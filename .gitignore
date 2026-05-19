@@ -1,0 +1,29 @@
+# Archivos compilados Java
+*.class
+*.jar
+*.war
+target/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# API Key y configuración sensible
+config.properties
+.env
+
+# Logs
+*.log
+logs/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
