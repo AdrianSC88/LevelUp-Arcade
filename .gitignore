@@ -27,3 +27,5 @@ logs/
 # Sistema operativo
 .DS_Store
 Thumbs.db
+/.metadata/
+.sonarlint/
