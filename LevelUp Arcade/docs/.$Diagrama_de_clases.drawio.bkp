@@ -1,9 +1,11 @@
 <mxfile host="Electron">
   <diagram name="Página-1" id="eDRZ21m5S1ydoRd6zglr">
-    <mxGraphModel dx="1236" dy="2048" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1806" dy="2454" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+
+        <!-- ETIQUETAS DE CAPAS -->
         <mxCell id="lbl-modelo" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fontColor=#888888;fontStyle=3;" value="«modelo»" vertex="1">
           <mxGeometry height="20" width="80" x="20" y="20" as="geometry" />
         </mxCell>
@@ -19,6 +21,10 @@
         <mxCell id="lbl-srv" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fontColor=#888888;fontStyle=3;" value="«servicio»" vertex="1">
           <mxGeometry height="20" width="80" x="20" y="1000" as="geometry" />
         </mxCell>
+
+        <!-- ===================== MODELOS ===================== -->
+
+        <!-- Producto -->
         <mxCell id="m-producto" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Producto" vertex="1">
           <mxGeometry height="190" width="160" x="120" y="45" as="geometry" />
         </mxCell>
@@ -31,6 +37,8 @@
         <mxCell id="m-producto-met" parent="m-producto" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="146" as="geometry" />
         </mxCell>
+
+        <!-- Categoria -->
         <mxCell id="m-categoria" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Categoria" vertex="1">
           <mxGeometry height="150" width="160" x="300" y="45" as="geometry" />
         </mxCell>
@@ -43,6 +51,8 @@
         <mxCell id="m-categoria-met" parent="m-categoria" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="106" as="geometry" />
         </mxCell>
+
+        <!-- Cliente -->
         <mxCell id="m-cliente" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Cliente" vertex="1">
           <mxGeometry height="170" width="160" x="480" y="45" as="geometry" />
         </mxCell>
@@ -55,6 +65,8 @@
         <mxCell id="m-cliente-met" parent="m-cliente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="126" as="geometry" />
         </mxCell>
+
+        <!-- Proveedor -->
         <mxCell id="m-proveedor" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Proveedor" vertex="1">
           <mxGeometry height="170" width="160" x="660" y="45" as="geometry" />
         </mxCell>
@@ -67,6 +79,8 @@
         <mxCell id="m-proveedor-met" parent="m-proveedor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="126" as="geometry" />
         </mxCell>
+
+        <!-- Usuario -->
         <mxCell id="m-usuario" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Usuario" vertex="1">
           <mxGeometry height="170" width="160" x="840" y="45" as="geometry" />
         </mxCell>
@@ -79,6 +93,8 @@
         <mxCell id="m-usuario-met" parent="m-usuario" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="126" as="geometry" />
         </mxCell>
+
+        <!-- Pedido (actualizado: sin idProducto, cantidad, precioUnitario) -->
         <mxCell id="m-pedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Pedido" vertex="1">
           <mxGeometry height="160" width="160" x="1020" y="45" as="geometry" />
         </mxCell>
@@ -91,6 +107,8 @@
         <mxCell id="m-pedido-met" parent="m-pedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="116" as="geometry" />
         </mxCell>
+
+        <!-- LineaPedido (NUEVO) -->
         <mxCell id="m-lineapedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="LineaPedido" vertex="1">
           <mxGeometry height="170" width="160" x="1200" y="45" as="geometry" />
         </mxCell>
@@ -103,6 +121,10 @@
         <mxCell id="m-lineapedido-met" parent="m-lineapedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getters() / setters()" vertex="1">
           <mxGeometry height="40" width="160" y="126" as="geometry" />
         </mxCell>
+
+        <!-- ===================== DAO ===================== -->
+
+        <!-- ConexionBD -->
         <mxCell id="d-conexion" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="ConexionBD" vertex="1">
           <mxGeometry height="130" width="160" x="120" y="350" as="geometry" />
         </mxCell>
@@ -115,132 +137,182 @@
         <mxCell id="d-conexion-met" parent="d-conexion" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ getConnection(): Connection" vertex="1">
           <mxGeometry height="30" width="160" y="96" as="geometry" />
         </mxCell>
+
+        <!-- ProductoDAO -->
         <mxCell id="d-producto" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="ProductoDAO" vertex="1">
           <mxGeometry height="150" width="160" x="300" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-producto-met" parent="d-producto" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ insertar(p: Producto)&#xa;+ buscarPorId(id: int)&#xa;+ listarTodos(): List&#xa;+ actualizar(p: Producto)&#xa;+ eliminar(id: int)" vertex="1">
           <mxGeometry height="120" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- CategoriaDAO -->
         <mxCell id="d-categoria" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="CategoriaDAO" vertex="1">
           <mxGeometry height="150" width="160" x="480" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-categoria-met" parent="d-categoria" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ insertar(c: Categoria)&#xa;+ buscarPorId(id: int)&#xa;+ listarTodos(): List&#xa;+ actualizar(c: Categoria)&#xa;+ eliminar(id: int)" vertex="1">
           <mxGeometry height="120" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ClienteDAO -->
         <mxCell id="d-cliente" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="ClienteDAO" vertex="1">
           <mxGeometry height="150" width="160" x="660" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-cliente-met" parent="d-cliente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ insertar(c: Cliente)&#xa;+ buscarPorId(id: int)&#xa;+ listarTodos(): List&#xa;+ actualizar(c: Cliente)&#xa;+ eliminar(id: int)" vertex="1">
           <mxGeometry height="120" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ProveedorDAO -->
         <mxCell id="d-proveedor" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="ProveedorDAO" vertex="1">
           <mxGeometry height="150" width="160" x="840" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-proveedor-met" parent="d-proveedor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ insertar(p: Proveedor)&#xa;+ buscarPorId(id: int)&#xa;+ listarTodos(): List&#xa;+ actualizar(p: Proveedor)&#xa;+ eliminar(id: int)" vertex="1">
           <mxGeometry height="120" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- UsuarioDAO -->
         <mxCell id="d-usuario" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="UsuarioDAO" vertex="1">
           <mxGeometry height="130" width="160" x="1020" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-usuario-met" parent="d-usuario" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ buscarPorNombre(n: String)&#xa;+ insertar(u: Usuario)&#xa;+ listarTodos(): List&#xa;+ eliminar(id: int)" vertex="1">
           <mxGeometry height="100" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- PedidoDAO -->
         <mxCell id="d-pedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="PedidoDAO" vertex="1">
           <mxGeometry height="150" width="160" x="1200" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-pedido-met" parent="d-pedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ insertar(p: Pedido)&#xa;+ buscarPorId(id: int)&#xa;+ listarTodos(): List&#xa;+ listarPorCliente(id: int)&#xa;+ eliminar(id: int)" vertex="1">
           <mxGeometry height="120" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- LineaPedidoDAO (NUEVO) -->
         <mxCell id="d-lineapedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" value="LineaPedidoDAO" vertex="1">
           <mxGeometry height="150" width="160" x="1380" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d-lineapedido-met" parent="d-lineapedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ insertar(lp: LineaPedido)&#xa;+ listarPorPedido(id: int)&#xa;+ actualizar(lp: LineaPedido)&#xa;+ eliminar(idPedido, idProd)" vertex="1">
           <mxGeometry height="120" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ===================== CONTROLADORES ===================== -->
+
+        <!-- ProductoController -->
         <mxCell id="c-producto" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="ProductoController" vertex="1">
           <mxGeometry height="150" width="175" x="120" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-producto-met" parent="c-producto" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ agregarProducto()&#xa;+ listarProductos()&#xa;+ modificarProducto()&#xa;+ eliminarProducto()&#xa;+ buscarProducto()" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- CategoriaController -->
         <mxCell id="c-categoria" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="CategoriaController" vertex="1">
           <mxGeometry height="150" width="175" x="315" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-categoria-met" parent="c-categoria" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ agregarCategoria()&#xa;+ listarCategorias()&#xa;+ modificarCategoria()&#xa;+ eliminarCategoria()" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ClienteController -->
         <mxCell id="c-cliente" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="ClienteController" vertex="1">
           <mxGeometry height="150" width="175" x="510" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-cliente-met" parent="c-cliente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ agregarCliente()&#xa;+ listarClientes()&#xa;+ modificarCliente()&#xa;+ eliminarCliente()" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ProveedorController -->
         <mxCell id="c-proveedor" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="ProveedorController" vertex="1">
           <mxGeometry height="150" width="175" x="705" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-proveedor-met" parent="c-proveedor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ agregarProveedor()&#xa;+ listarProveedores()&#xa;+ modificarProveedor()&#xa;+ eliminarProveedor()" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- UsuarioController -->
         <mxCell id="c-usuario" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="UsuarioController" vertex="1">
           <mxGeometry height="150" width="175" x="900" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-usuario-met" parent="c-usuario" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ login()&#xa;+ logout()&#xa;+ crearUsuario()&#xa;+ validarRol(): boolean" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- PedidoController -->
         <mxCell id="c-pedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="PedidoController" vertex="1">
           <mxGeometry height="150" width="175" x="1095" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-pedido-met" parent="c-pedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ registrarPedido()&#xa;+ listarPedidos()&#xa;+ listarPorCliente()&#xa;+ eliminarPedido()" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- LineaPedidoController (NUEVO) -->
         <mxCell id="c-lineapedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;" value="LineaPedidoController" vertex="1">
           <mxGeometry height="150" width="175" x="1290" y="600" as="geometry" />
         </mxCell>
         <mxCell id="c-lineapedido-met" parent="c-lineapedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ agregarLinea()&#xa;+ listarLineasPedido()&#xa;+ modificarLinea()&#xa;+ eliminarLinea()" vertex="1">
           <mxGeometry height="120" width="175" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ===================== VISTAS ===================== -->
+
+        <!-- MenuPrincipal -->
         <mxCell id="v-menu" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="MenuPrincipal" vertex="1">
           <mxGeometry height="110" width="160" x="120" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-menu-met" parent="v-menu" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarMenu()&#xa;+ leerOpcion(): int&#xa;+ iniciar()" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- VistaProducto -->
         <mxCell id="v-producto" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaProducto" vertex="1">
           <mxGeometry height="110" width="160" x="300" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-producto-met" parent="v-producto" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Producto&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- VistaCategoria -->
         <mxCell id="v-categoria" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaCategoria" vertex="1">
           <mxGeometry height="110" width="160" x="470" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-categoria-met" parent="v-categoria" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Categoria&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- VistaCliente -->
         <mxCell id="v-cliente" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaCliente" vertex="1">
           <mxGeometry height="110" width="160" x="640" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-cliente-met" parent="v-cliente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Cliente&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- VistaProveedor -->
         <mxCell id="v-proveedor" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaProveedor" vertex="1">
           <mxGeometry height="110" width="160" x="820" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-proveedor-met" parent="v-proveedor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Proveedor&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- VistaPedido -->
         <mxCell id="v-pedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaPedido" vertex="1">
-          <mxGeometry height="110" width="160" x="1180" y="820" as="geometry" />
+          <mxGeometry height="110" width="160" x="1000" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-pedido-met" parent="v-pedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Pedido&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- VistaLineaPedido (NUEVO) -->
         <mxCell id="v-lineapedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaLineaPedido" vertex="1">
-          <mxGeometry height="110" width="160" x="1360" y="820" as="geometry" />
+          <mxGeometry height="110" width="160" x="1180" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-lineapedido-met" parent="v-lineapedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLineas()&#xa;+ pedirDatos(): LineaPedido&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
+
+        <!-- ===================== SERVICIO ===================== -->
+
+        <!-- LlmService -->
         <mxCell id="s-llm" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="LlmService" vertex="1">
           <mxGeometry height="110" width="200" x="120" y="1020" as="geometry" />
         </mxCell>
@@ -253,7 +325,11 @@
         <mxCell id="s-llm-met" parent="s-llm" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ enviarPrompt(p: String): String&#xa;+ generarDescripcion(nombre): String" vertex="1">
           <mxGeometry height="30" width="200" y="76" as="geometry" />
         </mxCell>
-        <mxCell id="r-prod-cat" edge="1" parent="1" source="m-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="m-categoria">
+
+        <!-- ===================== RELACIONES MODELO ===================== -->
+
+        <!-- Producto -> Categoria (Producto usa Categoria) -->
+        <mxCell id="r-prod-cat" edge="1" parent="1" source="m-producto" target="m-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="-50" />
@@ -267,7 +343,9 @@
         <mxCell id="lbl-prod-cat-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="0..*" vertex="1">
           <mxGeometry height="20" width="20" x="210" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="r-prod-prov" edge="1" parent="1" source="m-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="m-proveedor">
+
+        <!-- Producto -> Proveedor -->
+        <mxCell id="r-prod-prov" edge="1" parent="1" source="m-producto" target="m-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="240" y="-30" />
@@ -281,7 +359,9 @@
         <mxCell id="lbl-prod-prov-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="0..*" vertex="1">
           <mxGeometry height="20" width="20" x="250" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="r-ped-cli" edge="1" parent="1" source="m-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="m-cliente">
+
+        <!-- Pedido -> Cliente -->
+        <mxCell id="r-ped-cli" edge="1" parent="1" source="m-pedido" target="m-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1060" y="-50" />
@@ -295,36 +375,37 @@
         <mxCell id="lbl-ped-cli-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="0..*" vertex="1">
           <mxGeometry height="20" width="20" x="1030" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="r-ped-lp" edge="1" parent="1" source="m-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="m-lineapedido">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1140" y="-50" />
-              <mxPoint x="1240" y="-50" />
-            </Array>
-          </mxGeometry>
+
+        <!-- Pedido -> LineaPedido (composicion) -->
+        <mxCell id="r-ped-lp" edge="1" parent="1" source="m-pedido" target="m-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="lbl-ped-lp-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;strokeWidth=1;fontSize=15;" value="&lt;b&gt;1&lt;/b&gt;" vertex="1">
-          <mxGeometry height="20" width="20" x="1150" y="20" as="geometry" />
+          <mxGeometry height="20" width="20" x="1110" y="120" as="geometry" />
         </mxCell>
         <mxCell id="lbl-ped-lp-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="1..*" vertex="1">
-          <mxGeometry height="20" width="20" x="1210" y="20" as="geometry" />
+          <mxGeometry height="20" width="20" x="1185" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="r-lp-prod" edge="1" parent="1" source="m-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.5;exitY=0;exitDx=0;exitDy=0;">
+
+        <!-- LineaPedido -> Producto -->
+        <mxCell id="r-lp-prod" edge="1" parent="1" source="m-lineapedido" target="m-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1280" y="-70" />
               <mxPoint x="160" y="-70" />
             </Array>
-            <mxPoint x="160" y="45" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="lbl-lp-prod-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="0..*" vertex="1">
-          <mxGeometry height="20" width="20" x="1290" y="20" as="geometry" />
+          <mxGeometry height="20" width="20" x="1350" y="20" as="geometry" />
         </mxCell>
         <mxCell id="lbl-lp-prod-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;strokeWidth=1;fontSize=15;" value="&lt;b&gt;1&lt;/b&gt;" vertex="1">
           <mxGeometry height="20" width="20" x="350" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="r-mprod-dprod" edge="1" parent="1" source="m-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-producto">
+
+        <!-- ===================== RELACIONES MODELO -> DAO ===================== -->
+
+        <mxCell id="r-mprod-dprod" edge="1" parent="1" source="m-producto" target="d-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="300" />
@@ -332,7 +413,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-mcat-dcat" edge="1" parent="1" source="m-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-categoria">
+        <mxCell id="r-mcat-dcat" edge="1" parent="1" source="m-categoria" target="d-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="380" y="290" />
@@ -340,7 +421,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-mcli-dcli" edge="1" parent="1" source="m-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-cliente">
+        <mxCell id="r-mcli-dcli" edge="1" parent="1" source="m-cliente" target="d-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="560" y="280" />
@@ -348,7 +429,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-mprov-dprov" edge="1" parent="1" source="m-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-proveedor">
+        <mxCell id="r-mprov-dprov" edge="1" parent="1" source="m-proveedor" target="d-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="740" y="270" />
@@ -356,7 +437,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-musr-dusr" edge="1" parent="1" source="m-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-usuario">
+        <mxCell id="r-musr-dusr" edge="1" parent="1" source="m-usuario" target="d-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="920" y="260" />
@@ -364,7 +445,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-mped-dped" edge="1" parent="1" source="m-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-pedido">
+        <mxCell id="r-mped-dped" edge="1" parent="1" source="m-pedido" target="d-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1100" y="250" />
@@ -372,7 +453,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-mlp-dlp" edge="1" parent="1" source="m-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;" target="d-lineapedido">
+        <mxCell id="r-mlp-dlp" edge="1" parent="1" source="m-lineapedido" target="d-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#9673a6;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1280" y="240" />
@@ -380,7 +461,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dprod" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="d-producto">
+
+        <!-- ===================== ConexionBD -> DAOs ===================== -->
+
+        <mxCell id="r-con-dprod" edge="1" parent="1" source="d-conexion" target="d-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -388,7 +472,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dcat" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="d-categoria">
+        <mxCell id="r-con-dcat" edge="1" parent="1" source="d-conexion" target="d-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -396,7 +480,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dcli" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="d-cliente">
+        <mxCell id="r-con-dcli" edge="1" parent="1" source="d-conexion" target="d-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -404,7 +488,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dprov" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="d-proveedor">
+        <mxCell id="r-con-dprov" edge="1" parent="1" source="d-conexion" target="d-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -412,7 +496,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dusr" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="d-usuario">
+        <mxCell id="r-con-dusr" edge="1" parent="1" source="d-conexion" target="d-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -420,7 +504,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dped" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="d-pedido">
+        <mxCell id="r-con-dped" edge="1" parent="1" source="d-conexion" target="d-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -428,7 +512,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-con-dlp" edge="1" parent="1" source="d-conexion" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="d-lineapedido">
+        <mxCell id="r-con-dlp" edge="1" parent="1" source="d-conexion" target="d-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.25;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="200" y="320" />
@@ -436,7 +520,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-dprod-cprod" edge="1" parent="1" source="d-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-producto">
+
+        <!-- ===================== DAO -> CONTROLLER ===================== -->
+
+        <mxCell id="r-dprod-cprod" edge="1" parent="1" source="d-producto" target="c-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="380" y="550" />
@@ -444,16 +531,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-dcat-ccat" edge="1" parent="1" source="d-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-categoria">
+        <mxCell id="r-dcat-ccat" edge="1" parent="1" source="d-categoria" target="c-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-dcli-ccli" edge="1" parent="1" source="d-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-cliente">
+        <mxCell id="r-dcli-ccli" edge="1" parent="1" source="d-cliente" target="c-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-dprov-cprov" edge="1" parent="1" source="d-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-proveedor">
+        <mxCell id="r-dprov-cprov" edge="1" parent="1" source="d-proveedor" target="c-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-dusr-cusr" edge="1" parent="1" source="d-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-usuario">
+        <mxCell id="r-dusr-cusr" edge="1" parent="1" source="d-usuario" target="c-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1100" y="550" />
@@ -461,10 +548,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-dped-cped" edge="1" parent="1" source="d-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-pedido">
+        <mxCell id="r-dped-cped" edge="1" parent="1" source="d-pedido" target="c-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-dlp-clp" edge="1" parent="1" source="d-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;" target="c-lineapedido">
+        <mxCell id="r-dlp-clp" edge="1" parent="1" source="d-lineapedido" target="c-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1460" y="550" />
@@ -472,7 +559,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-cprod-vprod" edge="1" parent="1" source="c-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-producto">
+
+        <!-- ===================== CONTROLLER -> VISTA ===================== -->
+
+        <mxCell id="r-cprod-vprod" edge="1" parent="1" source="c-producto" target="v-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="250" y="780" />
@@ -480,37 +570,41 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-ccat-vcat" edge="1" parent="1" source="c-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-categoria">
+        <mxCell id="r-ccat-vcat" edge="1" parent="1" source="c-categoria" target="v-categoria" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-ccli-vcli" edge="1" parent="1" source="c-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-cliente">
+        <mxCell id="r-ccli-vcli" edge="1" parent="1" source="c-cliente" target="v-cliente" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-cprov-vprov" edge="1" parent="1" source="c-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-proveedor">
+        <mxCell id="r-cprov-vprov" edge="1" parent="1" source="c-proveedor" target="v-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-cped-vped" edge="1" parent="1" source="c-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v-pedido">
+        <mxCell id="r-cped-vped" edge="1" parent="1" source="c-pedido" target="v-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1182" y="780" />
+              <mxPoint x="1183" y="780" />
+              <mxPoint x="1080" y="780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r-clp-vlp" edge="1" parent="1" source="c-lineapedido" target="v-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1378" y="780" />
               <mxPoint x="1260" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-clp-vlp" edge="1" parent="1" source="c-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v-lineapedido">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1378" y="780" />
-              <mxPoint x="1440" y="780" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
+
+        <!-- MenuPrincipal -> VistaProducto (flecha de navegacion existente) -->
         <mxCell id="r-menu-out" edge="1" parent="1" source="v-menu" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="200" y="750" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-llm-cprod" edge="1" parent="1" source="s-llm" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;exitX=0.185;exitY=-0.036;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="c-producto">
+
+        <!-- LlmService -> ProductoController -->
+        <mxCell id="r-llm-cprod" edge="1" parent="1" source="s-llm" target="c-producto" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#d6b656;strokeWidth=3;exitX=0.185;exitY=-0.036;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="160" y="1016" />
@@ -521,20 +615,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="v-usuario" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaUsuario" vertex="1">
-          <mxGeometry height="110" width="160" x="1000" y="820" as="geometry" />
-        </mxCell>
-        <mxCell id="v-usuario-met" parent="v-usuario" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Usuario&#xa;+ mostrarError(msg)" vertex="1">
-          <mxGeometry height="80" width="160" y="26" as="geometry" />
-        </mxCell>
-        <mxCell id="r-cusr-vusr" edge="1" parent="1" source="c-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v-usuario">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="988" y="780" />
-              <mxPoint x="1080" y="780" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
+
       </root>
     </mxGraphModel>
   </diagram>

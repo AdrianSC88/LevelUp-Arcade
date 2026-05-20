@@ -1,0 +1,230 @@
+<mxfile host="Electron">
+  <diagram id="UMzZVVAOlLDXzxLZoiRT" name="Página-1">
+    <mxGraphModel dx="2336" dy="879" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="inicio" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" value="INICIO" vertex="1">
+          <mxGeometry height="50" width="120" x="440" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="menu_crud" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="Mostrar menú de operaciones&#xa;1. Añadir  2. Consultar&#xa;3. Modificar  4. Eliminar  5. Salir" vertex="1">
+          <mxGeometry height="60" width="280" x="360" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="leer_opcion" parent="1" style="parallelogram;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Leer opción del usuario" vertex="1">
+          <mxGeometry height="50" width="220" x="390" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="dec_opcion" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Qué opción?" vertex="1">
+          <mxGeometry height="70" width="180" x="410" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_anadir" parent="1" style="text;html=1;fontSize=13;fontColor=#0066CC;fontStyle=1" value="Añadir" vertex="1">
+          <mxGeometry height="20" width="50" x="-190" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="pedir_datos_alta" parent="1" style="parallelogram;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Solicitar datos al usuario" vertex="1">
+          <mxGeometry height="50" width="180" x="-290" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="validar_alta" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Datos válidos?" vertex="1">
+          <mxGeometry height="60" width="140" x="-270" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="error_alta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="Mostrar error&#xa;de validación" vertex="1">
+          <mxGeometry height="50" width="140" x="-530" y="655" as="geometry" />
+        </mxCell>
+        <mxCell id="insertar_bd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="Insertar registro en BD" vertex="1">
+          <mxGeometry height="50" width="180" x="-290" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="ok_alta" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Mostrar confirmación&#xa;de alta correcta" vertex="1">
+          <mxGeometry height="50" width="180" x="-290" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_consultar" parent="1" style="text;html=1;fontSize=13;fontColor=#0066CC;fontStyle=1" value="Consultar" vertex="1">
+          <mxGeometry height="20" width="70" x="110" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="listar_bd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="Obtener registros de BD" vertex="1">
+          <mxGeometry height="50" width="180" x="10" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="dec_hay_datos" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Hay registros?" vertex="1">
+          <mxGeometry height="60" width="150" x="25" y="675" as="geometry" />
+        </mxCell>
+        <mxCell id="mostrar_lista" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Mostrar listado&#xa;por pantalla" vertex="1">
+          <mxGeometry height="50" width="180" x="10" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="sin_datos" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="Mostrar mensaje:&#xa;no hay registros" vertex="1">
+          <mxGeometry height="50" width="150" x="270" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_modificar" parent="1" style="text;html=1;fontSize=13;fontColor=#0066CC;fontStyle=1" value="Modificar" vertex="1">
+          <mxGeometry height="20" width="50" x="820" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="pedir_id_mod" parent="1" style="parallelogram;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Solicitar ID a modificar" vertex="1">
+          <mxGeometry height="50" width="180" x="800" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="dec_existe_mod" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Existe el registro?" vertex="1">
+          <mxGeometry height="60" width="160" x="810" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="error_no_existe_mod" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="Mostrar error:&#xa;registro no encontrado" vertex="1">
+          <mxGeometry height="50" width="150" x="570" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="pedir_nuevos_datos" parent="1" style="parallelogram;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Solicitar nuevos datos" vertex="1">
+          <mxGeometry height="50" width="180" x="800" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="validar_mod" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Datos válidos?" vertex="1">
+          <mxGeometry height="60" width="160" x="810" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="actualizar_bd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="Actualizar registro en BD" vertex="1">
+          <mxGeometry height="50" width="180" x="800" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="ok_mod" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Mostrar confirmación&#xa;de modificación" vertex="1">
+          <mxGeometry height="50" width="180" x="800" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_eliminar" parent="1" style="text;html=1;fontSize=13;fontColor=#0066CC;fontStyle=1" value="Eliminar" vertex="1">
+          <mxGeometry height="20" width="60" x="1110" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="pedir_id_eli" parent="1" style="parallelogram;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Solicitar ID a eliminar" vertex="1">
+          <mxGeometry height="50" width="180" x="1090" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="dec_existe_eli" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Existe el registro?" vertex="1">
+          <mxGeometry height="60" width="160" x="1100" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="error_no_existe_eli" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="Mostrar error:&#xa;registro no encontrado" vertex="1">
+          <mxGeometry height="50" width="150" x="1400" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="confirmar_eli" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" value="¿Confirmar eliminación?" vertex="1">
+          <mxGeometry height="60" width="160" x="1100" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="eliminar_bd" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="Eliminar registro de BD" vertex="1">
+          <mxGeometry height="50" width="180" x="1090" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="ok_eli" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Mostrar confirmación&#xa;de eliminación" vertex="1">
+          <mxGeometry height="50" width="180" x="1090" y="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="fin" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" value="FIN" vertex="1">
+          <mxGeometry height="50" width="120" x="440" y="1200" as="geometry" />
+        </mxCell>
+        <mxCell id="f1" edge="1" parent="1" source="inicio" style="edgeStyle=orthogonalEdgeStyle;" target="menu_crud">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" edge="1" parent="1" source="menu_crud" style="edgeStyle=orthogonalEdgeStyle;" target="leer_opcion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" edge="1" parent="1" source="leer_opcion" style="edgeStyle=orthogonalEdgeStyle;" target="dec_opcion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" edge="1" parent="1" source="dec_opcion" style="edgeStyle=orthogonalEdgeStyle;" target="pedir_datos_alta" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f5" edge="1" parent="1" source="dec_opcion" style="edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="listar_bd" value="">
+          <mxGeometry relative="1" x="0.0001" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="100" y="385" />
+            </Array>
+            <mxPoint x="300.11180124223574" y="384.9565217391305" as="sourcePoint" />
+            <mxPoint x="150" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f6" edge="1" parent="1" source="dec_opcion" style="edgeStyle=orthogonalEdgeStyle;" target="pedir_id_mod" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f7" edge="1" parent="1" source="dec_opcion" style="edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pedir_id_eli" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f_salir" edge="1" parent="1" source="dec_opcion" style="edgeStyle=orthogonalEdgeStyle;" target="fin" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa1" edge="1" parent="1" source="pedir_datos_alta" style="edgeStyle=orthogonalEdgeStyle;" target="validar_alta">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa2" edge="1" parent="1" source="validar_alta" style="edgeStyle=orthogonalEdgeStyle;" target="error_alta" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa3" edge="1" parent="1" source="error_alta" style="edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="pedir_datos_alta">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-460" y="505" />
+            </Array>
+            <mxPoint x="-500" y="560" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fa4" edge="1" parent="1" source="validar_alta" style="edgeStyle=orthogonalEdgeStyle;" target="insertar_bd" value="Sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa5" edge="1" parent="1" source="insertar_bd" style="edgeStyle=orthogonalEdgeStyle;" target="ok_alta">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa6" edge="1" parent="1" source="ok_alta" style="edgeStyle=orthogonalEdgeStyle;" target="fin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc1" edge="1" parent="1" source="listar_bd" style="edgeStyle=orthogonalEdgeStyle;" target="dec_hay_datos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc2" edge="1" parent="1" source="dec_hay_datos" style="edgeStyle=orthogonalEdgeStyle;" target="mostrar_lista" value="Sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc3" edge="1" parent="1" source="dec_hay_datos" style="edgeStyle=orthogonalEdgeStyle;" target="sin_datos" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc4" edge="1" parent="1" source="mostrar_lista" style="edgeStyle=orthogonalEdgeStyle;" target="fin">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="920" />
+            </Array>
+            <mxPoint x="230" y="920" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fc5" edge="1" parent="1" source="sin_datos" style="edgeStyle=orthogonalEdgeStyle;" target="fin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm1" edge="1" parent="1" source="pedir_id_mod" style="edgeStyle=orthogonalEdgeStyle;" target="dec_existe_mod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm2" edge="1" parent="1" source="dec_existe_mod" style="edgeStyle=orthogonalEdgeStyle;" target="error_no_existe_mod" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm3" edge="1" parent="1" source="error_no_existe_mod" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="pedir_id_mod">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="645" y="495" />
+            </Array>
+            <mxPoint x="760" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fm4" edge="1" parent="1" source="dec_existe_mod" style="edgeStyle=orthogonalEdgeStyle;" target="pedir_nuevos_datos" value="Sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm5" edge="1" parent="1" source="pedir_nuevos_datos" style="edgeStyle=orthogonalEdgeStyle;" target="validar_mod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm6" edge="1" parent="1" source="validar_mod" style="edgeStyle=orthogonalEdgeStyle;" target="actualizar_bd" value="Sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm7" edge="1" parent="1" source="actualizar_bd" style="edgeStyle=orthogonalEdgeStyle;" target="ok_mod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fm8" edge="1" parent="1" source="ok_mod" style="edgeStyle=orthogonalEdgeStyle;" target="fin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe1" edge="1" parent="1" source="pedir_id_eli" style="edgeStyle=orthogonalEdgeStyle;" target="dec_existe_eli">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe2" edge="1" parent="1" source="dec_existe_eli" style="edgeStyle=orthogonalEdgeStyle;" target="error_no_existe_eli" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe3" edge="1" parent="1" source="error_no_existe_eli" style="edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="pedir_id_eli">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe4" edge="1" parent="1" source="dec_existe_eli" style="edgeStyle=orthogonalEdgeStyle;" target="confirmar_eli" value="Sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe5" edge="1" parent="1" source="confirmar_eli" style="edgeStyle=orthogonalEdgeStyle;" target="eliminar_bd" value="Sí">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe7" edge="1" parent="1" source="eliminar_bd" style="edgeStyle=orthogonalEdgeStyle;" target="ok_eli">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe8" edge="1" parent="1" source="ok_eli" style="edgeStyle=orthogonalEdgeStyle;" target="fin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="48V6smfzKq2qwsLs_pij-4" parent="1" style="text;html=1;fontSize=13;fontColor=#0066CC;fontStyle=1" value="Salir" vertex="1">
+          <mxGeometry height="20" width="30" x="510" y="430" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

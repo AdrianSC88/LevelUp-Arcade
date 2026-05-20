@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Página-1" id="eDRZ21m5S1ydoRd6zglr">
-    <mxGraphModel dx="1236" dy="2048" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1468" dy="2213" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -230,13 +230,13 @@
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
         <mxCell id="v-pedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaPedido" vertex="1">
-          <mxGeometry height="110" width="160" x="1180" y="820" as="geometry" />
+          <mxGeometry height="110" width="160" x="1000" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-pedido-met" parent="v-pedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Pedido&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
         </mxCell>
         <mxCell id="v-lineapedido" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaLineaPedido" vertex="1">
-          <mxGeometry height="110" width="160" x="1360" y="820" as="geometry" />
+          <mxGeometry height="110" width="160" x="1180" y="820" as="geometry" />
         </mxCell>
         <mxCell id="v-lineapedido-met" parent="v-lineapedido" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLineas()&#xa;+ pedirDatos(): LineaPedido&#xa;+ mostrarError(msg)" vertex="1">
           <mxGeometry height="80" width="160" y="26" as="geometry" />
@@ -295,19 +295,14 @@
         <mxCell id="lbl-ped-cli-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="0..*" vertex="1">
           <mxGeometry height="20" width="20" x="1030" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="r-ped-lp" edge="1" parent="1" source="m-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="m-lineapedido">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1140" y="-50" />
-              <mxPoint x="1240" y="-50" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="r-ped-lp" edge="1" parent="1" source="m-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="m-lineapedido">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="lbl-ped-lp-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;strokeWidth=1;fontSize=15;" value="&lt;b&gt;1&lt;/b&gt;" vertex="1">
-          <mxGeometry height="20" width="20" x="1150" y="20" as="geometry" />
+          <mxGeometry height="20" width="20" x="1110" y="120" as="geometry" />
         </mxCell>
         <mxCell id="lbl-ped-lp-n" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=15;" value="1..*" vertex="1">
-          <mxGeometry height="20" width="20" x="1210" y="20" as="geometry" />
+          <mxGeometry height="20" width="20" x="1185" y="120" as="geometry" />
         </mxCell>
         <mxCell id="r-lp-prod" edge="1" parent="1" source="m-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#82b366;strokeWidth=3;exitX=0.5;exitY=0;exitDx=0;exitDy=0;">
           <mxGeometry relative="1" as="geometry">
@@ -489,19 +484,19 @@
         <mxCell id="r-cprov-vprov" edge="1" parent="1" source="c-proveedor" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-proveedor">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="r-cped-vped" edge="1" parent="1" source="c-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v-pedido">
+        <mxCell id="r-cped-vped" edge="1" parent="1" source="c-pedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-pedido">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1182" y="780" />
-              <mxPoint x="1260" y="780" />
+              <mxPoint x="1183" y="780" />
+              <mxPoint x="1080" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r-clp-vlp" edge="1" parent="1" source="c-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v-lineapedido">
+        <mxCell id="r-clp-vlp" edge="1" parent="1" source="c-lineapedido" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;" target="v-lineapedido">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1378" y="780" />
-              <mxPoint x="1440" y="780" />
+              <mxPoint x="1260" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -518,20 +513,6 @@
               <mxPoint x="90" y="960" />
               <mxPoint x="90" y="770" />
               <mxPoint x="164" y="770" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="v-usuario" parent="1" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;" value="VistaUsuario" vertex="1">
-          <mxGeometry height="110" width="160" x="1000" y="820" as="geometry" />
-        </mxCell>
-        <mxCell id="v-usuario-met" parent="v-usuario" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" value="+ mostrarLista()&#xa;+ pedirDatos(): Usuario&#xa;+ mostrarError(msg)" vertex="1">
-          <mxGeometry height="80" width="160" y="26" as="geometry" />
-        </mxCell>
-        <mxCell id="r-cusr-vusr" edge="1" parent="1" source="c-usuario" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;strokeColor=#666666;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="v-usuario">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="988" y="780" />
-              <mxPoint x="1080" y="780" />
             </Array>
           </mxGeometry>
         </mxCell>
