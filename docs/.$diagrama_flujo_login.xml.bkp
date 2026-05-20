@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- INICIO -->
+    <mxCell id="inicio" value="INICIO" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="325" y="40" width="120" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Mostrar pantalla login -->
+    <mxCell id="pantalla_login" value="Mostrar pantalla de login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="285" y="140" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Solicitar credenciales -->
+    <mxCell id="solicitar" value="Solicitar usuario y contraseña" style="parallelogram;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="285" y="240" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Validar campos vacíos -->
+    <mxCell id="dec_vacios" value="¿Campos vacíos?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="305" y="340" width="160" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Error campos vacíos -->
+    <mxCell id="error_vacios" value="Mostrar error:&#xa;campos obligatorios" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="530" y="348" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Buscar usuario en BD -->
+    <mxCell id="buscar_usuario" value="Buscar usuario en BD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="285" y="460" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ¿Usuario existe? -->
+    <mxCell id="dec_existe" value="¿Usuario existe?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="305" y="560" width="160" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Error usuario no encontrado -->
+    <mxCell id="error_usuario" value="Mostrar error:&#xa;usuario no encontrado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="530" y="568" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Verificar contraseña hash -->
+    <mxCell id="verificar_pass" value="Verificar contraseña (hash)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="285" y="680" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ¿Contraseña correcta? -->
+    <mxCell id="dec_pass" value="¿Contraseña correcta?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="305" y="780" width="160" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Error contraseña -->
+    <mxCell id="error_pass" value="Mostrar error:&#xa;contraseña incorrecta" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="530" y="788" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Comprobar rol -->
+    <mxCell id="comprobar_rol" value="Comprobar rol del usuario" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="285" y="900" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ¿Es administrador? -->
+    <mxCell id="dec_rol" value="¿Es administrador?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="305" y="1000" width="160" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- Menú administrador -->
+    <mxCell id="menu_admin" value="Acceso menú&#xa;ADMINISTRADOR&#xa;(CRUD completo)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="130" y="1120" width="160" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Menú empleado -->
+    <mxCell id="menu_empleado" value="Acceso menú&#xa;EMPLEADO&#xa;(solo consultas)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="480" y="1120" width="160" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- FIN -->
+    <mxCell id="fin" value="FIN" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="325" y="1240" width="120" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- ===================== FLECHAS ===================== -->
+
+    <mxCell id="f1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="inicio" target="pantalla_login" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="f2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="pantalla_login" target="solicitar" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="f3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="solicitar" target="dec_vacios" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Sí → error vacíos -->
+    <mxCell id="f4" value="Sí" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_vacios" target="error_vacios" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- error vacíos vuelve a solicitar -->
+    <mxCell id="f5" style="edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="error_vacios" target="solicitar" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- No → buscar usuario -->
+    <mxCell id="f6" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_vacios" target="buscar_usuario" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="f7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="buscar_usuario" target="dec_existe" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Sí → error usuario -->
+    <mxCell id="f8" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_existe" target="error_usuario" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- error usuario vuelve a solicitar -->
+    <mxCell id="f9" style="edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="error_usuario" target="solicitar" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Sí → verificar contraseña -->
+    <mxCell id="f10" value="Sí" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_existe" target="verificar_pass" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="f11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="verificar_pass" target="dec_pass" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- No → error contraseña -->
+    <mxCell id="f12" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_pass" target="error_pass" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- error contraseña vuelve a solicitar -->
+    <mxCell id="f13" style="edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="error_pass" target="solicitar" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Sí → comprobar rol -->
+    <mxCell id="f14" value="Sí" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_pass" target="comprobar_rol" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="f15" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="comprobar_rol" target="dec_rol" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Sí → menú admin -->
+    <mxCell id="f16" value="Sí" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_rol" target="menu_admin" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- No → menú empleado -->
+    <mxCell id="f17" value="No" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="dec_rol" target="menu_empleado" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ambos menús → fin -->
+    <mxCell id="f18" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="menu_admin" target="fin" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f19" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="menu_empleado" target="fin" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>
