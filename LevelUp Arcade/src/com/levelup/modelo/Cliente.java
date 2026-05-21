@@ -63,7 +63,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return String.format("| %-5d | %-20s | %-30s | %-15s | %-30s |",
+        return String.format("| %-5d | %-30s | %-40s | %-15s | %-40s |",
                 id, nombre, email, telefono, direccion);
     }
 }

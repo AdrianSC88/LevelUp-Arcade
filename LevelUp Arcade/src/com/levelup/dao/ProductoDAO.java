@@ -45,7 +45,7 @@ public class ProductoDAO {
                        pv.nombre AS nom_prov, pv.email, pv.direccion, pv.telefono
                 FROM productos p
                 JOIN categorias c ON p.id_categoria = c.id_categoria
-                JOIN proveedores pv ON p.id_proveedor = pv.id_proveedor
+                JOIN proveedores pv ON p.id_proveedor = pv.id_proveedor ORDER BY p.id_producto
                 """;
         try (Connection con = ConexionBD.getConnection();
              Statement st = con.createStatement();

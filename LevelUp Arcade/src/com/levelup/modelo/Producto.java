@@ -60,7 +60,7 @@ public class Producto {
      */
     @Override
     public String toString() {
-        return String.format("| %-5d | %-25s | %-10.2f | %-8d | %-15s | %-15s |",
+        return String.format("| %-5d | %-50s | %-10.2f | %-8d | %-25s | %-25s |",
                 id, nombre, precio, stock,
                 categoria != null ? categoria.getNombre() : "-",
                 proveedor != null ? proveedor.getNombre() : "-");

@@ -50,7 +50,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return String.format("| %-5d | %-12s | %-12s | %-25s |",
+        return String.format("| %-5d | %-15s | %-15s | %-30s |",
                 id, fecha, estado,
                 cliente != null ? cliente.getNombre() : "-");
     }

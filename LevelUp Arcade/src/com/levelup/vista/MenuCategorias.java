@@ -71,9 +71,9 @@ public class MenuCategorias {
             System.out.println("No hay categorías registradas.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-20s | %-50s |",
+        System.out.println("\n" + String.format("| %-5s | %-30s | %-70s |",
                 "ID", "NOMBRE", "DESCRIPCIÓN"));
-        System.out.println("-".repeat(85));
+        System.out.println("-".repeat(115));
         categorias.forEach(System.out::println);
     }
 
@@ -86,9 +86,9 @@ public class MenuCategorias {
             int id = Integer.parseInt(scanner.nextLine());
             Categoria categoria = categoriaController.obtenerPorId(id);
             if (categoria != null) {
-                System.out.println("\n" + String.format("| %-5s | %-20s | %-50s |",
+                System.out.println("\n" + String.format("| %-5s | %-30s | %-70s |",
                         "ID", "NOMBRE", "DESCRIPCIÓN"));
-                System.out.println("-".repeat(85));
+                System.out.println("-".repeat(115));
                 System.out.println(categoria);
             } else {
                 System.out.println("Categoría no encontrada.");

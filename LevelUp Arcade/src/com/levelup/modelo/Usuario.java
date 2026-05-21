@@ -55,6 +55,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return String.format("| %-5d | %-20s | %-15s |", id, nombre, rol);
+        return String.format("| %-5d | %-25s | %-15s |", id, nombre, rol);
     }
 }

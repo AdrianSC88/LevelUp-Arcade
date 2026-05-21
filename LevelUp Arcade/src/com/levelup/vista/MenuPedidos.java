@@ -77,9 +77,9 @@ public class MenuPedidos {
             System.out.println("No hay pedidos registrados.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-12s | %-12s | %-25s |",
+        System.out.println("\n" + String.format("| %-5s | %-15s | %-15s | %-30s |",
                 "ID", "FECHA", "ESTADO", "CLIENTE"));
-        System.out.println("-".repeat(65));
+        System.out.println("-".repeat(78));
         pedidos.forEach(System.out::println);
     }
 
@@ -105,14 +105,14 @@ public class MenuPedidos {
             if (lineas.isEmpty()) {
                 System.out.println("\nEste pedido no tiene productos.");
             } else {
-                System.out.println("\n" + String.format("| %-25s | %-8s | %-10s | %-10s |",
+                System.out.println("\n" + String.format("| %-50s | %-8s | %-10s | %-10s |",
                         "PRODUCTO", "CANTIDAD", "PRECIO", "SUBTOTAL"));
-                System.out.println("-".repeat(65));
+                System.out.println("-".repeat(91));
                 lineas.forEach(System.out::println);
                 double total = lineas.stream()
                         .mapToDouble(l -> l.getCantidad() * l.getPrecioUnitario())
                         .sum();
-                System.out.println("-".repeat(65));
+                System.out.println("-".repeat(91));
                 System.out.printf("TOTAL: %.2f €%n", total);
             }
         } catch (NumberFormatException e) {

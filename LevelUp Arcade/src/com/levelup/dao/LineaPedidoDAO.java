@@ -19,7 +19,7 @@ public class LineaPedidoDAO {
      * @return true si la inserción fue exitosa
      */
     public boolean insertar(LineaPedido lineaPedido) {
-        String sql = "INSERT INTO pedidos_productos (id_pedido, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO linea_pedido (id_pedido, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, lineaPedido.getIdPedido());
@@ -41,14 +41,14 @@ public class LineaPedidoDAO {
     public List<LineaPedido> obtenerPorPedido(int idPedido) {
         List<LineaPedido> lista = new ArrayList<>();
         String sql = """
-                SELECT pp.*, p.nombre, p.descripcion, p.precio, p.stock,
+                SELECT lp.*, p.nombre, p.descripcion, p.precio, p.stock,
                        c.id_categoria, c.nombre AS nom_cat, c.descripcion AS desc_cat,
                        pv.id_proveedor, pv.nombre AS nom_prov, pv.email, pv.direccion, pv.telefono
-                FROM pedidos_productos pp
-                JOIN productos p ON pp.id_producto = p.id_producto
+                FROM linea_pedido lp
+                JOIN productos p ON lp.id_producto = p.id_producto
                 JOIN categorias c ON p.id_categoria = c.id_categoria
                 JOIN proveedores pv ON p.id_proveedor = pv.id_proveedor
-                WHERE pp.id_pedido = ?
+                WHERE lp.id_pedido = ? ORDER BY p.nombre ASC
                 """;
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -69,7 +69,7 @@ public class LineaPedidoDAO {
      * @return true si la actualización fue exitosa
      */
     public boolean actualizar(LineaPedido lineaPedido) {
-        String sql = "UPDATE pedidos_productos SET cantidad = ?, precio_unitario = ? WHERE id_pedido = ? AND id_producto = ?";
+        String sql = "UPDATE linea_pedido  SET cantidad = ?, precio_unitario = ? WHERE id_pedido = ? AND id_producto = ?";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, lineaPedido.getCantidad());
@@ -90,7 +90,7 @@ public class LineaPedidoDAO {
      * @return true si la eliminación fue exitosa
      */
     public boolean eliminar(int idPedido, int idProducto) {
-        String sql = "DELETE FROM pedidos_productos WHERE id_pedido = ? AND id_producto = ?";
+        String sql = "DELETE FROM linea_pedido  WHERE id_pedido = ? AND id_producto = ?";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPedido);

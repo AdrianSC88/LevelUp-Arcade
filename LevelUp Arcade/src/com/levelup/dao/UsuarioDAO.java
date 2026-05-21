@@ -16,7 +16,7 @@ public class UsuarioDAO {
      * @return true si la inserción fue exitosa
      */
     public boolean insertar(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, password_hash, rol) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombre, contrasena_hash, rol) VALUES (?, ?, ?)";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombre());
@@ -43,7 +43,7 @@ public class UsuarioDAO {
                 lista.add(new Usuario(
                         rs.getInt("id_usuario"),
                         rs.getString("nombre"),
-                        rs.getString("password_hash"),
+                        rs.getString("contrasena_hash"),
                         rs.getString("rol")
                 ));
             }
@@ -53,13 +53,40 @@ public class UsuarioDAO {
         return lista;
     }
 
+    
+    /**
+     * Obtiene un usuario por su id.
+     * @param id identificador del usuario
+     * @return objeto Usuario o null si no existe
+     */
+    public Usuario obtenerPorId(int id) {
+        String sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+        try (Connection con = ConexionBD.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Usuario(
+                        rs.getInt("id_usuario"),
+                        rs.getString("nombre"),
+                        rs.getString("contrasena_hash"),
+                        rs.getString("rol")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener usuario: " + e.getMessage());
+        }
+        return null;
+    }
+    
+    
     /**
      * Obtiene un usuario por su nombre, usado para el login.
      * @param nombre nombre del usuario
      * @return objeto Usuario o null si no existe
      */
     public Usuario obtenerPorNombre(String nombre) {
-        String sql = "SELECT * FROM usuarios WHERE nombre = ?";
+        String sql = "SELECT * FROM usuarios WHERE nombre = ? ORDER BY id_usuario";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, nombre);
@@ -68,7 +95,7 @@ public class UsuarioDAO {
                 return new Usuario(
                         rs.getInt("id_usuario"),
                         rs.getString("nombre"),
-                        rs.getString("password_hash"),
+                        rs.getString("contrasena_hash"),
                         rs.getString("rol")
                 );
             }
@@ -84,7 +111,7 @@ public class UsuarioDAO {
      * @return true si la actualización fue exitosa
      */
     public boolean actualizar(Usuario usuario) {
-        String sql = "UPDATE usuarios SET nombre = ?, password_hash = ?, rol = ? WHERE id_usuario = ?";
+        String sql = "UPDATE usuarios SET nombre = ?, contrasena_hash = ?, rol = ? WHERE id_usuario = ?";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, usuario.getNombre());

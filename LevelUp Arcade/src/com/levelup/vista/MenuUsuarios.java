@@ -28,18 +28,20 @@ public class MenuUsuarios {
             System.out.println("║          GESTIÓN DE USUARIOS             ║");
             System.out.println("╠══════════════════════════════════════════╣");
             System.out.println("║  1. Listar todos los usuarios            ║");
-            System.out.println("║  2. Añadir usuario                       ║");
-            System.out.println("║  3. Actualizar contraseña                ║");
-            System.out.println("║  4. Eliminar usuario                     ║");
+            System.out.println("║  2. Buscar usuario por id                ║");
+            System.out.println("║  3. Añadir usuario                       ║");
+            System.out.println("║  4. Actualizar contraseña                ║");
+            System.out.println("║  5. Eliminar usuario                     ║");
             System.out.println("║  0. Volver al menú principal             ║");
             System.out.println("╚══════════════════════════════════════════╝");
             System.out.print("Selecciona una opción: ");
 
             switch (scanner.nextLine()) {
                 case "1" -> listarUsuarios();
-                case "2" -> añadirUsuario();
-                case "3" -> actualizarPassword();
-                case "4" -> eliminarUsuario();
+                case "2" -> buscarUsuario();
+                case "3" -> añadirUsuario();
+                case "4" -> actualizarPassword();
+                case "5" -> eliminarUsuario();
                 case "0" -> salir = true;
                 default -> System.out.println("Opción no válida.");
             }
@@ -55,12 +57,35 @@ public class MenuUsuarios {
             System.out.println("No hay usuarios registrados.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-20s | %-15s |",
+        System.out.println("\n" + String.format("| %-5s | %-25s | %-15s |",
                 "ID", "NOMBRE", "ROL"));
-        System.out.println("-".repeat(47));
+        System.out.println("-".repeat(55));
         usuarios.forEach(System.out::println);
     }
 
+    
+    /**
+     * Busca y muestra un usuario por su id.
+     */
+    private void buscarUsuario() {
+        System.out.print("Introduce el id del usuario: ");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            Usuario usuario = usuarioController.obtenerPorId(id);
+            if (usuario != null) {
+                System.out.println("\n" + String.format("| %-5s | %-25s | %-15s |",
+                        "ID", "NOMBRE", "ROL"));
+                System.out.println("-".repeat(55));
+                System.out.println(usuario);
+            } else {
+                System.out.println("Usuario no encontrado.");
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("El id debe ser un número entero.");
+        }
+    }
+    
+    
     /**
      * Solicita datos y añade un nuevo usuario.
      */

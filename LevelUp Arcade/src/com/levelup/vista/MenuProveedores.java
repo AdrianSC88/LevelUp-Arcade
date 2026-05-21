@@ -71,9 +71,9 @@ public class MenuProveedores {
             System.out.println("No hay proveedores registrados.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-20s | %-30s | %-30s | %-15s |",
+        System.out.println("\n" + String.format("| %-5s | %-30s | %-40s | %-40s | %-15s |",
                 "ID", "NOMBRE", "EMAIL", "DIRECCIÓN", "TELÉFONO"));
-        System.out.println("-".repeat(110));
+        System.out.println("-".repeat(146));
         proveedores.forEach(System.out::println);
     }
 
@@ -86,9 +86,9 @@ public class MenuProveedores {
             int id = Integer.parseInt(scanner.nextLine());
             Proveedor proveedor = proveedorController.obtenerPorId(id);
             if (proveedor != null) {
-                System.out.println("\n" + String.format("| %-5s | %-20s | %-30s | %-30s | %-15s |",
+                System.out.println("\n" + String.format("| %-5s | %-30s | %-40s | %-40s | %-15s |",
                         "ID", "NOMBRE", "EMAIL", "DIRECCIÓN", "TELÉFONO"));
-                System.out.println("-".repeat(110));
+                System.out.println("-".repeat(146));
                 System.out.println(proveedor);
             } else {
                 System.out.println("Proveedor no encontrado.");

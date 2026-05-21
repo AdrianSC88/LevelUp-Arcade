@@ -71,9 +71,9 @@ public class MenuClientes {
             System.out.println("No hay clientes registrados.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-20s | %-30s | %-12s | %-30s |",
+        System.out.println("\n" + String.format("| %-5s | %-30s | %-40s | %-15s | %-40s |",
                 "ID", "NOMBRE", "EMAIL", "TELÉFONO", "DIRECCIÓN"));
-        System.out.println("-".repeat(107));
+        System.out.println("-".repeat(146));
         clientes.forEach(System.out::println);
     }
 
@@ -86,9 +86,9 @@ public class MenuClientes {
             int id = Integer.parseInt(scanner.nextLine());
             Cliente cliente = clienteController.obtenerPorId(id);
             if (cliente != null) {
-                System.out.println("\n" + String.format("| %-5s | %-20s | %-30s | %-12s | %-30s |",
+                System.out.println("\n" + String.format("| %-5s | %-30s | %-40s | %-15s | %-40s |",
                         "ID", "NOMBRE", "EMAIL", "TELÉFONO", "DIRECCIÓN"));
-                System.out.println("-".repeat(107));
+                System.out.println("-".repeat(146));
                 System.out.println(cliente);
             } else {
                 System.out.println("Cliente no encontrado.");

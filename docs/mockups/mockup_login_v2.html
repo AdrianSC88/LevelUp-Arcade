@@ -15,8 +15,14 @@ body { background: #f0f0f0; display: flex; justify-content: center; align-items:
   <!-- Cabecera -->
   <div style="background:#5c33b5;padding:2rem;text-align:center;position:relative;">
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0.05;background:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:10px 10px;"></div>
+    <!-- Selector de idioma -->
+    <div style="position:absolute;top:12px;right:14px;">
+      <select id="lang-select" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:6px;color:#e2d9f3;font-size:11px;padding:3px 6px;cursor:pointer;outline:none;">
+        <option value="es" style="background:#5c33b5;color:#fff;">🌐 ES</option>
+        <option value="en" style="background:#5c33b5;color:#fff;">🌐 EN</option>
+      </select>
+    </div>
     <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:rgba(255,255,255,0.15);border-radius:14px;margin-bottom:12px;">
-      <!-- Mando de videojuego SVG -->
       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="12" rx="4"/><path d="M7 11v4M5 13h4"/><circle cx="15" cy="12" r="1.2" fill="#f97316" stroke="none"/><circle cx="18" cy="12" r="1.2" fill="#f97316" stroke="none"/><circle cx="16.5" cy="14.5" r="1.2" fill="#f97316" stroke="none"/><path d="M10 7V5a2 2 0 0 1 4 0v2"/></svg>
     </div>
     <p style="font-size:20px;font-weight:600;color:#ffffff;margin:0 0 4px;letter-spacing:0.5px;">LevelUp Arcade</p>
@@ -26,7 +32,14 @@ body { background: #f0f0f0; display: flex; justify-content: center; align-items:
   <div style="height:3px;background:linear-gradient(to right,#3b82f6,#f97316);"></div>
 
   <div style="padding:2rem;">
-    <p style="font-size:15px;font-weight:500;color:#1e1e2e;margin:0 0 6px;">Bienvenido de nuevo</p>
+    <!-- Indicador estado servidor -->
+    <div style="display:flex;align-items:center;gap:8px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:8px 12px;margin-bottom:1.25rem;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;flex-shrink:0;"></span>
+      <span style="font-size:12px;color:#15803d;">Servidor conectado</span>
+      <span style="font-size:11px;color:#999;margin-left:auto;">192.168.1.10</span>
+    </div>
+
+    <p id="greeting" style="font-size:15px;font-weight:500;color:#1e1e2e;margin:0 0 6px;">Buenos días</p>
     <p style="font-size:12px;color:#888;margin:0 0 1.5rem;">Introduce tus credenciales para acceder al sistema</p>
 
     <!-- Campo usuario -->
@@ -63,24 +76,6 @@ body { background: #f0f0f0; display: flex; justify-content: center; align-items:
       Acceder al sistema
     </button>
 
-    <!-- Divider -->
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
-      <div style="flex:1;height:1px;background:#e0e0e0;"></div>
-      <span style="font-size:11px;color:#aaa;">o continúa con</span>
-      <div style="flex:1;height:1px;background:#e0e0e0;"></div>
-    </div>
-
-    <!-- Acceso rápido roles -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem;">
-      <button style="height:38px;background:#fff;border:1px solid #d1d5db;border-radius:8px;font-size:12px;color:#555;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5c33b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Administrador
-      </button>
-      <button style="height:38px;background:#fff;border:1px solid #d1d5db;border-radius:8px;font-size:12px;color:#555;cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;gap:6px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
-        Empleado
-      </button>
-    </div>
 
     <!-- Aviso seguridad -->
     <div style="padding:10px 12px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;display:flex;align-items:flex-start;gap:8px;">
@@ -96,5 +91,10 @@ body { background: #f0f0f0; display: flex; justify-content: center; align-items:
   </div>
 
 </div>
+<script>
+  const h = new Date().getHours();
+  const greeting = h < 12 ? 'Buenos días' : h < 20 ? 'Buenas tardes' : 'Buenas noches';
+  document.getElementById('greeting').textContent = greeting;
+</script>
 </body>
 </html>

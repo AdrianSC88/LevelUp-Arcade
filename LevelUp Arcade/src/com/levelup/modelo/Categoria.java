@@ -47,6 +47,6 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return String.format("| %-5d | %-20s | %-50s |", id, nombre, descripcion);
+        return String.format("| %-5d | %-30s | %-70s |", id, nombre, descripcion);
     }
 }

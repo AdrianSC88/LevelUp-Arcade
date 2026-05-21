@@ -39,7 +39,7 @@ public class LineaPedido {
 
     @Override
     public String toString() {
-        return String.format("| %-25s | %-8d | %-10.2f | %-10.2f |",
+        return String.format("| %-50s | %-8d | %-10.2f | %-10.2f |",
                 producto != null ? producto.getNombre() : "-",
                 cantidad,
                 precioUnitario,

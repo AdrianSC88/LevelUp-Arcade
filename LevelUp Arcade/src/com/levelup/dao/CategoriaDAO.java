@@ -34,7 +34,7 @@ public class CategoriaDAO {
      */
     public List<Categoria> obtenerTodas() {
         List<Categoria> lista = new ArrayList<>();
-        String sql = "SELECT * FROM categorias";
+        String sql = "SELECT * FROM categorias ORDER BY id_categoria";
         try (Connection con = ConexionBD.getConnection();
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)) {

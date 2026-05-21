@@ -36,7 +36,7 @@ public class ProveedorDAO {
      */
     public List<Proveedor> obtenerTodos() {
         List<Proveedor> lista = new ArrayList<>();
-        String sql = "SELECT * FROM proveedores";
+        String sql = "SELECT * FROM proveedores ORDER BY id_proveedor ";
         try (Connection con = ConexionBD.getConnection();
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)) {

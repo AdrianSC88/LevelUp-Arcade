@@ -44,7 +44,7 @@ public class PedidoDAO {
         String sql = """
                 SELECT p.*, c.nombre AS nom_cliente, c.email, c.telefono, c.direccion
                 FROM pedidos p
-                JOIN clientes c ON p.id_cliente = c.id_cliente
+                JOIN clientes c ON p.id_cliente = c.id_cliente ORDER BY p.id_pedido
                 """;
         try (Connection con = ConexionBD.getConnection();
              Statement st = con.createStatement();

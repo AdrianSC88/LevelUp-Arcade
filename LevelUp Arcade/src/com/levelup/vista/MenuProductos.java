@@ -79,9 +79,9 @@ public class MenuProductos {
             System.out.println("No hay productos registrados.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-25s | %-10s | %-8s | %-15s | %-15s |",
+        System.out.println("\n" + String.format("| %-5s | %-50s | %-10s | %-8s | %-25s | %-25s |",
                 "ID", "NOMBRE", "PRECIO", "STOCK", "CATEGORÍA", "PROVEEDOR"));
-        System.out.println("-".repeat(95));
+        System.out.println("-".repeat(142));
         productos.forEach(System.out::println);
     }
 
@@ -94,9 +94,9 @@ public class MenuProductos {
             int id = Integer.parseInt(scanner.nextLine());
             Producto producto = productoController.obtenerPorId(id);
             if (producto != null) {
-                System.out.println("\n" + String.format("| %-5s | %-25s | %-10s | %-8s | %-15s | %-15s |",
+                System.out.println("\n" + String.format("| %-5s | %-50s | %-10s | %-8s | %-25s | %-25s |",
                         "ID", "NOMBRE", "PRECIO", "STOCK", "CATEGORÍA", "PROVEEDOR"));
-                System.out.println("-".repeat(95));
+                System.out.println("-".repeat(142));
                 System.out.println(producto);
             } else {
                 System.out.println("Producto no encontrado.");

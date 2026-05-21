@@ -77,6 +77,21 @@ public class UsuarioController {
         return usuarioDAO.obtenerTodos();
     }
 
+    
+    /**
+     * Obtiene un usuario por su id.
+     * @param id identificador del usuario
+     * @return objeto Usuario o null si no existe
+     */
+    public Usuario obtenerPorId(int id) {
+        if (id <= 0) {
+            System.err.println("El id debe ser un número positivo.");
+            return null;
+        }
+        return usuarioDAO.obtenerPorId(id);
+    }
+    
+    
     /**
      * Actualiza la contraseña de un usuario.
      * @param id identificador del usuario
@@ -88,11 +103,7 @@ public class UsuarioController {
             System.err.println("La contraseña debe tener al menos 6 caracteres.");
             return false;
         }
-        Usuario usuario = usuarioDAO.obtenerTodos()
-                .stream()
-                .filter(u -> u.getId() == id)
-                .findFirst()
-                .orElse(null);
+        Usuario usuario = usuarioDAO.obtenerPorId(id);
         if (usuario == null) {
             System.err.println("Usuario no encontrado.");
             return false;

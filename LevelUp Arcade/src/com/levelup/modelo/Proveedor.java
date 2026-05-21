@@ -63,7 +63,7 @@ public class Proveedor {
 
     @Override
     public String toString() {
-        return String.format("| %-5d | %-20s | %-30s | %-30s | %-15s |",
+        return String.format("| %-5d | %-30s | %-40s | %-40s | %-15s |",
                 id, nombre, email, direccion, telefono);
     }
 }
