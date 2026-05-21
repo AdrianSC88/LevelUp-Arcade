@@ -2,6 +2,7 @@ package com.levelup.controlador;
 
 import com.levelup.dao.CategoriaDAO;
 import com.levelup.modelo.Categoria;
+import com.levelup.util.Logger;
 import java.util.List;
 
 /**
@@ -23,11 +24,18 @@ public class CategoriaController {
      */
     public boolean añadirCategoria(String nombre, String descripcion) {
         if (nombre == null || nombre.trim().isEmpty()) {
+            Logger.error("Intento de añadir categoría con nombre vacío");
             System.err.println("El nombre de la categoría no puede estar vacío.");
             return false;
         }
         Categoria categoria = new Categoria(nombre.trim(), descripcion.trim());
-        return categoriaDAO.insertar(categoria);
+        boolean resultado = categoriaDAO.insertar(categoria);
+        if (resultado) {
+            Logger.info("Categoría '" + nombre + "' añadida correctamente");
+        } else {
+            Logger.error("Error al añadir categoría '" + nombre + "'");
+        }
+        return resultado;
     }
 
     /**
@@ -60,11 +68,18 @@ public class CategoriaController {
      */
     public boolean actualizarCategoria(int id, String nombre, String descripcion) {
         if (nombre == null || nombre.trim().isEmpty()) {
+            Logger.error("Intento de actualizar categoría con nombre vacío, id: " + id);
             System.err.println("El nombre de la categoría no puede estar vacío.");
             return false;
         }
         Categoria categoria = new Categoria(id, nombre.trim(), descripcion.trim());
-        return categoriaDAO.actualizar(categoria);
+        boolean resultado = categoriaDAO.actualizar(categoria);
+        if (resultado) {
+            Logger.info("Categoría con id " + id + " actualizada correctamente");
+        } else {
+            Logger.error("Error al actualizar categoría con id: " + id);
+        }
+        return resultado;
     }
 
     /**
@@ -74,9 +89,16 @@ public class CategoriaController {
      */
     public boolean eliminarCategoria(int id) {
         if (id <= 0) {
+            Logger.error("Intento de eliminar categoría con id inválido: " + id);
             System.err.println("El id debe ser un número positivo.");
             return false;
         }
-        return categoriaDAO.eliminar(id);
+        boolean resultado = categoriaDAO.eliminar(id);
+        if (resultado) {
+            Logger.info("Categoría con id " + id + " eliminada correctamente");
+        } else {
+            Logger.error("Error al eliminar categoría con id: " + id);
+        }
+        return resultado;
     }
 }

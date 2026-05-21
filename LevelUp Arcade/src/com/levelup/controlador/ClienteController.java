@@ -2,6 +2,7 @@ package com.levelup.controlador;
 
 import com.levelup.dao.ClienteDAO;
 import com.levelup.modelo.Cliente;
+import com.levelup.util.Logger;
 import java.util.List;
 
 /**
@@ -25,19 +26,28 @@ public class ClienteController {
      */
     public boolean añadirCliente(String nombre, String email, String telefono, String direccion) {
         if (nombre == null || nombre.trim().isEmpty()) {
+            Logger.error("Intento de añadir cliente con nombre vacío");
             System.err.println("El nombre del cliente no puede estar vacío.");
             return false;
         }
         if (email == null || !email.contains("@")) {
+            Logger.error("Intento de añadir cliente con email inválido: " + email);
             System.err.println("El email del cliente no es válido.");
             return false;
         }
         if (telefono == null || telefono.trim().isEmpty()) {
+            Logger.error("Intento de añadir cliente con teléfono vacío");
             System.err.println("El teléfono del cliente no puede estar vacío.");
             return false;
         }
         Cliente cliente = new Cliente(nombre.trim(), email.trim(), telefono.trim(), direccion.trim());
-        return clienteDAO.insertar(cliente);
+        boolean resultado = clienteDAO.insertar(cliente);
+        if (resultado) {
+            Logger.info("Cliente '" + nombre + "' añadido correctamente");
+        } else {
+            Logger.error("Error al añadir cliente '" + nombre + "'");
+        }
+        return resultado;
     }
 
     /**
@@ -72,19 +82,28 @@ public class ClienteController {
      */
     public boolean actualizarCliente(int id, String nombre, String email, String telefono, String direccion) {
         if (nombre == null || nombre.trim().isEmpty()) {
+            Logger.error("Intento de actualizar cliente con nombre vacío, id: " + id);
             System.err.println("El nombre del cliente no puede estar vacío.");
             return false;
         }
         if (email == null || !email.contains("@")) {
+            Logger.error("Intento de actualizar cliente con email inválido: " + email);
             System.err.println("El email del cliente no es válido.");
             return false;
         }
         if (telefono == null || telefono.trim().isEmpty()) {
+            Logger.error("Intento de actualizar cliente con teléfono vacío, id: " + id);
             System.err.println("El teléfono del cliente no puede estar vacío.");
             return false;
         }
         Cliente cliente = new Cliente(id, nombre.trim(), email.trim(), telefono.trim(), direccion.trim());
-        return clienteDAO.actualizar(cliente);
+        boolean resultado = clienteDAO.actualizar(cliente);
+        if (resultado) {
+            Logger.info("Cliente con id " + id + " actualizado correctamente");
+        } else {
+            Logger.error("Error al actualizar cliente con id: " + id);
+        }
+        return resultado;
     }
 
     /**
@@ -94,9 +113,16 @@ public class ClienteController {
      */
     public boolean eliminarCliente(int id) {
         if (id <= 0) {
+            Logger.error("Intento de eliminar cliente con id inválido: " + id);
             System.err.println("El id debe ser un número positivo.");
             return false;
         }
-        return clienteDAO.eliminar(id);
+        boolean resultado = clienteDAO.eliminar(id);
+        if (resultado) {
+            Logger.info("Cliente con id " + id + " eliminado correctamente");
+        } else {
+            Logger.error("Error al eliminar cliente con id: " + id);
+        }
+        return resultado;
     }
 }
