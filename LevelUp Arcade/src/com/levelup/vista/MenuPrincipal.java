@@ -111,11 +111,11 @@ public class MenuPrincipal {
             case "5" -> new MenuPedidos(scanner, usuarioActivo).mostrar();
             case "6" -> {
                 if (esAdmin) new MenuUsuarios(scanner).mostrar();
- //               else new MenuIA(scanner).mostrar();
+                else new MenuIA(scanner).mostrarMenu();
             }
             case "7" -> {
- //               if (esAdmin) new MenuIA(scanner).mostrar();
-//               else System.out.println("Opción no válida.");
+               if (esAdmin) new MenuIA(scanner).mostrarMenu();
+               else System.out.println("Opción no válida.");
             }
             case "0" -> { return true; }
             default -> System.out.println("Opción no válida, inténtalo de nuevo.");

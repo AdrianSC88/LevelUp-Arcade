@@ -39,7 +39,6 @@ public class Logger {
         String linea = String.format("[%s] %s - %s",
                 LocalDateTime.now().format(FORMATO), nivel, mensaje);
 
-        System.out.println(linea);
 
         try {
             java.io.File directorio = new java.io.File("logs");
