@@ -1,6 +1,5 @@
 # Archivos compilados Java
 *.class
-*.jar
 *.war
 target/
 out/
