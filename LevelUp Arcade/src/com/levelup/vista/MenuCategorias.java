@@ -15,6 +15,12 @@ public class MenuCategorias {
     private final Scanner scanner;
     private final Usuario usuarioActivo;
 
+    /**
+     * Constructor. Inicializa el controlador de categorías y los parámetros de sesión.
+     *
+     * @param scanner       scanner para la lectura de datos por consola
+     * @param usuarioActivo usuario que ha iniciado sesión en el sistema
+     */
     public MenuCategorias(Scanner scanner, Usuario usuarioActivo) {
         this.categoriaController = new CategoriaController();
         this.scanner = scanner;

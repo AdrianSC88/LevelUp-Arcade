@@ -12,6 +12,9 @@ public class CategoriaController {
 
     private final CategoriaDAO categoriaDAO;
 
+    /**
+     * Constructor. Inicializa el DAO de categorías.
+     */
     public CategoriaController() {
         this.categoriaDAO = new CategoriaDAO();
     }

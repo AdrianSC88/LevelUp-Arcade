@@ -14,6 +14,11 @@ public class MenuIA {
     private final LlmController llmController;
     private final Scanner scanner;
 
+    /**
+     * Constructor. Inicializa el controlador del LLM y el scanner de consola.
+     *
+     * @param scanner scanner para la lectura de datos por consola
+     */
     public MenuIA(Scanner scanner) {
         this.llmController = new LlmController();
         this.scanner = scanner;

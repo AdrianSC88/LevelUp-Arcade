@@ -20,6 +20,12 @@ public class MenuPedidos {
     private final Scanner scanner;
     private final Usuario usuarioActivo;
 
+    /**
+     * Constructor. Inicializa los controladores de pedidos y productos y los parámetros de sesión.
+     *
+     * @param scanner       scanner para la lectura de datos por consola
+     * @param usuarioActivo usuario que ha iniciado sesión en el sistema
+     */
     public MenuPedidos(Scanner scanner, Usuario usuarioActivo) {
         this.pedidoController = new PedidoController();
         this.productoController = new ProductoController();

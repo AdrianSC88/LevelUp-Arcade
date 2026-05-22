@@ -12,6 +12,9 @@ public class ProveedorController {
 
     private final ProveedorDAO proveedorDAO;
 
+    /**
+     * Constructor. Inicializa el DAO de proveedores.
+     */
     public ProveedorController() {
         this.proveedorDAO = new ProveedorDAO();
     }

@@ -20,6 +20,9 @@ public class PedidoController {
     private final ClienteDAO clienteDAO;
     private final LineaPedidoDAO lineaPedidoDAO;
 
+    /**
+     * Constructor. Inicializa los DAOs de pedidos, clientes y líneas de pedido.
+     */
     public PedidoController() {
         this.pedidoDAO = new PedidoDAO();
         this.clienteDAO = new ClienteDAO();

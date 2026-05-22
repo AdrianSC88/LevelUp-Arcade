@@ -13,6 +13,9 @@ public class UsuarioController {
 
     private final UsuarioDAO usuarioDAO;
 
+    /**
+     * Constructor. Inicializa el DAO de usuarios.
+     */
     public UsuarioController() {
         this.usuarioDAO = new UsuarioDAO();
     }

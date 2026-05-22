@@ -13,6 +13,9 @@ public class MenuPrincipal {
     private final Scanner scanner;
     private Usuario usuarioActivo;
 
+    /**
+     * Constructor. Inicializa el controlador de usuarios y el scanner de consola.
+     */
     public MenuPrincipal() {
         this.usuarioController = new UsuarioController();
         this.scanner = new Scanner(System.in);

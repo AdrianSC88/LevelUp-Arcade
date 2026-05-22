@@ -20,6 +20,14 @@ public class Producto {
 
     /**
      * Constructor completo.
+     *
+     * @param id         identificador del producto
+     * @param nombre     nombre del producto
+     * @param descripcion descripción comercial del producto
+     * @param precio     precio de venta del producto
+     * @param stock      cantidad disponible en inventario
+     * @param categoria  categoría a la que pertenece el producto
+     * @param proveedor  proveedor que suministra el producto
      */
     public Producto(int id, String nombre, String descripcion, double precio, int stock,
                     Categoria categoria, Proveedor proveedor) {

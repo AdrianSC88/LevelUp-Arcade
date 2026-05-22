@@ -21,6 +21,12 @@ public class MenuProductos {
     private final Scanner scanner;
     private final Usuario usuarioActivo;
 
+    /**
+     * Constructor. Inicializa los controladores de productos, categorías y proveedores y los parámetros de sesión.
+     *
+     * @param scanner       scanner para la lectura de datos por consola
+     * @param usuarioActivo usuario que ha iniciado sesión en el sistema
+     */
     public MenuProductos(Scanner scanner, Usuario usuarioActivo) {
         this.productoController = new ProductoController();
         this.categoriaController = new CategoriaController();

@@ -13,6 +13,11 @@ public class MenuUsuarios {
     private final UsuarioController usuarioController;
     private final Scanner scanner;
 
+    /**
+     * Constructor. Inicializa el controlador de usuarios y el scanner de consola.
+     *
+     * @param scanner scanner para la lectura de datos por consola
+     */
     public MenuUsuarios(Scanner scanner) {
         this.usuarioController = new UsuarioController();
         this.scanner = scanner;

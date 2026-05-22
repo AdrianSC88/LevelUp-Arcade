@@ -9,6 +9,9 @@ public class LlmController {
 
     private final LlmService llmService;
 
+    /**
+     * Constructor. Inicializa el servicio de comunicación con el LLM.
+     */
     public LlmController() {
         this.llmService = new LlmService();
     }

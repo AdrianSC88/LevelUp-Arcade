@@ -19,6 +19,11 @@ public class Pedido {
 
     /**
      * Constructor con parámetros.
+     *
+     * @param id      identificador del pedido
+     * @param fecha   fecha en la que se realizó el pedido
+     * @param estado  estado actual del pedido
+     * @param cliente cliente que realizó el pedido
      */
     public Pedido(int id, LocalDate fecha, EstadoPedido estado, Cliente cliente) {
         this.id = id;
@@ -29,6 +34,10 @@ public class Pedido {
 
     /**
      * Constructor sin id, para inserciones nuevas.
+     *
+     * @param fecha   fecha en la que se realizó el pedido
+     * @param estado  estado actual del pedido
+     * @param cliente cliente que realizó el pedido
      */
     public Pedido(LocalDate fecha, EstadoPedido estado, Cliente cliente) {
         this.fecha = fecha;

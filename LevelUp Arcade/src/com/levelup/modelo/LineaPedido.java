@@ -17,6 +17,11 @@ public class LineaPedido {
 
     /**
      * Constructor con parámetros.
+     *
+     * @param idPedido       identificador del pedido al que pertenece la línea
+     * @param producto       producto asociado a la línea de pedido
+     * @param cantidad       cantidad de unidades del producto
+     * @param precioUnitario precio unitario del producto en el momento del pedido
      */
     public LineaPedido(int idPedido, Producto producto, int cantidad, double precioUnitario) {
         this.idPedido = idPedido;

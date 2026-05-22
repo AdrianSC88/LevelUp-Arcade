@@ -19,6 +19,9 @@ public class ProductoController {
     private final CategoriaDAO categoriaDAO;
     private final ProveedorDAO proveedorDAO;
 
+    /**
+     * Constructor. Inicializa los DAOs de productos, categorías y proveedores.
+     */
     public ProductoController() {
         this.productoDAO = new ProductoDAO();
         this.categoriaDAO = new CategoriaDAO();

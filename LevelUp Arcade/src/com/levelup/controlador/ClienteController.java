@@ -12,6 +12,9 @@ public class ClienteController {
 
     private final ClienteDAO clienteDAO;
 
+    /**
+     * Constructor. Inicializa el DAO de clientes.
+     */
     public ClienteController() {
         this.clienteDAO = new ClienteDAO();
     }
