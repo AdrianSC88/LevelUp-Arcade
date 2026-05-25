@@ -45,7 +45,7 @@ public class ProductoController {
     		System.err.println("El nombre del producto no puede estar vacío.");
     		return false;
     	}
-    	if (precio < 0) {
+    	if (precio <= 0) {
     		Logger.error("Intento de añadir producto con precio negativo");
     		System.err.println("El precio no puede ser negativo.");
     		return false;
