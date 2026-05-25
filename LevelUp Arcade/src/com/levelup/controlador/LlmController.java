@@ -36,9 +36,15 @@ public class LlmController {
      * @return Categoría sugerida por la IA.
      */
     public String sugerirCategoria(String nombreProducto) {
+        CategoriaController categoriaController = new CategoriaController();
+        String categorias = categoriaController.obtenerTodas()
+                .stream()
+                .map(c -> c.getNombre())
+                .collect(java.util.stream.Collectors.joining(", "));
+
         String prompt = "Sugiere una única categoría para clasificar el siguiente producto " +
                 "en una tienda de videojuegos: " + nombreProducto +
-                ". Las categorías posibles son: Consolas, Videojuegos, Accesorios, Merchandising, Periféricos, Coleccionables. " +
+                ". Las categorías posibles son: " + categorias + ". " +
                 "Responde solo con el nombre de la categoría, sin explicaciones.";
         return llmService.consultarLlm(prompt);
     }

@@ -3,6 +3,7 @@
 *.war
 target/
 out/
+.jar
 
 # IntelliJ IDEA
 .idea/
