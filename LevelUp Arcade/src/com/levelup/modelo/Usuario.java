@@ -6,6 +6,7 @@ package com.levelup.modelo;
 public class Usuario {
 
     private int id;
+    private String nombreUsuario;
     private String nombre;
     private String passwordHash;
     private String rol;
@@ -18,12 +19,14 @@ public class Usuario {
     /**
      * Constructor con parámetros.
      * @param id identificador del usuario
-     * @param nombre nombre del usuario
+     * @param nombreUsuario nombre de usuario para login
+     * @param nombre nombre real del usuario
      * @param passwordHash contraseña hasheada del usuario
      * @param rol rol del usuario (administrador/empleado)
      */
-    public Usuario(int id, String nombre, String passwordHash, String rol) {
+    public Usuario(int id, String nombreUsuario, String nombre, String passwordHash, String rol) {
         this.id = id;
+        this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
         this.passwordHash = passwordHash;
         this.rol = rol;
@@ -31,11 +34,13 @@ public class Usuario {
 
     /**
      * Constructor sin id, para inserciones nuevas.
+     * @param nombreUsuario nombre de usuario para login
      * @param nombre nombre del usuario
      * @param passwordHash contraseña hasheada del usuario
      * @param rol rol del usuario (administrador/empleado)
      */
-    public Usuario(String nombre, String passwordHash, String rol) {
+    public Usuario(String nombreUsuario, String nombre, String passwordHash, String rol) {
+        this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
         this.passwordHash = passwordHash;
         this.rol = rol;
@@ -44,6 +49,9 @@ public class Usuario {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
+    public String getNombreUsuario() { return nombreUsuario; }
+    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+    
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
@@ -55,6 +63,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return String.format("| %-5d | %-25s | %-15s |", id, nombre, rol);
+    	return String.format("| %-5d | %-20s | %-30s | %-15s |", id, nombreUsuario, nombre, rol);    
     }
 }

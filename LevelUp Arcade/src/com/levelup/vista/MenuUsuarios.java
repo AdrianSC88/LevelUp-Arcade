@@ -15,7 +15,6 @@ public class MenuUsuarios {
 
     /**
      * Constructor. Inicializa el controlador de usuarios y el scanner de consola.
-     *
      * @param scanner scanner para la lectura de datos por consola
      */
     public MenuUsuarios(Scanner scanner) {
@@ -62,13 +61,12 @@ public class MenuUsuarios {
             System.out.println("No hay usuarios registrados.");
             return;
         }
-        System.out.println("\n" + String.format("| %-5s | %-25s | %-15s |",
-                "ID", "NOMBRE", "ROL"));
-        System.out.println("-".repeat(55));
+        System.out.println("\n" + String.format("| %-5s | %-20s | %-30s | %-15s |",
+                "ID", "USUARIO", "NOMBRE COMPLETO", "ROL"));
+        System.out.println("-".repeat(83));
         usuarios.forEach(System.out::println);
     }
 
-    
     /**
      * Busca y muestra un usuario por su id.
      */
@@ -78,9 +76,9 @@ public class MenuUsuarios {
             int id = Integer.parseInt(scanner.nextLine());
             Usuario usuario = usuarioController.obtenerPorId(id);
             if (usuario != null) {
-                System.out.println("\n" + String.format("| %-5s | %-25s | %-15s |",
-                        "ID", "NOMBRE", "ROL"));
-                System.out.println("-".repeat(55));
+                System.out.println("\n" + String.format("| %-5s | %-20s | %-30s | %-15s |",
+                        "ID", "USUARIO", "NOMBRE COMPLETO", "ROL"));
+                System.out.println("-".repeat(83));
                 System.out.println(usuario);
             } else {
                 System.out.println("Usuario no encontrado.");
@@ -89,14 +87,15 @@ public class MenuUsuarios {
             System.err.println("El id debe ser un número entero.");
         }
     }
-    
-    
+
     /**
      * Solicita datos y añade un nuevo usuario.
      */
     private void añadirUsuario() {
         System.out.println("\n--- AÑADIR USUARIO ---");
-        System.out.print("Nombre: ");
+        System.out.print("Nombre de usuario (login): ");
+        String nombreUsuario = scanner.nextLine();
+        System.out.print("Nombre completo: ");
         String nombre = scanner.nextLine();
         System.out.print("Contraseña: ");
         String password = scanner.nextLine();
@@ -104,7 +103,7 @@ public class MenuUsuarios {
         System.out.print("Rol: ");
         String rol = scanner.nextLine();
 
-        if (usuarioController.añadirUsuario(nombre, password, rol)) {
+        if (usuarioController.añadirUsuario(nombreUsuario, nombre, password, rol)) {
             System.out.println("Usuario añadido correctamente.");
         } else {
             System.out.println("Error al añadir el usuario.");

@@ -21,44 +21,50 @@ public class UsuarioController {
     }
 
     /**
-     * Autentica un usuario comprobando nombre y contraseña.
-     * @param nombre nombre del usuario
+     * Autentica un usuario comprobando nombre de usuario y contraseña.
+     * @param nombreUsuario nombre de login del usuario
      * @param password contraseña en texto plano
      * @return objeto Usuario si las credenciales son correctas, null si no
      */
-    public Usuario login(String nombre, String password) {
-        if (nombre == null || nombre.trim().isEmpty() ||
+    public Usuario login(String nombreUsuario, String password) {
+        if (nombreUsuario == null || nombreUsuario.trim().isEmpty() ||
             password == null || password.trim().isEmpty()) {
             Logger.error("Intento de login con campos vacíos");
             System.err.println("El nombre y la contraseña son obligatorios.");
             return null;
         }
-        Usuario usuario = usuarioDAO.obtenerPorNombre(nombre.trim());
+        Usuario usuario = usuarioDAO.obtenerPorNombre(nombreUsuario.trim());
         if (usuario == null) {
-            Logger.error("Intento de login con usuario inexistente: " + nombre);
+            Logger.error("Intento de login con usuario inexistente: " + nombreUsuario);
             System.err.println("Usuario no encontrado.");
             return null;
         }
         if (!BCrypt.checkpw(password, usuario.getPasswordHash())) {
-            Logger.error("Contraseña incorrecta para el usuario: " + nombre);
+            Logger.error("Contraseña incorrecta para el usuario: " + nombreUsuario);
             System.err.println("Contraseña incorrecta.");
             return null;
         }
-        Logger.info("Usuario '" + nombre + "' ha iniciado sesión correctamente");
+        Logger.info("Usuario '" + nombreUsuario + "' ha iniciado sesión correctamente");
         return usuario;
     }
 
     /**
      * Añade un nuevo usuario al sistema.
-     * @param nombre nombre del usuario
+     * @param nombreUsuario nombre de login único del usuario
+     * @param nombre nombre real completo del usuario
      * @param password contraseña en texto plano
      * @param rol rol del usuario (administrador/empleado)
      * @return true si se añadió correctamente
      */
-    public boolean añadirUsuario(String nombre, String password, String rol) {
+    public boolean añadirUsuario(String nombreUsuario, String nombre, String password, String rol) {
+        if (nombreUsuario == null || nombreUsuario.trim().isEmpty()) {
+            Logger.error("Intento de añadir usuario con nombre de usuario vacío");
+            System.err.println("El nombre de usuario no puede estar vacío.");
+            return false;
+        }
         if (nombre == null || nombre.trim().isEmpty()) {
-            Logger.error("Intento de añadir usuario con nombre vacío");
-            System.err.println("El nombre del usuario no puede estar vacío.");
+            Logger.error("Intento de añadir usuario con nombre real vacío");
+            System.err.println("El nombre real no puede estar vacío.");
             return false;
         }
         if (password == null || password.length() < 6) {
@@ -71,18 +77,18 @@ public class UsuarioController {
             System.err.println("El rol debe ser 'administrador' o 'empleado'.");
             return false;
         }
-        if (usuarioDAO.obtenerPorNombre(nombre.trim()) != null) {
-            Logger.error("Intento de añadir usuario duplicado: " + nombre);
-            System.err.println("Ya existe un usuario con ese nombre.");
+        if (usuarioDAO.obtenerPorNombre(nombreUsuario.trim()) != null) {
+            Logger.error("Intento de añadir usuario duplicado: " + nombreUsuario);
+            System.err.println("Ya existe un usuario con ese nombre de usuario.");
             return false;
         }
         String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-        Usuario usuario = new Usuario(nombre.trim(), hash, rol);
+        Usuario usuario = new Usuario(nombreUsuario.trim(), nombre.trim(), hash, rol);
         boolean resultado = usuarioDAO.insertar(usuario);
         if (resultado) {
-            Logger.info("Usuario '" + nombre + "' añadido correctamente con rol: " + rol);
+            Logger.info("Usuario '" + nombreUsuario + "' añadido correctamente con rol: " + rol);
         } else {
-            Logger.error("Error al añadir usuario '" + nombre + "'");
+            Logger.error("Error al añadir usuario '" + nombreUsuario + "'");
         }
         return resultado;
     }
@@ -129,7 +135,7 @@ public class UsuarioController {
         usuario.setPasswordHash(BCrypt.hashpw(nuevaPassword, BCrypt.gensalt()));
         boolean resultado = usuarioDAO.actualizar(usuario);
         if (resultado) {
-            Logger.info("Contraseña actualizada correctamente para usuario: " + usuario.getNombre());
+            Logger.info("Contraseña actualizada correctamente para usuario: " + usuario.getNombreUsuario());
         } else {
             Logger.error("Error al actualizar contraseña para usuario con id: " + id);
         }

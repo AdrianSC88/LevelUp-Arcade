@@ -16,12 +16,13 @@ public class UsuarioDAO {
      * @return true si la inserción fue exitosa
      */
     public boolean insertar(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, contrasena_hash, rol) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombre_usuario, nombre, contrasena_hash, rol) VALUES (?, ?, ?, ?)";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, usuario.getNombre());
-            ps.setString(2, usuario.getPasswordHash());
-            ps.setString(3, usuario.getRol());
+            ps.setString(1, usuario.getNombreUsuario());
+            ps.setString(2, usuario.getNombre());
+            ps.setString(3, usuario.getPasswordHash());
+            ps.setString(4, usuario.getRol());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error al insertar usuario: " + e.getMessage());
@@ -42,6 +43,7 @@ public class UsuarioDAO {
             while (rs.next()) {
                 lista.add(new Usuario(
                         rs.getInt("id_usuario"),
+                        rs.getString("nombre_usuario"),
                         rs.getString("nombre"),
                         rs.getString("contrasena_hash"),
                         rs.getString("rol")
@@ -53,7 +55,6 @@ public class UsuarioDAO {
         return lista;
     }
 
-    
     /**
      * Obtiene un usuario por su id.
      * @param id identificador del usuario
@@ -68,6 +69,7 @@ public class UsuarioDAO {
             if (rs.next()) {
                 return new Usuario(
                         rs.getInt("id_usuario"),
+                        rs.getString("nombre_usuario"),
                         rs.getString("nombre"),
                         rs.getString("contrasena_hash"),
                         rs.getString("rol")
@@ -78,22 +80,22 @@ public class UsuarioDAO {
         }
         return null;
     }
-    
-    
+
     /**
-     * Obtiene un usuario por su nombre, usado para el login.
-     * @param nombre nombre del usuario
+     * Obtiene un usuario por su nombre de usuario, usado para el login.
+     * @param nombreUsuario nombre de login del usuario
      * @return objeto Usuario o null si no existe
      */
-    public Usuario obtenerPorNombre(String nombre) {
-        String sql = "SELECT * FROM usuarios WHERE nombre = ? ORDER BY id_usuario";
+    public Usuario obtenerPorNombre(String nombreUsuario) {
+        String sql = "SELECT * FROM usuarios WHERE nombre_usuario = ? ORDER BY id_usuario";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, nombre);
+            ps.setString(1, nombreUsuario);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return new Usuario(
                         rs.getInt("id_usuario"),
+                        rs.getString("nombre_usuario"),
                         rs.getString("nombre"),
                         rs.getString("contrasena_hash"),
                         rs.getString("rol")
@@ -111,13 +113,14 @@ public class UsuarioDAO {
      * @return true si la actualización fue exitosa
      */
     public boolean actualizar(Usuario usuario) {
-        String sql = "UPDATE usuarios SET nombre = ?, contrasena_hash = ?, rol = ? WHERE id_usuario = ?";
+        String sql = "UPDATE usuarios SET nombre_usuario = ?, nombre = ?, contrasena_hash = ?, rol = ? WHERE id_usuario = ?";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, usuario.getNombre());
-            ps.setString(2, usuario.getPasswordHash());
-            ps.setString(3, usuario.getRol());
-            ps.setInt(4, usuario.getId());
+            ps.setString(1, usuario.getNombreUsuario());
+            ps.setString(2, usuario.getNombre());
+            ps.setString(3, usuario.getPasswordHash());
+            ps.setString(4, usuario.getRol());
+            ps.setInt(5, usuario.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error al actualizar usuario: " + e.getMessage());

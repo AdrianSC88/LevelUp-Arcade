@@ -1,5 +1,9 @@
+create database levelup_arcade;
+use levelup_arcade;
+
 create table usuarios (
 	id_usuario int primary key auto_increment,
+	nombre_usuario varchar(50) unique not null,
     nombre varchar(100) not null,
     contrasena_hash varchar(255) not null,
     rol enum('administrador','empleado') not null
@@ -49,7 +53,7 @@ create table pedidos (
 	foreign key (id_cliente) references clientes(id_cliente) on delete restrict
 );
 
-CREATE TABLE linea_pedido (
+create table linea_pedido (
     id_pedido int not null,
     id_producto int not null,
     cantidad int not null,
@@ -58,6 +62,5 @@ CREATE TABLE linea_pedido (
     foreign key (id_pedido) references pedidos(id_pedido) on delete cascade,
     foreign key (id_producto) references productos(id_producto) on delete restrict
 );
-
 
 
