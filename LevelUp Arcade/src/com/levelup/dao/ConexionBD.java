@@ -44,7 +44,7 @@ public class ConexionBD {
             System.out.println("Introduce los datos de conexión a la base de datos:\n");
             System.out.println("NOTA: El usuario y contraseña son los del servidor de base de datos,");
             System.out.println("no los de acceso a la aplicación.\n");
-            
+
             Scanner scanner = new Scanner(System.in);
 
             System.out.print("IP del servidor: ");
@@ -58,11 +58,18 @@ public class ConexionBD {
             String usuario = scanner.nextLine().trim();
             System.out.print("Contraseña: ");
             String password = scanner.nextLine().trim();
+            System.out.print("API Key de OpenRouter: ");
+            String apiKey = scanner.nextLine().trim();
+            System.out.print("Modelo LLM (por defecto: nvidia/nemotron-3-super-120b-a12b:free): ");
+            String modelo = scanner.nextLine().trim();
+            if (modelo.isEmpty()) modelo = "nvidia/nemotron-3-super-120b-a12b:free";
 
             String url = "jdbc:mariadb://" + host + ":" + puerto + "/" + bd;
             props.setProperty("db.url", url);
             props.setProperty("db.usuario", usuario);
             props.setProperty("db.password", password);
+            props.setProperty("openrouter.api.key", apiKey);
+            props.setProperty("openrouter.modelo", modelo);
 
             try {
                 props.store(new FileOutputStream(new File("config.properties")),

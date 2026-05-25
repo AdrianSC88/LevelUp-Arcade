@@ -3,7 +3,8 @@ package com.levelup.servicio;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -33,21 +34,21 @@ public class LlmService {
 
     private Properties cargarProperties() {
         Properties props = new Properties();
-        try (var fis = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (fis == null) {
-                logger.severe("No se encontró config.properties en el classpath");
-                return props;
+        File configFile = new File("config.properties");
+        if (configFile.exists()) {
+            try (FileInputStream fis = new FileInputStream(configFile)) {
+                props.load(fis);
+            } catch (IOException e) {
+                logger.severe("No se pudo cargar config.properties: " + e.getMessage());
             }
-            props.load(fis);
-        } catch (IOException e) {
-            logger.severe("No se pudo cargar config.properties: " + e.getMessage());
+        } else {
+            logger.severe("No se encontró config.properties en el directorio de ejecución");
         }
         return props;
     }
 
     /**
      * Envía un prompt al LLM y devuelve la respuesta como String.
-     *
      * @param prompt La instrucción o pregunta para el modelo.
      * @return La respuesta generada por el LLM, o mensaje de error.
      */
@@ -58,19 +59,15 @@ public class LlmService {
         if (modelo == null || modelo.isBlank()) {
             return "Error: modelo LLM no configurado.";
         }
-
         try {
             JsonObject mensaje = new JsonObject();
             mensaje.addProperty("role", "user");
             mensaje.addProperty("content", prompt);
-
             JsonArray mensajes = new JsonArray();
             mensajes.add(mensaje);
-
             JsonObject cuerpo = new JsonObject();
             cuerpo.addProperty("model", this.modelo);
             cuerpo.add("messages", mensajes);
-
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(URL_API))
@@ -78,21 +75,17 @@ public class LlmService {
                     .header("Authorization", "Bearer " + apiKey)
                     .POST(HttpRequest.BodyPublishers.ofString(cuerpo.toString()))
                     .build();
-
             HttpResponse<String> response = client.send(request,
                     HttpResponse.BodyHandlers.ofString());
-
             if (response.statusCode() != 200) {
                 return "Error HTTP " + response.statusCode() + ": " + response.body();
             }
-
             JsonObject respuestaJson = JsonParser.parseString(response.body()).getAsJsonObject();
             return respuestaJson
                     .getAsJsonArray("choices")
                     .get(0).getAsJsonObject()
                     .getAsJsonObject("message")
                     .get("content").getAsString();
-
         } catch (Exception e) {
             logger.severe("Error al consultar el LLM: " + e.getMessage());
             return "Error al conectar con la IA: " + e.getMessage();
