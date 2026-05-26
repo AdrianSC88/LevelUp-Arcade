@@ -37,6 +37,7 @@ public class ProductosPanel extends JPanel {
 
     private JTable tabla;
     private DefaultTableModel modeloTabla;
+    private JPanel cuerpo;
 
     public ProductosPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
@@ -52,7 +53,12 @@ public class ProductosPanel extends JPanel {
 
     private void construirUI() {
         add(construirTopbar(), BorderLayout.NORTH);
-        add(construirCuerpo(), BorderLayout.CENTER);
+        cuerpo = new JPanel(new BorderLayout(0, 16));
+        cuerpo.setBackground(C_BG);
+        cuerpo.setBorder(new EmptyBorder(20, 28, 20, 28));
+        cuerpo.add(construirTarjetas(), BorderLayout.NORTH);
+        cuerpo.add(construirPanelTabla(), BorderLayout.CENTER);
+        add(cuerpo, BorderLayout.CENTER);
     }
 
     private JPanel construirTopbar() {
@@ -100,15 +106,6 @@ public class ProductosPanel extends JPanel {
         bar.add(izquierda, BorderLayout.WEST);
         bar.add(derecha, BorderLayout.EAST);
         return bar;
-    }
-
-    private JPanel construirCuerpo() {
-        JPanel cuerpo = new JPanel(new BorderLayout(0, 16));
-        cuerpo.setBackground(C_BG);
-        cuerpo.setBorder(new EmptyBorder(20, 28, 20, 28));
-        cuerpo.add(construirTarjetas(), BorderLayout.NORTH);
-        cuerpo.add(construirPanelTabla(), BorderLayout.CENTER);
-        return cuerpo;
     }
 
     private JPanel construirTarjetas() {
@@ -170,10 +167,16 @@ public class ProductosPanel extends JPanel {
             BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER),
             new EmptyBorder(12, 16, 12, 16)
         ));
+
         JLabel lblTabla = new JLabel("Inventario");
         lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblTabla.setForeground(C_TEXT);
+
+        JButton btnRefrescar = crearBotonRefrescar();
+        btnRefrescar.addActionListener(e -> refrescar());
+
         cabecera.add(lblTabla, BorderLayout.WEST);
+        cabecera.add(btnRefrescar, BorderLayout.EAST);
         panel.add(cabecera, BorderLayout.NORTH);
 
         String[] cols = {"ID", "Nombre", "Categoría", "Proveedor", "Precio", "Stock", "Estado", ""};
@@ -200,7 +203,6 @@ public class ProductosPanel extends JPanel {
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER));
         header.setPreferredSize(new Dimension(0, 36));
 
-        // Filas alternas
         tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override public Component getTableCellRendererComponent(JTable t, Object v,
                     boolean sel, boolean foc, int r, int c) {
@@ -230,8 +232,7 @@ public class ProductosPanel extends JPanel {
                 if (val.equals("Sin stock")) lbl.setForeground(C_RED);
                 else if (val.equals("Stock bajo")) lbl.setForeground(C_ORANGE);
                 else lbl.setForeground(C_GREEN);
-                lbl.setBackground(sel ? new Color(92,51,181,30)
-                    : r % 2 == 0 ? C_WHITE : new Color(245, 243, 255));
+                lbl.setBackground(sel ? new Color(92,51,181,30) : r % 2 == 0 ? C_WHITE : new Color(245, 243, 255));
                 return lbl;
             }
         });
@@ -249,9 +250,7 @@ public class ProductosPanel extends JPanel {
                 }
             });
             tabla.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-                @Override public void mouseMoved(java.awt.event.MouseEvent e) {
-                    tabla.repaint();
-                }
+                @Override public void mouseMoved(java.awt.event.MouseEvent e) { tabla.repaint(); }
             });
         }
 
@@ -260,6 +259,14 @@ public class ProductosPanel extends JPanel {
         scroll.getViewport().setBackground(C_WHITE);
         panel.add(scroll, BorderLayout.CENTER);
         return panel;
+    }
+
+    private void refrescar() {
+        cargarDatos();
+        cuerpo.remove(0);
+        cuerpo.add(construirTarjetas(), BorderLayout.NORTH, 0);
+        cuerpo.revalidate();
+        cuerpo.repaint();
     }
 
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
@@ -331,7 +338,7 @@ public class ProductosPanel extends JPanel {
                 int idCat  = cats.get(cbCat.getSelectedIndex()).getId();
                 int idProv = provs.get(cbProv.getSelectedIndex()).getId();
                 if (productoController.añadirProducto(fNombre.getText(), fDesc.getText(), precio, stock, idCat, idProv)) {
-                    exito("Producto añadido correctamente."); cargarDatos();
+                    exito("Producto añadido correctamente."); refrescar();
                 } else error("No se pudo añadir. Revisa los datos.");
             } catch (NumberFormatException ex) { error("Precio y stock deben ser números válidos."); }
         }
@@ -370,7 +377,7 @@ public class ProductosPanel extends JPanel {
                 int idCat  = cats.get(cbCat.getSelectedIndex()).getId();
                 int idProv = provs.get(cbProv.getSelectedIndex()).getId();
                 if (productoController.actualizarProducto(id, fNombre.getText(), fDesc.getText(), precio, stock, idCat, idProv)) {
-                    exito("Producto actualizado."); cargarDatos();
+                    exito("Producto actualizado."); refrescar();
                 } else error("No se pudo actualizar.");
             } catch (NumberFormatException ex) { error("Precio y stock deben ser números válidos."); }
         }
@@ -381,7 +388,7 @@ public class ProductosPanel extends JPanel {
         String nombre = modeloTabla.getValueAt(fila, 1).toString();
         if (JOptionPane.showConfirmDialog(this, "¿Eliminar \"" + nombre + "\"?",
                 "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-            if (productoController.eliminarProducto(id)) { exito("Producto eliminado."); cargarDatos(); }
+            if (productoController.eliminarProducto(id)) { exito("Producto eliminado."); refrescar(); }
             else error("No se pudo eliminar.");
         }
     }
@@ -415,11 +422,7 @@ public class ProductosPanel extends JPanel {
         b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         b.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override public void mouseEntered(java.awt.event.MouseEvent e) {
-                b.setBackground(new Color(
-                    Math.min(bg.getRed() + 20, 255),
-                    Math.min(bg.getGreen() + 20, 255),
-                    Math.min(bg.getBlue() + 20, 255)
-                ));
+                b.setBackground(new Color(Math.min(bg.getRed()+20,255), Math.min(bg.getGreen()+20,255), Math.min(bg.getBlue()+20,255)));
             }
             @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(bg); }
         });
@@ -435,6 +438,23 @@ public class ProductosPanel extends JPanel {
         b.setFocusPainted(false);
         b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         b.setPreferredSize(new Dimension(62, 26));
+        return b;
+    }
+
+    private JButton crearBotonRefrescar() {
+        JButton b = new JButton("↻ Refrescar");
+        b.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        b.setForeground(C_PURPLE);
+        b.setBackground(C_WHITE);
+        b.setBorder(BorderFactory.createLineBorder(C_BORDER, 1));
+        b.setFocusPainted(false);
+        b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) {
+                b.setBackground(new Color(245, 243, 255));
+            }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(C_WHITE); }
+        });
         return b;
     }
 

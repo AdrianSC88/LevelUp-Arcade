@@ -30,6 +30,7 @@ public class PedidosPanel extends JPanel {
     private final boolean esAdmin;
     private JTable tabla;
     private DefaultTableModel modeloTabla;
+    private JPanel cuerpo;
 
     public PedidosPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
@@ -43,7 +44,12 @@ public class PedidosPanel extends JPanel {
 
     private void construirUI() {
         add(construirTopbar(), BorderLayout.NORTH);
-        add(construirCuerpo(), BorderLayout.CENTER);
+        cuerpo = new JPanel(new BorderLayout(0, 16));
+        cuerpo.setBackground(C_BG);
+        cuerpo.setBorder(new EmptyBorder(20, 28, 20, 28));
+        cuerpo.add(construirTarjetas(), BorderLayout.NORTH);
+        cuerpo.add(construirPanelTabla(), BorderLayout.CENTER);
+        add(cuerpo, BorderLayout.CENTER);
     }
 
     private JPanel construirTopbar() {
@@ -79,18 +85,8 @@ public class PedidosPanel extends JPanel {
 
         izquierda.add(labelLogo);
         izquierda.add(titulo);
-
         bar.add(izquierda, BorderLayout.WEST);
         return bar;
-    }
-
-    private JPanel construirCuerpo() {
-        JPanel cuerpo = new JPanel(new BorderLayout(0, 16));
-        cuerpo.setBackground(C_BG);
-        cuerpo.setBorder(new EmptyBorder(20, 28, 20, 28));
-        cuerpo.add(construirTarjetas(), BorderLayout.NORTH);
-        cuerpo.add(construirPanelTabla(), BorderLayout.CENTER);
-        return cuerpo;
     }
 
     private JPanel construirTarjetas() {
@@ -99,8 +95,8 @@ public class PedidosPanel extends JPanel {
         panel.setPreferredSize(new Dimension(0, 110));
 
         List<Pedido> todos = pedidoController.obtenerTodos();
-        long pendientes  = todos.stream().filter(p -> p.getEstado() == EstadoPedido.PENDIENTE).count();
-        long entregados  = todos.stream().filter(p -> p.getEstado() == EstadoPedido.ENTREGADO).count();
+        long pendientes = todos.stream().filter(p -> p.getEstado() == EstadoPedido.PENDIENTE).count();
+        long entregados = todos.stream().filter(p -> p.getEstado() == EstadoPedido.ENTREGADO).count();
 
         panel.add(crearTarjeta("Total pedidos", String.valueOf(todos.size()), "registrados en el sistema", C_PURPLE));
         panel.add(crearTarjeta("Pendientes", String.valueOf(pendientes), "requieren atención", C_ORANGE));
@@ -112,30 +108,17 @@ public class PedidosPanel extends JPanel {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(C_WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(C_BORDER, 1),
-            new EmptyBorder(14, 18, 14, 18)
-        ));
+            BorderFactory.createLineBorder(C_BORDER, 1), new EmptyBorder(14, 18, 14, 18)));
         JLabel lblTitulo = new JLabel(titulo);
-        lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblTitulo.setForeground(C_MUTED);
-
+        lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 12)); lblTitulo.setForeground(C_MUTED);
         JLabel lblValor = new JLabel(valor);
-        lblValor.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        lblValor.setForeground(acento);
-
+        lblValor.setFont(new Font("Segoe UI", Font.BOLD, 26)); lblValor.setForeground(acento);
         JLabel lblSub = new JLabel(sub);
-        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblSub.setForeground(C_MUTED);
-
+        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 11)); lblSub.setForeground(C_MUTED);
         JPanel centro = new JPanel();
-        centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
-        centro.setBackground(C_WHITE);
-        centro.add(lblValor);
-        centro.add(Box.createVerticalStrut(2));
-        centro.add(lblSub);
-
-        card.add(lblTitulo, BorderLayout.NORTH);
-        card.add(centro, BorderLayout.CENTER);
+        centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS)); centro.setBackground(C_WHITE);
+        centro.add(lblValor); centro.add(Box.createVerticalStrut(2)); centro.add(lblSub);
+        card.add(lblTitulo, BorderLayout.NORTH); card.add(centro, BorderLayout.CENTER);
         return card;
     }
 
@@ -147,13 +130,16 @@ public class PedidosPanel extends JPanel {
         JPanel cabecera = new JPanel(new BorderLayout());
         cabecera.setBackground(C_WHITE);
         cabecera.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER),
-            new EmptyBorder(12, 16, 12, 16)
-        ));
+            BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER), new EmptyBorder(12, 16, 12, 16)));
+
         JLabel lblTabla = new JLabel("Listado de pedidos");
-        lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        lblTabla.setForeground(C_TEXT);
+        lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14)); lblTabla.setForeground(C_TEXT);
+
+        JButton btnRefrescar = crearBotonRefrescar();
+        btnRefrescar.addActionListener(e -> refrescar());
+
         cabecera.add(lblTabla, BorderLayout.WEST);
+        cabecera.add(btnRefrescar, BorderLayout.EAST);
         panel.add(cabecera, BorderLayout.NORTH);
 
         String[] cols = {"ID", "Cliente", "Fecha", "Estado", ""};
@@ -163,18 +149,13 @@ public class PedidosPanel extends JPanel {
 
         tabla = new JTable(modeloTabla);
         tabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        tabla.setRowHeight(40);
-        tabla.setGridColor(C_BORDER);
-        tabla.setBackground(C_WHITE);
-        tabla.setSelectionBackground(new Color(92, 51, 181, 30));
-        tabla.setSelectionForeground(C_TEXT);
-        tabla.setShowVerticalLines(false);
-        tabla.setFillsViewportHeight(true);
+        tabla.setRowHeight(40); tabla.setGridColor(C_BORDER); tabla.setBackground(C_WHITE);
+        tabla.setSelectionBackground(new Color(92, 51, 181, 30)); tabla.setSelectionForeground(C_TEXT);
+        tabla.setShowVerticalLines(false); tabla.setFillsViewportHeight(true);
 
         JTableHeader header = tabla.getTableHeader();
         header.setFont(new Font("Consolas", Font.BOLD, 11));
-        header.setBackground(new Color(245, 243, 255));
-        header.setForeground(C_PURPLE);
+        header.setBackground(new Color(245, 243, 255)); header.setForeground(C_PURPLE);
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER));
         header.setPreferredSize(new Dimension(0, 36));
 
@@ -194,7 +175,6 @@ public class PedidosPanel extends JPanel {
         tabla.getColumnModel().getColumn(3).setMinWidth(110);
         tabla.getColumnModel().getColumn(3).setMaxWidth(110);
 
-        // Renderer estado con color
         tabla.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
             @Override public Component getTableCellRendererComponent(JTable t, Object v,
                     boolean sel, boolean foc, int r, int c) {
@@ -204,12 +184,12 @@ public class PedidosPanel extends JPanel {
                 lbl.setFont(new Font("Segoe UI", Font.BOLD, 11));
                 lbl.setBackground(sel ? new Color(92,51,181,30) : r % 2 == 0 ? C_WHITE : new Color(245,243,255));
                 switch (val) {
-                    case "PENDIENTE"   -> lbl.setForeground(C_ORANGE);
-                    case "EN_PROCESO"  -> lbl.setForeground(C_BLUE);
-                    case "ENVIADO"     -> lbl.setForeground(new Color(139, 92, 246));
-                    case "ENTREGADO"   -> lbl.setForeground(C_GREEN);
-                    case "CANCELADO"   -> lbl.setForeground(C_RED);
-                    default            -> lbl.setForeground(C_MUTED);
+                    case "PENDIENTE"  -> lbl.setForeground(C_ORANGE);
+                    case "EN_PROCESO" -> lbl.setForeground(C_BLUE);
+                    case "ENVIADO"    -> lbl.setForeground(new Color(139, 92, 246));
+                    case "ENTREGADO"  -> lbl.setForeground(C_GREEN);
+                    case "CANCELADO"  -> lbl.setForeground(C_RED);
+                    default           -> lbl.setForeground(C_MUTED);
                 }
                 return lbl;
             }
@@ -231,9 +211,7 @@ public class PedidosPanel extends JPanel {
                 }
             });
             tabla.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-                @Override public void mouseMoved(java.awt.event.MouseEvent e) {
-                    tabla.repaint();
-                }
+                @Override public void mouseMoved(java.awt.event.MouseEvent e) { tabla.repaint(); }
             });
         }
 
@@ -244,28 +222,29 @@ public class PedidosPanel extends JPanel {
         return panel;
     }
 
+    private void refrescar() {
+        cargarDatos();
+        cuerpo.remove(0);
+        cuerpo.add(construirTarjetas(), BorderLayout.NORTH, 0);
+        cuerpo.revalidate();
+        cuerpo.repaint();
+    }
+
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
         private final JButton btnEstado   = crearBotonInline("Estado", C_BLUE);
         private final JButton btnEliminar = crearBotonInline("Eliminar", C_RED);
         AccionesRenderer() {
-            setLayout(new FlowLayout(FlowLayout.CENTER, 4, 6));
-            setOpaque(true);
-            add(btnEstado);
-            add(btnEliminar);
+            setLayout(new FlowLayout(FlowLayout.CENTER, 4, 6)); setOpaque(true);
+            add(btnEstado); add(btnEliminar);
         }
         @Override public Component getTableCellRendererComponent(JTable t, Object v,
                 boolean sel, boolean foc, int r, int c) {
             boolean hover = false;
-            try {
-                Point mp = t.getMousePosition();
-                if (mp != null) hover = t.rowAtPoint(mp) == r;
-            } catch (Exception ex) { /* ignorar */ }
-            setBackground(sel ? new Color(92, 51, 181, 30)
-                : r % 2 == 0 ? C_WHITE : new Color(245, 243, 255));
-            btnEstado.setBackground(hover ? C_BLUE : C_WHITE);
-            btnEstado.setForeground(hover ? C_WHITE : C_BLUE);
-            btnEliminar.setBackground(hover ? C_RED : C_WHITE);
-            btnEliminar.setForeground(hover ? C_WHITE : C_RED);
+            try { Point mp = t.getMousePosition(); if (mp != null) hover = t.rowAtPoint(mp) == r; }
+            catch (Exception ex) { /* ignorar */ }
+            setBackground(sel ? new Color(92, 51, 181, 30) : r % 2 == 0 ? C_WHITE : new Color(245, 243, 255));
+            btnEstado.setBackground(hover ? C_BLUE : C_WHITE); btnEstado.setForeground(hover ? C_WHITE : C_BLUE);
+            btnEliminar.setBackground(hover ? C_RED : C_WHITE); btnEliminar.setForeground(hover ? C_WHITE : C_RED);
             return this;
         }
     }
@@ -286,14 +265,12 @@ public class PedidosPanel extends JPanel {
     private void dialogoCambiarEstado(int fila) {
         int id = Integer.parseInt(modeloTabla.getValueAt(fila, 0).toString());
         EstadoPedido[] estados = EstadoPedido.values();
-        String[] nombresEstados = java.util.Arrays.stream(estados).map(Enum::toString).toArray(String[]::new);
-        String seleccion = (String) JOptionPane.showInputDialog(this,
-            "Selecciona el nuevo estado:", "Cambiar estado",
-            JOptionPane.PLAIN_MESSAGE, null, nombresEstados, nombresEstados[0]);
+        String[] nombres = java.util.Arrays.stream(estados).map(Enum::toString).toArray(String[]::new);
+        String seleccion = (String) JOptionPane.showInputDialog(this, "Selecciona el nuevo estado:",
+            "Cambiar estado", JOptionPane.PLAIN_MESSAGE, null, nombres, nombres[0]);
         if (seleccion != null) {
-            EstadoPedido nuevoEstado = EstadoPedido.valueOf(seleccion);
-            if (pedidoController.actualizarEstado(id, nuevoEstado)) {
-                exito("Estado actualizado."); cargarDatos();
+            if (pedidoController.actualizarEstado(id, EstadoPedido.valueOf(seleccion))) {
+                exito("Estado actualizado."); refrescar();
             } else error("No se pudo actualizar el estado.");
         }
     }
@@ -302,20 +279,29 @@ public class PedidosPanel extends JPanel {
         int id = Integer.parseInt(modeloTabla.getValueAt(fila, 0).toString());
         if (JOptionPane.showConfirmDialog(this, "¿Eliminar el pedido #" + id + "?",
                 "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-            if (pedidoController.eliminarPedido(id)) { exito("Pedido eliminado."); cargarDatos(); }
+            if (pedidoController.eliminarPedido(id)) { exito("Pedido eliminado."); refrescar(); }
             else error("No se pudo eliminar.");
         }
     }
 
     private JButton crearBotonInline(String texto, Color color) {
         JButton b = new JButton(texto);
-        b.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        b.setForeground(color);
-        b.setBackground(C_WHITE);
-        b.setBorder(BorderFactory.createLineBorder(color, 1));
-        b.setFocusPainted(false);
-        b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.setFont(new Font("Segoe UI", Font.BOLD, 11)); b.setForeground(color);
+        b.setBackground(C_WHITE); b.setBorder(BorderFactory.createLineBorder(color, 1));
+        b.setFocusPainted(false); b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         b.setPreferredSize(new Dimension(70, 26));
+        return b;
+    }
+
+    private JButton crearBotonRefrescar() {
+        JButton b = new JButton("↻ Refrescar");
+        b.setFont(new Font("Segoe UI", Font.PLAIN, 11)); b.setForeground(C_PURPLE);
+        b.setBackground(C_WHITE); b.setBorder(BorderFactory.createLineBorder(C_BORDER, 1));
+        b.setFocusPainted(false); b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) { b.setBackground(new Color(245, 243, 255)); }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(C_WHITE); }
+        });
         return b;
     }
 

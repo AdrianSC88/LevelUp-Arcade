@@ -93,11 +93,12 @@ public class MainFrame extends JFrame {
         sidebar.add(crearNavBoton("▪  Pedidos",     "pedidos"));
 
         sidebar.add(crearNavLabel("SISTEMA"));
-        sidebar.add(crearNavBoton("▪  Asistente IA", "ia"));
 
         if ("administrador".equals(usuarioActivo.getRol())) {
             sidebar.add(crearNavBoton("▪  Usuarios", "usuarios"));
         }
+
+        sidebar.add(crearNavBoton("▪  Asistente IA", "ia"));
 
         sidebar.add(Box.createVerticalGlue());
         sidebar.add(crearSeparador());

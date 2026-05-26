@@ -12,23 +12,23 @@ import java.util.List;
 
 public class ClientesPanel extends JPanel {
 
-    private static final Color C_BG       = new Color(248, 247, 255);
-    private static final Color C_PURPLE   = new Color(92, 51, 181);
-    private static final Color C_ORANGE   = new Color(249, 115, 22);
-    private static final Color C_BLUE     = new Color(59, 130, 246);
-    private static final Color C_RED      = new Color(239, 68, 68);
-    private static final Color C_BORDER   = new Color(229, 224, 248);
-    private static final Color C_WHITE    = Color.WHITE;
-    private static final Color C_TEXT     = new Color(26, 18, 37);
-    private static final Color C_MUTED    = new Color(107, 114, 128);
-    private static final Color C_HEADER   = new Color(45, 21, 114);
+    private static final Color C_BG     = new Color(248, 247, 255);
+    private static final Color C_PURPLE = new Color(92, 51, 181);
+    private static final Color C_ORANGE = new Color(249, 115, 22);
+    private static final Color C_BLUE   = new Color(59, 130, 246);
+    private static final Color C_RED    = new Color(239, 68, 68);
+    private static final Color C_BORDER = new Color(229, 224, 248);
+    private static final Color C_WHITE  = Color.WHITE;
+    private static final Color C_TEXT   = new Color(26, 18, 37);
+    private static final Color C_MUTED  = new Color(107, 114, 128);
+    private static final Color C_HEADER = new Color(45, 21, 114);
 
     private final ClienteController clienteController;
     private final Usuario usuarioActivo;
     private final boolean esAdmin;
-
     private JTable tabla;
     private DefaultTableModel modeloTabla;
+    private JPanel cuerpo;
 
     public ClientesPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
@@ -42,7 +42,12 @@ public class ClientesPanel extends JPanel {
 
     private void construirUI() {
         add(construirTopbar(), BorderLayout.NORTH);
-        add(construirCuerpo(), BorderLayout.CENTER);
+        cuerpo = new JPanel(new BorderLayout(0, 16));
+        cuerpo.setBackground(C_BG);
+        cuerpo.setBorder(new EmptyBorder(20, 28, 20, 28));
+        cuerpo.add(construirTarjetas(), BorderLayout.NORTH);
+        cuerpo.add(construirPanelTabla(), BorderLayout.CENTER);
+        add(cuerpo, BorderLayout.CENTER);
     }
 
     private JPanel construirTopbar() {
@@ -67,8 +72,8 @@ public class ClientesPanel extends JPanel {
         try {
             java.net.URL imgURL = getClass().getClassLoader().getResource("resources/logo2.png");
             if (imgURL != null) {
-            	Image scaled = new ImageIcon(imgURL).getImage().getScaledInstance(44, 44, Image.SCALE_SMOOTH);                
-            	labelLogo.setIcon(new ImageIcon(scaled));
+                Image scaled = new ImageIcon(imgURL).getImage().getScaledInstance(44, 44, Image.SCALE_SMOOTH);
+                labelLogo.setIcon(new ImageIcon(scaled));
             }
         } catch (Exception ex) { /* sin logo */ }
 
@@ -92,15 +97,6 @@ public class ClientesPanel extends JPanel {
         return bar;
     }
 
-    private JPanel construirCuerpo() {
-        JPanel cuerpo = new JPanel(new BorderLayout(0, 16));
-        cuerpo.setBackground(C_BG);
-        cuerpo.setBorder(new EmptyBorder(20, 28, 20, 28));
-        cuerpo.add(construirTarjetas(), BorderLayout.NORTH);
-        cuerpo.add(construirPanelTabla(), BorderLayout.CENTER);
-        return cuerpo;
-    }
-
     private JPanel construirTarjetas() {
         JPanel panel = new JPanel(new GridLayout(1, 3, 12, 0));
         panel.setBackground(C_BG);
@@ -113,7 +109,6 @@ public class ClientesPanel extends JPanel {
         panel.add(crearTarjeta("Total clientes", String.valueOf(todos.size()), "registrados en el sistema", C_PURPLE));
         panel.add(crearTarjeta("Con email", String.valueOf(conEmail), "contacto por correo", C_BLUE));
         panel.add(crearTarjeta("Con teléfono", String.valueOf(conTelefono), "contacto directo", C_ORANGE));
-
         return panel;
     }
 
@@ -159,10 +154,16 @@ public class ClientesPanel extends JPanel {
             BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER),
             new EmptyBorder(12, 16, 12, 16)
         ));
+
         JLabel lblTabla = new JLabel("Directorio de clientes");
         lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblTabla.setForeground(C_TEXT);
+
+        JButton btnRefrescar = crearBotonRefrescar();
+        btnRefrescar.addActionListener(e -> refrescar());
+
         cabecera.add(lblTabla, BorderLayout.WEST);
+        cabecera.add(btnRefrescar, BorderLayout.EAST);
         panel.add(cabecera, BorderLayout.NORTH);
 
         String[] cols = {"ID", "Nombre", "Email", "Teléfono", "Dirección", ""};
@@ -186,8 +187,7 @@ public class ClientesPanel extends JPanel {
         header.setForeground(C_PURPLE);
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER));
         header.setPreferredSize(new Dimension(0, 36));
-        
-        // Filas alternas
+
         tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override public Component getTableCellRendererComponent(JTable t, Object v,
                     boolean sel, boolean foc, int r, int c) {
@@ -216,11 +216,8 @@ public class ClientesPanel extends JPanel {
                     else eliminarFila(fila);
                 }
             });
-            
             tabla.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-                @Override public void mouseMoved(java.awt.event.MouseEvent e) {
-                    tabla.repaint();
-                }
+                @Override public void mouseMoved(java.awt.event.MouseEvent e) { tabla.repaint(); }
             });
         }
 
@@ -229,6 +226,14 @@ public class ClientesPanel extends JPanel {
         scroll.getViewport().setBackground(C_WHITE);
         panel.add(scroll, BorderLayout.CENTER);
         return panel;
+    }
+
+    private void refrescar() {
+        cargarDatos();
+        cuerpo.remove(0);
+        cuerpo.add(construirTarjetas(), BorderLayout.NORTH, 0);
+        cuerpo.revalidate();
+        cuerpo.repaint();
     }
 
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
@@ -260,29 +265,19 @@ public class ClientesPanel extends JPanel {
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
         for (Cliente c : clienteController.obtenerTodos()) {
-            modeloTabla.addRow(new Object[]{
-                c.getId(), c.getNombre(), c.getEmail(),
-                c.getTelefono(), c.getDireccion(), ""
-            });
+            modeloTabla.addRow(new Object[]{c.getId(), c.getNombre(), c.getEmail(), c.getTelefono(), c.getDireccion(), ""});
         }
     }
 
     private void dialogoAnadir() {
-        JTextField fNombre    = new JTextField();
-        JTextField fEmail     = new JTextField();
-        JTextField fTelefono  = new JTextField();
-        JTextField fDireccion = new JTextField();
-
-        JPanel form = construirForm(
-            new String[]{"Nombre", "Email", "Teléfono", "Dirección"},
-            new JComponent[]{fNombre, fEmail, fTelefono, fDireccion}
-        );
-
+        JTextField fNombre = new JTextField(); JTextField fEmail = new JTextField();
+        JTextField fTelefono = new JTextField(); JTextField fDireccion = new JTextField();
+        JPanel form = construirForm(new String[]{"Nombre", "Email", "Teléfono", "Dirección"},
+            new JComponent[]{fNombre, fEmail, fTelefono, fDireccion});
         if (JOptionPane.showConfirmDialog(this, form, "Añadir cliente",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
-            if (clienteController.añadirCliente(fNombre.getText(), fEmail.getText(),
-                    fTelefono.getText(), fDireccion.getText())) {
-                exito("Cliente añadido correctamente."); cargarDatos();
+            if (clienteController.añadirCliente(fNombre.getText(), fEmail.getText(), fTelefono.getText(), fDireccion.getText())) {
+                exito("Cliente añadido correctamente."); refrescar();
             } else error("No se pudo añadir. Revisa los datos.");
         }
     }
@@ -291,22 +286,14 @@ public class ClientesPanel extends JPanel {
         int id = Integer.parseInt(modeloTabla.getValueAt(fila, 0).toString());
         Cliente c = clienteController.obtenerPorId(id);
         if (c == null) return;
-
-        JTextField fNombre    = new JTextField(c.getNombre());
-        JTextField fEmail     = new JTextField(c.getEmail());
-        JTextField fTelefono  = new JTextField(c.getTelefono());
-        JTextField fDireccion = new JTextField(c.getDireccion());
-
-        JPanel form = construirForm(
-            new String[]{"Nombre", "Email", "Teléfono", "Dirección"},
-            new JComponent[]{fNombre, fEmail, fTelefono, fDireccion}
-        );
-
+        JTextField fNombre = new JTextField(c.getNombre()); JTextField fEmail = new JTextField(c.getEmail());
+        JTextField fTelefono = new JTextField(c.getTelefono()); JTextField fDireccion = new JTextField(c.getDireccion());
+        JPanel form = construirForm(new String[]{"Nombre", "Email", "Teléfono", "Dirección"},
+            new JComponent[]{fNombre, fEmail, fTelefono, fDireccion});
         if (JOptionPane.showConfirmDialog(this, form, "Editar cliente",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
-            if (clienteController.actualizarCliente(id, fNombre.getText(), fEmail.getText(),
-                    fTelefono.getText(), fDireccion.getText())) {
-                exito("Cliente actualizado."); cargarDatos();
+            if (clienteController.actualizarCliente(id, fNombre.getText(), fEmail.getText(), fTelefono.getText(), fDireccion.getText())) {
+                exito("Cliente actualizado."); refrescar();
             } else error("No se pudo actualizar.");
         }
     }
@@ -316,27 +303,22 @@ public class ClientesPanel extends JPanel {
         String nombre = modeloTabla.getValueAt(fila, 1).toString();
         if (JOptionPane.showConfirmDialog(this, "¿Eliminar al cliente \"" + nombre + "\"?",
                 "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-            if (clienteController.eliminarCliente(id)) { exito("Cliente eliminado."); cargarDatos(); }
+            if (clienteController.eliminarCliente(id)) { exito("Cliente eliminado."); refrescar(); }
             else error("No se pudo eliminar.");
         }
     }
 
     private JPanel construirForm(String[] labels, JComponent[] campos) {
         JPanel p = new JPanel(new GridBagLayout());
-        p.setBackground(C_WHITE);
-        p.setBorder(new EmptyBorder(12, 12, 12, 12));
+        p.setBackground(C_WHITE); p.setBorder(new EmptyBorder(12, 12, 12, 12));
         GridBagConstraints g = new GridBagConstraints();
-        g.insets = new Insets(6, 6, 6, 6);
-        g.fill = GridBagConstraints.HORIZONTAL;
+        g.insets = new Insets(6, 6, 6, 6); g.fill = GridBagConstraints.HORIZONTAL;
         for (int i = 0; i < labels.length; i++) {
             g.gridx = 0; g.gridy = i; g.weightx = 0;
             JLabel lbl = new JLabel(labels[i]);
-            lbl.setFont(new Font("Consolas", Font.BOLD, 11));
-            lbl.setForeground(C_PURPLE);
-            p.add(lbl, g);
-            g.gridx = 1; g.weightx = 1;
-            campos[i].setPreferredSize(new Dimension(260, 32));
-            p.add(campos[i], g);
+            lbl.setFont(new Font("Consolas", Font.BOLD, 11)); lbl.setForeground(C_PURPLE);
+            p.add(lbl, g); g.gridx = 1; g.weightx = 1;
+            campos[i].setPreferredSize(new Dimension(260, 32)); p.add(campos[i], g);
         }
         return p;
     }
@@ -348,45 +330,38 @@ public class ClientesPanel extends JPanel {
         b.setBorder(new EmptyBorder(8, 18, 8, 18));
         b.setFocusPainted(false); b.setOpaque(true); b.setBorderPainted(false);
         b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
         b.addMouseListener(new java.awt.event.MouseAdapter() {
-            final Color bgOriginal = bg;
+            final Color bgO = bg;
             @Override public void mouseEntered(java.awt.event.MouseEvent e) {
-                b.setBackground(new Color(
-                    Math.min(bgOriginal.getRed() + 20, 255),
-                    Math.min(bgOriginal.getGreen() + 20, 255),
-                    Math.min(bgOriginal.getBlue() + 20, 255)
-                ));
+                b.setBackground(new Color(Math.min(bgO.getRed()+20,255), Math.min(bgO.getGreen()+20,255), Math.min(bgO.getBlue()+20,255)));
             }
-            @Override public void mouseExited(java.awt.event.MouseEvent e) {
-                b.setBackground(bgOriginal);
-            }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(bgO); }
         });
-        
         return b;
     }
 
     private JButton crearBotonInline(String texto, Color color) {
         JButton b = new JButton(texto);
-        b.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        b.setForeground(color);
-        b.setBackground(C_WHITE);
-        b.setBorder(BorderFactory.createLineBorder(color, 1));
-        b.setFocusPainted(false);
-        b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.setFont(new Font("Segoe UI", Font.BOLD, 11)); b.setForeground(color);
+        b.setBackground(C_WHITE); b.setBorder(BorderFactory.createLineBorder(color, 1));
+        b.setFocusPainted(false); b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         b.setPreferredSize(new Dimension(62, 26));
-        
         b.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override public void mouseEntered(java.awt.event.MouseEvent e) {
-                b.setBackground(color);
-                b.setForeground(Color.WHITE);
-            }
-            @Override public void mouseExited(java.awt.event.MouseEvent e) {
-                b.setBackground(C_WHITE);
-                b.setForeground(color);
-            }
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) { b.setBackground(color); b.setForeground(C_WHITE); }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(C_WHITE); b.setForeground(color); }
         });
-        
+        return b;
+    }
+
+    private JButton crearBotonRefrescar() {
+        JButton b = new JButton("↻ Refrescar");
+        b.setFont(new Font("Segoe UI", Font.PLAIN, 11)); b.setForeground(C_PURPLE);
+        b.setBackground(C_WHITE); b.setBorder(BorderFactory.createLineBorder(C_BORDER, 1));
+        b.setFocusPainted(false); b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) { b.setBackground(new Color(245, 243, 255)); }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(C_WHITE); }
+        });
         return b;
     }
 
