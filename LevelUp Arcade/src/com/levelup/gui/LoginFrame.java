@@ -18,7 +18,7 @@ public class LoginFrame extends JFrame {
     private static final Color C_PURPLE     = new Color(92, 51, 181);
     private static final Color C_TEXT       = new Color(26, 18, 37);
     private static final Color C_MUTED      = new Color(107, 114, 128);
-    private static final Color C_BORDER     = new Color(229, 224, 248);
+    private static final Color C_BORDER     = new Color(180, 170, 220);
     private static final Color C_FIELD_BG   = new Color(252, 251, 255);
     private static final Color C_ERROR      = new Color(239, 68, 68);
     private static final Color C_INFO_BG    = new Color(239, 246, 255);
@@ -224,6 +224,21 @@ public class LoginFrame extends JFrame {
         ));
         campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
         campo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        campo.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override public void focusGained(java.awt.event.FocusEvent e) {
+                campo.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(C_BLUE, 2),
+                    new EmptyBorder(9, 13, 9, 13)
+                ));
+            }
+            @Override public void focusLost(java.awt.event.FocusEvent e) {
+                campo.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(C_BORDER, 1),
+                    new EmptyBorder(10, 14, 10, 14)
+                ));
+            }
+        });
     }
 
     private JButton crearBotonLogin() {

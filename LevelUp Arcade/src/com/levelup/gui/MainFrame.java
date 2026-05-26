@@ -102,9 +102,20 @@ public class MainFrame extends JFrame {
         sidebar.add(Box.createVerticalGlue());
         sidebar.add(crearSeparador());
 
-        JButton cerrarSesion = new JButton("▪  Cerrar sesión");
+        JButton cerrarSesion = new JButton("▪  Cerrar sesión") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                if (getModel().isRollover()) {
+                    g2.setColor(new Color(92, 51, 181, 50));
+                    g2.fillRect(0, 0, getWidth(), getHeight());
+                }
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
         cerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        cerrarSesion.setForeground(new Color(196, 181, 253, 160));
+        cerrarSesion.setForeground(new Color(239, 68, 68));
         cerrarSesion.setBackground(C_SIDEBAR);
         cerrarSesion.setBorderPainted(false);
         cerrarSesion.setFocusPainted(false);
@@ -118,6 +129,14 @@ public class MainFrame extends JFrame {
             SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
         });
         sidebar.add(cerrarSesion);
+        cerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) {
+                cerrarSesion.setBackground(new Color(92, 51, 181, 50));
+            }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) {
+                cerrarSesion.setBackground(C_SIDEBAR);
+            }
+        });
 
         return sidebar;
     }

@@ -55,7 +55,6 @@ public class ProductosPanel extends JPanel {
         add(construirCuerpo(), BorderLayout.CENTER);
     }
 
-    // ── TOPBAR MORADO ──
     private JPanel construirTopbar() {
         JPanel bar = new JPanel() {
             @Override protected void paintComponent(Graphics g) {
@@ -71,25 +70,38 @@ public class ProductosPanel extends JPanel {
         bar.setPreferredSize(new Dimension(0, 64));
         bar.setBorder(new EmptyBorder(0, 28, 0, 28));
 
+        JPanel izquierda = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 10));
+        izquierda.setOpaque(false);
+
+        JLabel labelLogo = new JLabel();
+        try {
+            java.net.URL imgURL = getClass().getClassLoader().getResource("resources/logo2.png");
+            if (imgURL != null) {
+                Image scaled = new ImageIcon(imgURL).getImage().getScaledInstance(44, 44, Image.SCALE_SMOOTH);
+                labelLogo.setIcon(new ImageIcon(scaled));
+            }
+        } catch (Exception ex) { /* sin logo */ }
+
         JLabel titulo = new JLabel("Gestión de Productos");
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
         titulo.setForeground(C_WHITE);
 
+        izquierda.add(labelLogo);
+        izquierda.add(titulo);
+
         JPanel derecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 14));
         derecha.setOpaque(false);
-
         if (esAdmin) {
             JButton btnAnadir = crearBotonTop("+ Añadir producto", C_ORANGE, C_WHITE);
             btnAnadir.addActionListener(e -> dialogoAnadir());
             derecha.add(btnAnadir);
         }
 
-        bar.add(titulo, BorderLayout.WEST);
+        bar.add(izquierda, BorderLayout.WEST);
         bar.add(derecha, BorderLayout.EAST);
         return bar;
     }
 
-    // ── CUERPO ──
     private JPanel construirCuerpo() {
         JPanel cuerpo = new JPanel(new BorderLayout(0, 16));
         cuerpo.setBackground(C_BG);
@@ -99,7 +111,6 @@ public class ProductosPanel extends JPanel {
         return cuerpo;
     }
 
-    // ── TARJETAS ESTADÍSTICAS ──
     private JPanel construirTarjetas() {
         JPanel panel = new JPanel(new GridLayout(1, 3, 12, 0));
         panel.setBackground(C_BG);
@@ -124,7 +135,6 @@ public class ProductosPanel extends JPanel {
             BorderFactory.createLineBorder(C_BORDER, 1),
             new EmptyBorder(14, 18, 14, 18)
         ));
-
         JLabel lblTitulo = new JLabel(titulo);
         lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblTitulo.setForeground(C_MUTED);
@@ -149,27 +159,23 @@ public class ProductosPanel extends JPanel {
         return card;
     }
 
-    // ── PANEL TABLA ──
     private JPanel construirPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout(0, 0));
         panel.setBackground(C_WHITE);
         panel.setBorder(BorderFactory.createLineBorder(C_BORDER, 1));
 
-        // Cabecera de la tabla con título
         JPanel cabecera = new JPanel(new BorderLayout());
         cabecera.setBackground(C_WHITE);
         cabecera.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER),
             new EmptyBorder(12, 16, 12, 16)
         ));
-
         JLabel lblTabla = new JLabel("Inventario");
         lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblTabla.setForeground(C_TEXT);
         cabecera.add(lblTabla, BorderLayout.WEST);
         panel.add(cabecera, BorderLayout.NORTH);
 
-        // Tabla
         String[] cols = {"ID", "Nombre", "Categoría", "Proveedor", "Precio", "Stock", "Estado", ""};
         modeloTabla = new DefaultTableModel(cols, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -194,7 +200,19 @@ public class ProductosPanel extends JPanel {
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER));
         header.setPreferredSize(new Dimension(0, 36));
 
-        // Anchos de columna
+        // Filas alternas
+        tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override public Component getTableCellRendererComponent(JTable t, Object v,
+                    boolean sel, boolean foc, int r, int c) {
+                super.getTableCellRendererComponent(t, v, sel, foc, r, c);
+                if (sel) setBackground(new Color(92, 51, 181, 30));
+                else if (r % 2 == 0) setBackground(C_WHITE);
+                else setBackground(new Color(245, 243, 255));
+                setBorder(new EmptyBorder(0, 8, 0, 8));
+                return this;
+            }
+        });
+
         tabla.getColumnModel().getColumn(0).setMaxWidth(48);
         tabla.getColumnModel().getColumn(4).setMaxWidth(90);
         tabla.getColumnModel().getColumn(5).setMaxWidth(70);
@@ -202,7 +220,6 @@ public class ProductosPanel extends JPanel {
         tabla.getColumnModel().getColumn(7).setMinWidth(esAdmin ? 140 : 0);
         tabla.getColumnModel().getColumn(7).setMaxWidth(esAdmin ? 140 : 0);
 
-        // Renderer estado con color
         tabla.getColumnModel().getColumn(6).setCellRenderer(new DefaultTableCellRenderer() {
             @Override public Component getTableCellRendererComponent(JTable t, Object v,
                     boolean sel, boolean foc, int r, int c) {
@@ -213,12 +230,12 @@ public class ProductosPanel extends JPanel {
                 if (val.equals("Sin stock")) lbl.setForeground(C_RED);
                 else if (val.equals("Stock bajo")) lbl.setForeground(C_ORANGE);
                 else lbl.setForeground(C_GREEN);
-                lbl.setBackground(sel ? new Color(92,51,181,30) : C_WHITE);
+                lbl.setBackground(sel ? new Color(92,51,181,30)
+                    : r % 2 == 0 ? C_WHITE : new Color(245, 243, 255));
                 return lbl;
             }
         });
 
-        // Renderer acciones con botones inline
         if (esAdmin) {
             tabla.getColumnModel().getColumn(7).setCellRenderer(new AccionesRenderer());
             tabla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -231,6 +248,11 @@ public class ProductosPanel extends JPanel {
                     else eliminarFila(fila);
                 }
             });
+            tabla.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+                @Override public void mouseMoved(java.awt.event.MouseEvent e) {
+                    tabla.repaint();
+                }
+            });
         }
 
         JScrollPane scroll = new JScrollPane(tabla);
@@ -240,7 +262,6 @@ public class ProductosPanel extends JPanel {
         return panel;
     }
 
-    // ── RENDERER BOTONES INLINE ──
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
         private final JButton btnEditar   = crearBotonInline("Editar", C_BLUE);
         private final JButton btnEliminar = crearBotonInline("Eliminar", C_RED);
@@ -254,24 +275,21 @@ public class ProductosPanel extends JPanel {
 
         @Override public Component getTableCellRendererComponent(JTable t, Object v,
                 boolean sel, boolean foc, int r, int c) {
-            setBackground(sel ? new Color(92, 51, 181, 30) : C_WHITE);
+            boolean hover = false;
+            try {
+                Point mp = t.getMousePosition();
+                if (mp != null) hover = t.rowAtPoint(mp) == r;
+            } catch (Exception ex) { /* ignorar */ }
+            setBackground(sel ? new Color(92, 51, 181, 30)
+                : r % 2 == 0 ? C_WHITE : new Color(245, 243, 255));
+            btnEditar.setBackground(hover ? C_BLUE : C_WHITE);
+            btnEditar.setForeground(hover ? C_WHITE : C_BLUE);
+            btnEliminar.setBackground(hover ? C_RED : C_WHITE);
+            btnEliminar.setForeground(hover ? C_WHITE : C_RED);
             return this;
         }
     }
 
-    private JButton crearBotonInline(String texto, Color color) {
-        JButton b = new JButton(texto);
-        b.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        b.setForeground(color);
-        b.setBackground(C_WHITE);
-        b.setBorder(BorderFactory.createLineBorder(color, 1));
-        b.setFocusPainted(false);
-        b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        b.setPreferredSize(new Dimension(62, 26));
-        return b;
-    }
-
-    // ── CARGA DE DATOS ──
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
         for (Producto p : productoController.obtenerTodos()) {
@@ -279,21 +297,16 @@ public class ProductosPanel extends JPanel {
             if (p.getStock() == 0) estado = "Sin stock";
             else if (p.getStock() <= 10) estado = "Stock bajo";
             else estado = "Disponible";
-
             modeloTabla.addRow(new Object[]{
-                p.getId(),
-                p.getNombre(),
+                p.getId(), p.getNombre(),
                 p.getCategoria() != null ? p.getCategoria().getNombre() : "-",
                 p.getProveedor() != null ? p.getProveedor().getNombre() : "-",
                 String.format("%.2f €", p.getPrecio()),
-                p.getStock(),
-                estado,
-                ""
+                p.getStock(), estado, ""
             });
         }
     }
 
-    // ── DIÁLOGOS ──
     private void dialogoAnadir() {
         List<Categoria> cats = categoriaController.obtenerTodas();
         List<Proveedor> provs = proveedorController.obtenerTodos();
@@ -306,7 +319,7 @@ public class ProductosPanel extends JPanel {
         JComboBox<String> cbProv = new JComboBox<>(provs.stream().map(Proveedor::getNombre).toArray(String[]::new));
 
         JPanel form = construirForm(
-            new String[]{"Nombre *", "Descripción", "Precio *", "Stock *", "Categoría *", "Proveedor *"},
+            new String[]{"Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor"},
             new JComponent[]{fNombre, fDesc, fPrecio, fStock, cbCat, cbProv}
         );
 
@@ -345,7 +358,7 @@ public class ProductosPanel extends JPanel {
             .ifPresent(v -> cbProv.setSelectedIndex(provs.indexOf(v)));
 
         JPanel form = construirForm(
-            new String[]{"Nombre *", "Descripción", "Precio *", "Stock *", "Categoría *", "Proveedor *"},
+            new String[]{"Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor"},
             new JComponent[]{fNombre, fDesc, fPrecio, fStock, cbCat, cbProv}
         );
 
@@ -373,7 +386,6 @@ public class ProductosPanel extends JPanel {
         }
     }
 
-    // ── HELPERS ──
     private JPanel construirForm(String[] labels, JComponent[] campos) {
         JPanel p = new JPanel(new GridBagLayout());
         p.setBackground(C_WHITE);
@@ -401,6 +413,28 @@ public class ProductosPanel extends JPanel {
         b.setBorder(new EmptyBorder(8, 18, 8, 18));
         b.setFocusPainted(false); b.setOpaque(true); b.setBorderPainted(false);
         b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) {
+                b.setBackground(new Color(
+                    Math.min(bg.getRed() + 20, 255),
+                    Math.min(bg.getGreen() + 20, 255),
+                    Math.min(bg.getBlue() + 20, 255)
+                ));
+            }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { b.setBackground(bg); }
+        });
+        return b;
+    }
+
+    private JButton crearBotonInline(String texto, Color color) {
+        JButton b = new JButton(texto);
+        b.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        b.setForeground(color);
+        b.setBackground(C_WHITE);
+        b.setBorder(BorderFactory.createLineBorder(color, 1));
+        b.setFocusPainted(false);
+        b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        b.setPreferredSize(new Dimension(62, 26));
         return b;
     }
 
