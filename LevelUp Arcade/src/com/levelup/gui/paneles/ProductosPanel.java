@@ -108,12 +108,12 @@ public class ProductosPanel extends JPanel {
         List<Producto> todos = productoController.obtenerTodos();
         long sinStock = todos.stream().filter(p -> p.getStock() == 0).count();
         long stockBajo = todos.stream().filter(p -> p.getStock() > 0 && p.getStock() <= 10).count();
+        long totalUnidades = todos.stream().mapToLong(p -> p.getStock()).sum();
         double valorInventario = todos.stream().mapToDouble(p -> p.getPrecio() * p.getStock()).sum();
 
         panel.add(crearTarjeta("Total productos", String.valueOf(todos.size()), "unidades en catálogo", C_PURPLE));
         panel.add(crearTarjeta("Stock bajo / sin stock", stockBajo + " / " + sinStock, "requieren atención", C_ORANGE));
-        panel.add(crearTarjeta("Valor inventario", String.format("%.0f €", valorInventario), "precio × stock", C_BLUE));
-
+        panel.add(crearTarjeta("Valor inventario", String.format("%.2f €", valorInventario), totalUnidades + " unidades totales en stock", C_BLUE));
         return panel;
     }
 
