@@ -18,30 +18,30 @@ import java.awt.*;
  */
 public final class GUIUtils {
 
-    // ── PALETA DE COLORES ──────────────────────────────────────────────────────
-    public static final Color C_BG        = new Color(248, 247, 255);
-    public static final Color C_PURPLE    = new Color(92, 51, 181);
-    public static final Color C_PURPLE_L  = new Color(196, 181, 253);
-    public static final Color C_ORANGE    = new Color(249, 115, 22);
-    public static final Color C_BLUE      = new Color(59, 130, 246);
-    public static final Color C_RED       = new Color(239, 68, 68);
-    public static final Color C_GREEN     = new Color(34, 197, 94);
-    public static final Color C_WHITE     = Color.WHITE;
-    public static final Color C_TEXT      = new Color(26, 18, 37);
-    public static final Color C_MUTED     = new Color(107, 114, 128);
-    public static final Color C_BORDER    = new Color(229, 224, 248);
-    public static final Color C_HEADER    = new Color(45, 21, 114);
-    public static final Color C_FIELD_BG  = new Color(252, 251, 255);
-    public static final Color C_ROW_ALT   = new Color(245, 243, 255);
-    public static final Color C_SEL_BG    = new Color(92, 51, 181, 30);
-    public static final Color C_HOVER_BG  = new Color(92, 51, 181, 50);
+    // ── PALETA DE COLORES ─────────────────────────────────────────────────────
+    public static final Color C_BG       = new Color(248, 247, 255);
+    public static final Color C_PURPLE   = new Color(92, 51, 181);
+    public static final Color C_PURPLE_L = new Color(196, 181, 253);
+    public static final Color C_ORANGE   = new Color(249, 115, 22);
+    public static final Color C_BLUE     = new Color(59, 130, 246);
+    public static final Color C_RED      = new Color(239, 68, 68);
+    public static final Color C_GREEN    = new Color(34, 197, 94);
+    public static final Color C_WHITE    = Color.WHITE;
+    public static final Color C_TEXT     = new Color(26, 18, 37);
+    public static final Color C_MUTED    = new Color(107, 114, 128);
+    public static final Color C_BORDER   = new Color(229, 224, 248);
+    public static final Color C_HEADER   = new Color(45, 21, 114);
+    public static final Color C_FIELD_BG = new Color(252, 251, 255);
+    public static final Color C_ROW_ALT  = new Color(245, 243, 255);
+    public static final Color C_SEL_BG   = new Color(92, 51, 181, 30);
+    public static final Color C_HOVER_BG = new Color(92, 51, 181, 50);
 
     private GUIUtils() { /* no instanciable */ }
 
     // ── BOTONES ───────────────────────────────────────────────────────────────
 
     /**
-     * Crea un botón principal de acción (topbar) con color de fondo y hover suave.
+     * Crea un botón principal de acción con color de fondo y hover suave.
      */
     public static JButton crearBotonTop(String texto, Color bg, Color fg) {
         JButton b = new JButton(texto);
@@ -56,9 +56,9 @@ public final class GUIUtils {
         b.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override public void mouseEntered(java.awt.event.MouseEvent e) {
                 b.setBackground(new Color(
-                    Math.min(bg.getRed() + 20, 255),
+                    Math.min(bg.getRed()   + 20, 255),
                     Math.min(bg.getGreen() + 20, 255),
-                    Math.min(bg.getBlue() + 20, 255)
+                    Math.min(bg.getBlue()  + 20, 255)
                 ));
             }
             @Override public void mouseExited(java.awt.event.MouseEvent e) {
@@ -69,7 +69,7 @@ public final class GUIUtils {
     }
 
     /**
-     * Crea un botón inline de tabla (Editar / Eliminar) con borde de color y hover de relleno.
+     * Crea un botón inline de tabla con borde de color y hover de relleno.
      */
     public static JButton crearBotonInline(String texto, Color color) {
         JButton b = new JButton(texto);
@@ -82,19 +82,17 @@ public final class GUIUtils {
         b.setPreferredSize(new Dimension(62, 26));
         b.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override public void mouseEntered(java.awt.event.MouseEvent e) {
-                b.setBackground(color);
-                b.setForeground(C_WHITE);
+                b.setBackground(color); b.setForeground(C_WHITE);
             }
             @Override public void mouseExited(java.awt.event.MouseEvent e) {
-                b.setBackground(C_WHITE);
-                b.setForeground(color);
+                b.setBackground(C_WHITE); b.setForeground(color);
             }
         });
         return b;
     }
 
     /**
-     * Crea un botón inline de tabla con ancho personalizado.
+     * Crea un botón inline con ancho personalizado.
      */
     public static JButton crearBotonInline(String texto, Color color, int ancho) {
         JButton b = crearBotonInline(texto, color);
@@ -114,12 +112,8 @@ public final class GUIUtils {
         b.setFocusPainted(false);
         b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         b.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override public void mouseEntered(java.awt.event.MouseEvent e) {
-                b.setBackground(C_ROW_ALT);
-            }
-            @Override public void mouseExited(java.awt.event.MouseEvent e) {
-                b.setBackground(C_WHITE);
-            }
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) { b.setBackground(C_ROW_ALT); }
+            @Override public void mouseExited(java.awt.event.MouseEvent e)  { b.setBackground(C_WHITE); }
         });
         return b;
     }
@@ -148,29 +142,25 @@ public final class GUIUtils {
         campo.setForeground(C_TEXT);
         campo.setCaretColor(C_PURPLE);
         campo.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(C_BORDER, 1),
-            new EmptyBorder(4, 10, 4, 10)
-        ));
+            BorderFactory.createLineBorder(C_BORDER, 1), new EmptyBorder(4, 10, 4, 10)));
         campo.setPreferredSize(new Dimension(240, 32));
         campo.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override public void focusGained(java.awt.event.FocusEvent e) {
                 campo.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(C_PURPLE, 1),
-                    new EmptyBorder(4, 10, 4, 10)
-                ));
+                    BorderFactory.createLineBorder(C_PURPLE, 1), new EmptyBorder(4, 10, 4, 10)));
             }
             @Override public void focusLost(java.awt.event.FocusEvent e) {
                 campo.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(C_BORDER, 1),
-                    new EmptyBorder(4, 10, 4, 10)
-                ));
+                    BorderFactory.createLineBorder(C_BORDER, 1), new EmptyBorder(4, 10, 4, 10)));
             }
         });
-        campo.getDocument().addDocumentListener(new DocumentListener() {
-            @Override public void insertUpdate(DocumentEvent e)  { filtrar(campo.getText(), sorter); }
-            @Override public void removeUpdate(DocumentEvent e)  { filtrar(campo.getText(), sorter); }
-            @Override public void changedUpdate(DocumentEvent e) { filtrar(campo.getText(), sorter); }
-        });
+        if (sorter != null) {
+            campo.getDocument().addDocumentListener(new DocumentListener() {
+                @Override public void insertUpdate(DocumentEvent e)  { filtrar(campo.getText(), sorter); }
+                @Override public void removeUpdate(DocumentEvent e)  { filtrar(campo.getText(), sorter); }
+                @Override public void changedUpdate(DocumentEvent e) { filtrar(campo.getText(), sorter); }
+            });
+        }
         return campo;
     }
 
@@ -178,26 +168,20 @@ public final class GUIUtils {
      * Aplica o elimina el filtro sobre un {@link TableRowSorter}.
      */
     public static void filtrar(String texto, TableRowSorter<DefaultTableModel> sorter) {
-        if (texto == null || texto.trim().isEmpty()) {
-            sorter.setRowFilter(null);
-        } else {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto.trim()));
-        }
+        if (texto == null || texto.trim().isEmpty()) sorter.setRowFilter(null);
+        else sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto.trim()));
     }
 
     // ── TABLA ─────────────────────────────────────────────────────────────────
 
     /**
-     * Aplica el estilo estándar a una JTable: fuente, altura de fila, colores,
-     * renderer de filas alternas y configuración del header.
-     * También inicializa y asigna el {@link TableRowSorter}.
+     * Aplica el estilo estándar a una JTable y devuelve el sorter creado.
      *
-     * @return el sorter creado para poder asignarlo al campo de búsqueda
+     * @return el sorter creado, ya asignado a la tabla
      */
     public static TableRowSorter<DefaultTableModel> estilizarTabla(JTable tabla, DefaultTableModel modelo) {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
         tabla.setRowSorter(sorter);
-
         tabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         tabla.setRowHeight(40);
         tabla.setGridColor(C_BORDER);
@@ -226,7 +210,6 @@ public final class GUIUtils {
                 return this;
             }
         });
-
         return sorter;
     }
 
@@ -244,10 +227,10 @@ public final class GUIUtils {
 
     /**
      * Crea el panel topbar morado con gradiente y línea naranja-azul inferior,
-     * con logo y título a la izquierda y un panel derecho para botones de acción.
+     * con logo y título a la izquierda y un panel derecho opcional para botones.
      *
-     * @param titulo      texto del título
-     * @param panelDerecha panel con botones de acción (puede ser vacío)
+     * @param titulo       texto del título
+     * @param panelDerecha panel con botones de acción (puede ser null)
      * @return el topbar construido
      */
     public static JPanel construirTopbar(String titulo, JPanel panelDerecha) {
@@ -283,14 +266,13 @@ public final class GUIUtils {
 
         izquierda.add(labelLogo);
         izquierda.add(lblTitulo);
-
         bar.add(izquierda, BorderLayout.WEST);
         if (panelDerecha != null) bar.add(panelDerecha, BorderLayout.EAST);
         return bar;
     }
 
     /**
-     * Crea el panel derecho del topbar con el botón de añadir en naranja.
+     * Crea el panel derecho del topbar para alojar botones de acción.
      */
     public static JPanel panelAccionTopbar(JButton boton) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 14));
@@ -308,30 +290,17 @@ public final class GUIUtils {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(C_WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(C_BORDER, 1),
-            new EmptyBorder(14, 18, 14, 18)
-        ));
+            BorderFactory.createLineBorder(C_BORDER, 1), new EmptyBorder(14, 18, 14, 18)));
         JLabel lblTitulo = new JLabel(titulo);
-        lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblTitulo.setForeground(C_MUTED);
-
-        JLabel lblValor = new JLabel(valor);
-        lblValor.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        lblValor.setForeground(acento);
-
-        JLabel lblSub = new JLabel(sub);
-        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblSub.setForeground(C_MUTED);
-
+        lblTitulo.setFont(new Font("Segoe UI", Font.PLAIN, 12)); lblTitulo.setForeground(C_MUTED);
+        JLabel lblValor  = new JLabel(valor);
+        lblValor.setFont(new Font("Segoe UI", Font.BOLD, 26));   lblValor.setForeground(acento);
+        JLabel lblSub    = new JLabel(sub);
+        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 11));    lblSub.setForeground(C_MUTED);
         JPanel centro = new JPanel();
-        centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
-        centro.setBackground(C_WHITE);
-        centro.add(lblValor);
-        centro.add(Box.createVerticalStrut(2));
-        centro.add(lblSub);
-
-        card.add(lblTitulo, BorderLayout.NORTH);
-        card.add(centro, BorderLayout.CENTER);
+        centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS)); centro.setBackground(C_WHITE);
+        centro.add(lblValor); centro.add(Box.createVerticalStrut(2)); centro.add(lblSub);
+        card.add(lblTitulo, BorderLayout.NORTH); card.add(centro, BorderLayout.CENTER);
         return card;
     }
 
@@ -350,8 +319,7 @@ public final class GUIUtils {
         for (int i = 0; i < labels.length; i++) {
             g.gridx = 0; g.gridy = i; g.weightx = 0;
             JLabel lbl = new JLabel(labels[i]);
-            lbl.setFont(new Font("Consolas", Font.BOLD, 11));
-            lbl.setForeground(C_PURPLE);
+            lbl.setFont(new Font("Consolas", Font.BOLD, 11)); lbl.setForeground(C_PURPLE);
             p.add(lbl, g);
             g.gridx = 1; g.weightx = 1;
             campos[i].setPreferredSize(new Dimension(260, 32));
@@ -363,8 +331,8 @@ public final class GUIUtils {
     // ── CABECERA DE TABLA ─────────────────────────────────────────────────────
 
     /**
-     * Construye la cabecera estándar de un panel de tabla con título,
-     * campo de búsqueda y botón de refrescar.
+     * Construye la cabecera estándar de tabla con título, campo de búsqueda
+     * y botón de refrescar. El campo de búsqueda filtra automáticamente el sorter.
      *
      * @param titulo      texto del título de la sección
      * @param placeholder texto de ayuda del campo de búsqueda
@@ -377,32 +345,41 @@ public final class GUIUtils {
             TableRowSorter<DefaultTableModel> sorter,
             Runnable onRefrescar) {
 
+        JTextField campoBusqueda = crearCampoBusqueda(placeholder, sorter);
+        JButton btnRefrescar = crearBotonRefrescar();
+        btnRefrescar.addActionListener(e -> { campoBusqueda.setText(""); onRefrescar.run(); });
+
+        JPanel derechaBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+        derechaBar.setBackground(C_WHITE);
+        derechaBar.add(btnRefrescar);
+
+        return construirCabeceraTabla(titulo, campoBusqueda, derechaBar);
+    }
+
+    /**
+     * Construye la cabecera de tabla con título, campo de búsqueda y panel derecho
+     * personalizado. Úsalo cuando necesites añadir botones extra además del refrescar.
+     *
+     * @param titulo        texto del título de la sección
+     * @param campoBusqueda campo de búsqueda ya configurado
+     * @param derechaBar    panel derecho con los botones de acción
+     * @return el panel cabecera construido
+     */
+    public static JPanel construirCabeceraTabla(String titulo,
+            JTextField campoBusqueda,
+            JPanel derechaBar) {
+
         JPanel cabecera = new JPanel(new BorderLayout(8, 0));
         cabecera.setBackground(C_WHITE);
         cabecera.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER),
             new EmptyBorder(10, 16, 10, 16)
         ));
-
         JLabel lblTabla = new JLabel(titulo);
-        lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        lblTabla.setForeground(C_TEXT);
-
-        JTextField campoBusqueda = crearCampoBusqueda(placeholder, sorter);
-
-        JButton btnRefrescar = crearBotonRefrescar();
-        btnRefrescar.addActionListener(e -> {
-            campoBusqueda.setText("");
-            onRefrescar.run();
-        });
-
-        JPanel derechaBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
-        derechaBar.setBackground(C_WHITE);
-        derechaBar.add(btnRefrescar);
-
-        cabecera.add(lblTabla, BorderLayout.WEST);
+        lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14)); lblTabla.setForeground(C_TEXT);
+        cabecera.add(lblTabla,      BorderLayout.WEST);
         cabecera.add(campoBusqueda, BorderLayout.CENTER);
-        cabecera.add(derechaBar, BorderLayout.EAST);
+        cabecera.add(derechaBar,    BorderLayout.EAST);
         return cabecera;
     }
 
@@ -410,16 +387,11 @@ public final class GUIUtils {
 
     /**
      * Muestra un diálogo de confirmación antes de cerrar la aplicación.
-     * Llama a System.exit(0) si el usuario confirma.
      */
     public static void confirmarSalida(Component parent) {
-        int resp = JOptionPane.showConfirmDialog(
-            parent,
+        int resp = JOptionPane.showConfirmDialog(parent,
             "¿Seguro que quieres salir de LevelUp Arcade?",
-            "Confirmar salida",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE
-        );
+            "Confirmar salida", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (resp == JOptionPane.YES_OPTION) System.exit(0);
     }
 
@@ -440,8 +412,7 @@ public final class GUIUtils {
         JPanel p = new JPanel(new GridBagLayout());
         p.setBackground(C_WHITE);
         JLabel lbl = new JLabel("No se encontraron resultados");
-        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        lbl.setForeground(C_MUTED);
+        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13)); lbl.setForeground(C_MUTED);
         p.add(lbl);
         return p;
     }
