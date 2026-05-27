@@ -9,6 +9,7 @@ import com.levelup.modelo.LineaPedido;
 import com.levelup.modelo.Pedido;
 import com.levelup.util.Logger;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -106,12 +107,12 @@ public class PedidoController {
     /**
      * Obtiene las líneas de un pedido concreto.
      * @param idPedido identificador del pedido
-     * @return lista de líneas de pedido
+     * @return lista de líneas de pedido, vacía si el id es inválido
      */
     public List<LineaPedido> obtenerLineasPorPedido(int idPedido) {
         if (idPedido <= 0) {
             System.err.println("El id del pedido debe ser un número positivo.");
-            return null;
+            return new ArrayList<>();
         }
         return lineaPedidoDAO.obtenerPorPedido(idPedido);
     }

@@ -17,12 +17,12 @@ public class MenuProductos {
     private final ProductoController productoController;
     private final CategoriaController categoriaController;
     private final ProveedorController proveedorController;
-    private final LlmController llmController = new LlmController();
+    private final LlmController llmController;
     private final Scanner scanner;
     private final Usuario usuarioActivo;
 
     /**
-     * Constructor. Inicializa los controladores de productos, categorías y proveedores y los parámetros de sesión.
+     * Constructor. Inicializa los controladores y los parámetros de sesión.
      *
      * @param scanner       scanner para la lectura de datos por consola
      * @param usuarioActivo usuario que ha iniciado sesión en el sistema
@@ -31,6 +31,7 @@ public class MenuProductos {
         this.productoController = new ProductoController();
         this.categoriaController = new CategoriaController();
         this.proveedorController = new ProveedorController();
+        this.llmController = new LlmController();
         this.scanner = scanner;
         this.usuarioActivo = usuarioActivo;
     }
@@ -58,20 +59,11 @@ public class MenuProductos {
             switch (scanner.nextLine()) {
                 case "1" -> listarProductos();
                 case "2" -> buscarProducto();
-                case "3" -> {
-                    if (esAdmin()) añadirProducto();
-                    else opcionNoValida();
-                }
-                case "4" -> {
-                    if (esAdmin()) actualizarProducto();
-                    else opcionNoValida();
-                }
-                case "5" -> {
-                    if (esAdmin()) eliminarProducto();
-                    else opcionNoValida();
-                }
+                case "3" -> { if (esAdmin()) añadirProducto(); else opcionNoValida(); }
+                case "4" -> { if (esAdmin()) actualizarProducto(); else opcionNoValida(); }
+                case "5" -> { if (esAdmin()) eliminarProducto(); else opcionNoValida(); }
                 case "0" -> salir = true;
-                default -> opcionNoValida();
+                default  -> opcionNoValida();
             }
         }
     }
@@ -104,8 +96,8 @@ public class MenuProductos {
                         "ID", "NOMBRE", "PRECIO", "STOCK", "CATEGORÍA", "PROVEEDOR"));
                 System.out.println("-".repeat(142));
                 System.out.println(producto);
-                System.out.println("\nDescripción: " + 
-                        (producto.getDescripcion() != null && !producto.getDescripcion().isBlank() 
+                System.out.println("\nDescripción: " +
+                        (producto.getDescripcion() != null && !producto.getDescripcion().isBlank()
                         ? producto.getDescripcion() : "Sin descripción"));
             } else {
                 System.out.println("Producto no encontrado.");
@@ -131,22 +123,16 @@ public class MenuProductos {
         System.out.print("Selecciona una opción: ");
         String descripcion = "";
         switch (scanner.nextLine().trim()) {
-            case "1" -> {
-                System.out.print("Descripción: ");
-                descripcion = scanner.nextLine();
-            }
+            case "1" -> { System.out.print("Descripción: "); descripcion = scanner.nextLine(); }
             case "2" -> {
                 System.out.println("Generando descripción, espera...");
                 descripcion = llmController.generarDescripcion(nombre);
                 System.out.println("Descripción generada: " + descripcion);
             }
-            default -> {
-                System.out.print("Opción no válida, introduce la descripción manualmente: ");
-                descripcion = scanner.nextLine();
-            }
+            default -> { System.out.print("Opción no válida, introduce la descripción manualmente: "); descripcion = scanner.nextLine(); }
         }
 
-        double precio = 0;
+        double precio;
         try {
             System.out.print("Precio: ");
             precio = Double.parseDouble(scanner.nextLine());
@@ -155,7 +141,7 @@ public class MenuProductos {
             return;
         }
 
-        int stock = 0;
+        int stock;
         try {
             System.out.print("Stock: ");
             stock = Integer.parseInt(scanner.nextLine());
@@ -169,45 +155,30 @@ public class MenuProductos {
         System.out.println("  1. Seleccionarla manualmente");
         System.out.println("  2. Sugerirla con IA");
         System.out.print("Selecciona una opción: ");
-        int idCategoria = 0;
+        int idCategoria;
         switch (scanner.nextLine().trim()) {
             case "1" -> {
                 listarCategorias();
-                try {
-                    System.out.print("Id categoría: ");
-                    idCategoria = Integer.parseInt(scanner.nextLine());
-                } catch (NumberFormatException e) {
-                    System.err.println("Id de categoría no válido.");
-                    return;
-                }
+                try { System.out.print("Id categoría: "); idCategoria = Integer.parseInt(scanner.nextLine()); }
+                catch (NumberFormatException e) { System.err.println("Id de categoría no válido."); return; }
             }
             case "2" -> {
                 System.out.println("Consultando categoría sugerida, espera...");
                 String categoriaSugerida = llmController.sugerirCategoria(nombre);
                 System.out.println("Categoría sugerida por la IA: " + categoriaSugerida);
                 listarCategorias();
-                try {
-                    System.out.print("Introduce el Id de la categoría que corresponda: ");
-                    idCategoria = Integer.parseInt(scanner.nextLine());
-                } catch (NumberFormatException e) {
-                    System.err.println("Id de categoría no válido.");
-                    return;
-                }
+                try { System.out.print("Introduce el Id de la categoría que corresponda: "); idCategoria = Integer.parseInt(scanner.nextLine()); }
+                catch (NumberFormatException e) { System.err.println("Id de categoría no válido."); return; }
             }
             default -> {
                 listarCategorias();
-                try {
-                    System.out.print("Opción no válida, introduce el Id de categoría manualmente: ");
-                    idCategoria = Integer.parseInt(scanner.nextLine());
-                } catch (NumberFormatException e) {
-                    System.err.println("Id de categoría no válido.");
-                    return;
-                }
+                try { System.out.print("Opción no válida, introduce el Id de categoría manualmente: "); idCategoria = Integer.parseInt(scanner.nextLine()); }
+                catch (NumberFormatException e) { System.err.println("Id de categoría no válido."); return; }
             }
         }
 
         listarProveedores();
-        int idProveedor = 0;
+        int idProveedor;
         try {
             System.out.print("Id proveedor: ");
             idProveedor = Integer.parseInt(scanner.nextLine());
@@ -247,29 +218,35 @@ public class MenuProductos {
             System.out.println("  2. Generarla con IA");
             System.out.println("  3. Mantener la actual (" + producto.getDescripcion() + ")");
             System.out.print("Selecciona una opción: ");
-            String descripcion = "";
+            String descripcion;
             switch (scanner.nextLine().trim()) {
-                case "1" -> {
-                    System.out.print("Nueva descripción: ");
-                    descripcion = scanner.nextLine();
-                }
+                case "1" -> { System.out.print("Nueva descripción: "); descripcion = scanner.nextLine(); }
                 case "2" -> {
                     System.out.println("Generando descripción, espera...");
                     descripcion = llmController.generarDescripcion(nombre.isBlank() ? producto.getNombre() : nombre);
                     System.out.println("Descripción generada: " + descripcion);
                 }
                 case "3" -> descripcion = producto.getDescripcion();
-                default -> {
-                    System.out.print("Opción no válida, introduce la descripción manualmente: ");
-                    descripcion = scanner.nextLine();
-                }
+                default -> { System.out.print("Opción no válida, introduce la descripción manualmente: "); descripcion = scanner.nextLine(); }
             }
 
-            System.out.print("Nuevo precio (" + producto.getPrecio() + "): ");
-            double precio = Double.parseDouble(scanner.nextLine());
+            double precio;
+            try {
+                System.out.print("Nuevo precio (" + producto.getPrecio() + "): ");
+                precio = Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Precio no válido.");
+                return;
+            }
 
-            System.out.print("Nuevo stock (" + producto.getStock() + "): ");
-            int stock = Integer.parseInt(scanner.nextLine());
+            int stock;
+            try {
+                System.out.print("Nuevo stock (" + producto.getStock() + "): ");
+                stock = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Stock no válido.");
+                return;
+            }
 
             // Categoría
             System.out.println("¿Cómo quieres actualizar la categoría?");
@@ -277,32 +254,38 @@ public class MenuProductos {
             System.out.println("  2. Sugerirla con IA");
             System.out.println("  3. Mantener la actual (" + producto.getCategoria().getId() + ")");
             System.out.print("Selecciona una opción: ");
-            int idCategoria = 0;
+            int idCategoria;
             switch (scanner.nextLine().trim()) {
                 case "1" -> {
                     listarCategorias();
-                    System.out.print("Id categoría: ");
-                    idCategoria = Integer.parseInt(scanner.nextLine());
+                    try { System.out.print("Id categoría: "); idCategoria = Integer.parseInt(scanner.nextLine()); }
+                    catch (NumberFormatException e) { System.err.println("Id de categoría no válido."); return; }
                 }
                 case "2" -> {
                     System.out.println("Consultando categoría sugerida, espera...");
                     String categoriaSugerida = llmController.sugerirCategoria(nombre.isBlank() ? producto.getNombre() : nombre);
                     System.out.println("Categoría sugerida por la IA: " + categoriaSugerida);
                     listarCategorias();
-                    System.out.print("Introduce el Id de la categoría que corresponda: ");
-                    idCategoria = Integer.parseInt(scanner.nextLine());
+                    try { System.out.print("Introduce el Id de la categoría que corresponda: "); idCategoria = Integer.parseInt(scanner.nextLine()); }
+                    catch (NumberFormatException e) { System.err.println("Id de categoría no válido."); return; }
                 }
                 case "3" -> idCategoria = producto.getCategoria().getId();
                 default -> {
                     listarCategorias();
-                    System.out.print("Opción no válida, introduce el Id de categoría manualmente: ");
-                    idCategoria = Integer.parseInt(scanner.nextLine());
+                    try { System.out.print("Opción no válida, introduce el Id de categoría manualmente: "); idCategoria = Integer.parseInt(scanner.nextLine()); }
+                    catch (NumberFormatException e) { System.err.println("Id de categoría no válido."); return; }
                 }
             }
 
             listarProveedores();
-            System.out.print("Id proveedor (" + producto.getProveedor().getId() + "): ");
-            int idProveedor = Integer.parseInt(scanner.nextLine());
+            int idProveedor;
+            try {
+                System.out.print("Id proveedor (" + producto.getProveedor().getId() + "): ");
+                idProveedor = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Id de proveedor no válido.");
+                return;
+            }
 
             if (productoController.actualizarProducto(id, nombre, descripcion, precio, stock, idCategoria, idProveedor)) {
                 System.out.println("Producto actualizado correctamente.");
@@ -310,7 +293,7 @@ public class MenuProductos {
                 System.out.println("Error al actualizar el producto.");
             }
         } catch (NumberFormatException e) {
-            System.err.println("Valor no válido.");
+            System.err.println("El id debe ser un número entero.");
         }
     }
 
@@ -327,7 +310,7 @@ public class MenuProductos {
                 System.out.println("Producto no encontrado.");
                 return;
             }
-            System.out.println("¿Seguro que quieres eliminar '" + producto.getNombre() + "'? (s/n): ");
+            System.out.print("¿Seguro que quieres eliminar '" + producto.getNombre() + "'? (s/n): ");
             if (scanner.nextLine().equalsIgnoreCase("s")) {
                 if (productoController.eliminarProducto(id)) {
                     System.out.println("Producto eliminado correctamente.");

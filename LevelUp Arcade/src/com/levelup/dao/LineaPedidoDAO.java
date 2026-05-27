@@ -69,7 +69,7 @@ public class LineaPedidoDAO {
      * @return true si la actualización fue exitosa
      */
     public boolean actualizar(LineaPedido lineaPedido) {
-        String sql = "UPDATE linea_pedido  SET cantidad = ?, precio_unitario = ? WHERE id_pedido = ? AND id_producto = ?";
+        String sql = "UPDATE linea_pedido SET cantidad = ?, precio_unitario = ? WHERE id_pedido = ? AND id_producto = ?";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, lineaPedido.getCantidad());
@@ -90,7 +90,7 @@ public class LineaPedidoDAO {
      * @return true si la eliminación fue exitosa
      */
     public boolean eliminar(int idPedido, int idProducto) {
-        String sql = "DELETE FROM linea_pedido  WHERE id_pedido = ? AND id_producto = ?";
+        String sql = "DELETE FROM linea_pedido WHERE id_pedido = ? AND id_producto = ?";
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPedido);

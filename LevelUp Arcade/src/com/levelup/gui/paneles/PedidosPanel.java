@@ -8,6 +8,9 @@ import com.levelup.modelo.Usuario;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class PedidosPanel extends JPanel {
     private final boolean esAdmin;
     private JTable tabla;
     private DefaultTableModel modeloTabla;
+    private TableRowSorter<DefaultTableModel> sorter;
     private JPanel cuerpo;
 
     public PedidosPanel(Usuario usuarioActivo) {
@@ -127,19 +131,26 @@ public class PedidosPanel extends JPanel {
         panel.setBackground(C_WHITE);
         panel.setBorder(BorderFactory.createLineBorder(C_BORDER, 1));
 
-        JPanel cabecera = new JPanel(new BorderLayout());
+        JPanel cabecera = new JPanel(new BorderLayout(8, 0));
         cabecera.setBackground(C_WHITE);
         cabecera.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER), new EmptyBorder(12, 16, 12, 16)));
+            BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER), new EmptyBorder(10, 16, 10, 16)));
 
         JLabel lblTabla = new JLabel("Listado de pedidos");
         lblTabla.setFont(new Font("Segoe UI", Font.BOLD, 14)); lblTabla.setForeground(C_TEXT);
 
+        JTextField campoBusqueda = crearCampoBusqueda("Buscar por ID, cliente, estado...");
+
         JButton btnRefrescar = crearBotonRefrescar();
-        btnRefrescar.addActionListener(e -> refrescar());
+        btnRefrescar.addActionListener(e -> { campoBusqueda.setText(""); refrescar(); });
+
+        JPanel derechaBar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+        derechaBar.setBackground(C_WHITE);
+        derechaBar.add(btnRefrescar);
 
         cabecera.add(lblTabla, BorderLayout.WEST);
-        cabecera.add(btnRefrescar, BorderLayout.EAST);
+        cabecera.add(campoBusqueda, BorderLayout.CENTER);
+        cabecera.add(derechaBar, BorderLayout.EAST);
         panel.add(cabecera, BorderLayout.NORTH);
 
         String[] cols = {"ID", "Cliente", "Fecha", "Estado", ""};
@@ -148,6 +159,8 @@ public class PedidosPanel extends JPanel {
         };
 
         tabla = new JTable(modeloTabla);
+        sorter = new TableRowSorter<>(modeloTabla);
+        tabla.setRowSorter(sorter);
         tabla.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         tabla.setRowHeight(40); tabla.setGridColor(C_BORDER); tabla.setBackground(C_WHITE);
         tabla.setSelectionBackground(new Color(92, 51, 181, 30)); tabla.setSelectionForeground(C_TEXT);
@@ -185,7 +198,7 @@ public class PedidosPanel extends JPanel {
                 lbl.setBackground(sel ? new Color(92,51,181,30) : r % 2 == 0 ? C_WHITE : new Color(245,243,255));
                 switch (val) {
                     case "PENDIENTE"  -> lbl.setForeground(C_ORANGE);
-                    case "EN_PROCESO" -> lbl.setForeground(C_BLUE);
+                    case "PROCESANDO" -> lbl.setForeground(C_BLUE);
                     case "ENVIADO"    -> lbl.setForeground(new Color(139, 92, 246));
                     case "ENTREGADO"  -> lbl.setForeground(C_GREEN);
                     case "CANCELADO"  -> lbl.setForeground(C_RED);
@@ -205,9 +218,10 @@ public class PedidosPanel extends JPanel {
                     int fila = tabla.rowAtPoint(e.getPoint());
                     int col  = tabla.columnAtPoint(e.getPoint());
                     if (col != 4 || fila < 0) return;
+                    int modelRow = tabla.convertRowIndexToModel(fila);
                     int x = e.getX() - tabla.getCellRect(fila, col, true).x;
-                    if (x < 80) dialogoCambiarEstado(fila);
-                    else eliminarFila(fila);
+                    if (x < 80) dialogoCambiarEstado(modelRow);
+                    else eliminarFila(modelRow);
                 }
             });
             tabla.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -282,6 +296,52 @@ public class PedidosPanel extends JPanel {
             if (pedidoController.eliminarPedido(id)) { exito("Pedido eliminado."); refrescar(); }
             else error("No se pudo eliminar.");
         }
+    }
+
+    private void filtrar(String texto) {
+        if (texto == null || texto.trim().isEmpty()) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto.trim()));
+        }
+    }
+
+    private JTextField crearCampoBusqueda(String placeholder) {
+        JTextField campo = new JTextField() {
+            @Override protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (getText().isEmpty() && !isFocusOwner()) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setColor(C_MUTED);
+                    g2.setFont(getFont().deriveFont(Font.ITALIC));
+                    g2.drawString(placeholder, 10, getHeight() / 2 + 5);
+                    g2.dispose();
+                }
+            }
+        };
+        campo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        campo.setBackground(new Color(248, 247, 255));
+        campo.setForeground(C_TEXT);
+        campo.setCaretColor(C_PURPLE);
+        campo.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(C_BORDER, 1), new EmptyBorder(4, 10, 4, 10)));
+        campo.setPreferredSize(new Dimension(240, 32));
+        campo.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override public void focusGained(java.awt.event.FocusEvent e) {
+                campo.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(C_PURPLE, 1), new EmptyBorder(4, 10, 4, 10)));
+            }
+            @Override public void focusLost(java.awt.event.FocusEvent e) {
+                campo.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(C_BORDER, 1), new EmptyBorder(4, 10, 4, 10)));
+            }
+        });
+        campo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e) { filtrar(campo.getText()); }
+            @Override public void removeUpdate(DocumentEvent e) { filtrar(campo.getText()); }
+            @Override public void changedUpdate(DocumentEvent e) { filtrar(campo.getText()); }
+        });
+        return campo;
     }
 
     private JButton crearBotonInline(String texto, Color color) {

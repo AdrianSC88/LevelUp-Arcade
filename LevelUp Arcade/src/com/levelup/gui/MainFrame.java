@@ -7,17 +7,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Ventana principal de la aplicación tras el login.
+ * Contiene el sidebar de navegación y el área de contenido central.
+ * La navegación y los paneles disponibles se adaptan al rol del usuario.
+ */
 public class MainFrame extends JFrame {
 
-    private static final Color C_BG        = new Color(248, 247, 255);
-    private static final Color C_SIDEBAR   = new Color(15, 10, 30);
-    private static final Color C_PURPLE    = new Color(92, 51, 181);
-    private static final Color C_PURPLE_L  = new Color(196, 181, 253);
-    private static final Color C_ORANGE    = new Color(249, 115, 22);
-    private static final Color C_TEXT      = new Color(26, 18, 37);
-    private static final Color C_MUTED     = new Color(107, 114, 128);
-    private static final Color C_BORDER    = new Color(229, 224, 248);
-    private static final int   SIDEBAR_W   = 220;
+    private static final int SIDEBAR_W = 220;
 
     private final Usuario usuarioActivo;
     private JPanel areaContenido;
@@ -32,38 +29,45 @@ public class MainFrame extends JFrame {
 
     private void configurarVentana() {
         setTitle("LevelUp Arcade — " + usuarioActivo.getNombre() + " [" + usuarioActivo.getRol() + "]");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Confirmación antes de cerrar
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override public void windowClosing(java.awt.event.WindowEvent e) {
+                GUIUtils.confirmarSalida(MainFrame.this);
+            }
+        });
         setSize(1100, 700);
         setMinimumSize(new Dimension(900, 600));
         setLocationRelativeTo(null);
-        getContentPane().setBackground(C_BG);
+        getContentPane().setBackground(GUIUtils.C_BG);
     }
 
     private void construirUI() {
         setLayout(new BorderLayout());
-        add(construirSidebar(), BorderLayout.WEST);
-        add(construirTopbar(), BorderLayout.NORTH);
+        add(construirSidebar(),       BorderLayout.WEST);
+        add(construirTopbar(),        BorderLayout.NORTH);
         add(construirAreaContenido(), BorderLayout.CENTER);
-        add(construirFooter(), BorderLayout.SOUTH);
+        add(construirFooter(),        BorderLayout.SOUTH);
     }
 
     private JPanel construirSidebar() {
         JPanel sidebar = new JPanel();
-        sidebar.setBackground(C_SIDEBAR);
+        sidebar.setBackground(GUIUtils.C_PURPLE_L.darker().darker().darker()); // C_SIDEBAR
+        sidebar.setBackground(new Color(15, 10, 30));
         sidebar.setPreferredSize(new Dimension(SIDEBAR_W, 0));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, new Color(196, 181, 253, 25)));
 
         // Brand
         JPanel brand = new JPanel();
-        brand.setBackground(C_SIDEBAR);
+        brand.setBackground(new Color(15, 10, 30));
         brand.setLayout(new BoxLayout(brand, BoxLayout.Y_AXIS));
         brand.setBorder(new EmptyBorder(24, 20, 16, 20));
         brand.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
 
         JLabel tagLabel = new JLabel("PRÁCTICAS 1.º DAM");
         tagLabel.setFont(new Font("Consolas", Font.PLAIN, 11));
-        tagLabel.setForeground(C_ORANGE);
+        tagLabel.setForeground(GUIUtils.C_ORANGE);
         tagLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel titulo = new JLabel("LevelUp Arcade");
@@ -93,22 +97,20 @@ public class MainFrame extends JFrame {
         sidebar.add(crearNavBoton("▪  Pedidos",     "pedidos"));
 
         sidebar.add(crearNavLabel("SISTEMA"));
-
         if ("administrador".equals(usuarioActivo.getRol())) {
             sidebar.add(crearNavBoton("▪  Usuarios", "usuarios"));
         }
-
         sidebar.add(crearNavBoton("▪  Asistente IA", "ia"));
 
         sidebar.add(Box.createVerticalGlue());
         sidebar.add(crearSeparador());
 
+        // Botón cerrar sesión
         JButton cerrarSesion = new JButton("▪  Cerrar sesión") {
-            @Override
-            protected void paintComponent(Graphics g) {
+            @Override protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 if (getModel().isRollover()) {
-                    g2.setColor(new Color(92, 51, 181, 50));
+                    g2.setColor(GUIUtils.C_HOVER_BG);
                     g2.fillRect(0, 0, getWidth(), getHeight());
                 }
                 g2.dispose();
@@ -116,8 +118,8 @@ public class MainFrame extends JFrame {
             }
         };
         cerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        cerrarSesion.setForeground(new Color(239, 68, 68));
-        cerrarSesion.setBackground(C_SIDEBAR);
+        cerrarSesion.setForeground(GUIUtils.C_RED);
+        cerrarSesion.setBackground(new Color(15, 10, 30));
         cerrarSesion.setBorderPainted(false);
         cerrarSesion.setFocusPainted(false);
         cerrarSesion.setContentAreaFilled(false);
@@ -130,25 +132,15 @@ public class MainFrame extends JFrame {
             SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
         });
         sidebar.add(cerrarSesion);
-        cerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override public void mouseEntered(java.awt.event.MouseEvent e) {
-                cerrarSesion.setBackground(new Color(92, 51, 181, 50));
-            }
-            @Override public void mouseExited(java.awt.event.MouseEvent e) {
-                cerrarSesion.setBackground(C_SIDEBAR);
-            }
-        });
-
         return sidebar;
     }
 
     private JButton crearNavBoton(String texto, String seccion) {
         JButton boton = new JButton(texto) {
-            @Override
-            protected void paintComponent(Graphics g) {
+            @Override protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 if (getModel().isRollover()) {
-                    g2.setColor(new Color(92, 51, 181, 50));
+                    g2.setColor(GUIUtils.C_HOVER_BG);
                     g2.fillRect(0, 0, getWidth(), getHeight());
                 }
                 g2.dispose();
@@ -157,7 +149,7 @@ public class MainFrame extends JFrame {
         };
         boton.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         boton.setForeground(new Color(255, 255, 255, 160));
-        boton.setBackground(C_SIDEBAR);
+        boton.setBackground(new Color(15, 10, 30));
         boton.setBorderPainted(false);
         boton.setFocusPainted(false);
         boton.setContentAreaFilled(false);
@@ -190,20 +182,19 @@ public class MainFrame extends JFrame {
         JPanel topbar = new JPanel(new BorderLayout());
         topbar.setBackground(Color.WHITE);
         topbar.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(0, 0, 1, 0, C_BORDER),
+            BorderFactory.createMatteBorder(0, 0, 1, 0, GUIUtils.C_BORDER),
             new EmptyBorder(10, 24, 10, 24)
         ));
         topbar.setPreferredSize(new Dimension(0, 46));
 
         labelSeccion = new JLabel("Inicio");
         labelSeccion.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        labelSeccion.setForeground(C_PURPLE);
+        labelSeccion.setForeground(GUIUtils.C_PURPLE);
 
         JLabel rolTag = new JLabel(usuarioActivo.getRol().toUpperCase());
         rolTag.setFont(new Font("Consolas", Font.BOLD, 10));
         rolTag.setForeground(Color.WHITE);
-        rolTag.setBackground("administrador".equals(usuarioActivo.getRol())
-            ? C_PURPLE : new Color(59, 130, 246));
+        rolTag.setBackground("administrador".equals(usuarioActivo.getRol()) ? GUIUtils.C_PURPLE : GUIUtils.C_BLUE);
         rolTag.setOpaque(true);
         rolTag.setBorder(new EmptyBorder(3, 8, 3, 8));
 
@@ -214,26 +205,31 @@ public class MainFrame extends JFrame {
 
     private JPanel construirAreaContenido() {
         areaContenido = new JPanel(new BorderLayout());
-        areaContenido.setBackground(C_BG);
+        areaContenido.setBackground(GUIUtils.C_BG);
         return areaContenido;
     }
 
     private JLabel construirFooter() {
         JLabel footer = new JLabel(
-            "Adrián Sánchez Cañadas · CampusFP · 1.º DAM · Curso 2025–2026",
+            "Adrián Sánchez Cañadas · 1.º DAM · CampusFP · Curso 2025–2026",
             SwingConstants.CENTER
         );
         footer.setFont(new Font("Consolas", Font.PLAIN, 10));
-        footer.setForeground(C_MUTED);
+        footer.setForeground(GUIUtils.C_MUTED);
         footer.setBackground(Color.WHITE);
         footer.setOpaque(true);
         footer.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(1, 0, 0, 0, C_BORDER),
+            BorderFactory.createMatteBorder(1, 0, 0, 0, GUIUtils.C_BORDER),
             new EmptyBorder(6, 0, 6, 0)
         ));
         return footer;
     }
 
+    /**
+     * Navega al panel indicado actualizando el área de contenido y el breadcrumb.
+     *
+     * @param seccion identificador de la sección destino
+     */
     public void navegarA(String seccion) {
         areaContenido.removeAll();
 

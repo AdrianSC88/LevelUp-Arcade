@@ -8,12 +8,14 @@ import com.levelup.servicio.LlmService;
 public class LlmController {
 
     private final LlmService llmService;
+    private final CategoriaController categoriaController;
 
     /**
-     * Constructor. Inicializa el servicio de comunicación con el LLM.
+     * Constructor. Inicializa el servicio LLM y el controlador de categorías.
      */
     public LlmController() {
         this.llmService = new LlmService();
+        this.categoriaController = new CategoriaController();
     }
 
     /**
@@ -36,7 +38,6 @@ public class LlmController {
      * @return Categoría sugerida por la IA.
      */
     public String sugerirCategoria(String nombreProducto) {
-        CategoriaController categoriaController = new CategoriaController();
         String categorias = categoriaController.obtenerTodas()
                 .stream()
                 .map(c -> c.getNombre())
