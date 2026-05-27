@@ -23,6 +23,14 @@ public class Logger {
     }
 
     /**
+     * Registra un mensaje de advertencia en el fichero de log.
+     * @param mensaje mensaje a registrar
+     */
+    public static void warn(String mensaje) {
+        escribir("WARN", mensaje);
+    }
+
+    /**
      * Registra un mensaje de error en el fichero de log.
      * @param mensaje mensaje a registrar
      */
@@ -32,13 +40,12 @@ public class Logger {
 
     /**
      * Escribe una línea en el fichero de log.
-     * @param nivel nivel del log (INFO/ERROR)
+     * @param nivel nivel del log (INFO/WARN/ERROR)
      * @param mensaje mensaje a registrar
      */
     private static void escribir(String nivel, String mensaje) {
         String linea = String.format("[%s] %s - %s",
                 LocalDateTime.now().format(FORMATO), nivel, mensaje);
-
 
         try {
             java.io.File directorio = new java.io.File("logs");

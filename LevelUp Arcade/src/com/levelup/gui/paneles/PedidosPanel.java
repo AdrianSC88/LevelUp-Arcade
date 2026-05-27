@@ -49,7 +49,7 @@ public class PedidosPanel extends JPanel {
     private void construirUI() {
         JButton btnNuevo = null;
         if (esAdmin) {
-            btnNuevo = GUIUtils.crearBotonTop("+ Añadir pedido", GUIUtils.C_ORANGE, GUIUtils.C_WHITE);
+            btnNuevo = GUIUtils.crearBotonTop("+ Nuevo pedido", GUIUtils.C_ORANGE, GUIUtils.C_WHITE);
             btnNuevo.addActionListener(e -> dialogoCrearPedido());
         }
         add(GUIUtils.construirTopbar("Gestión de Pedidos", GUIUtils.panelAccionTopbar(btnNuevo)), BorderLayout.NORTH);

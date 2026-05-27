@@ -74,15 +74,23 @@
             <mxRectangle height="25" width="160" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="linea_pedido" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;strokeWidth=1;" value="linea_pedido" vertex="1">
-          <mxGeometry height="112.5" width="160" x="570" y="146.25" as="geometry" />
+        <mxCell id="linea_pedido" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="linea_pedido" vertex="1">
+          <mxGeometry height="105" width="160" x="560" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="lp-1" parent="linea_pedido" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;top=0;left=0;right=0;bottom=1;" value="" vertex="1">
+          <mxGeometry height="25" width="160" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lp-1a" parent="lp-1" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" value="cantidad" vertex="1">
+          <mxGeometry height="25" width="160" as="geometry">
+            <mxRectangle height="25" width="160" as="alternateBounds" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="lp-2" parent="linea_pedido" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;top=0;left=0;right=0;bottom=0;" value="" vertex="1">
-          <mxGeometry height="40" width="160" y="30" as="geometry" />
+          <mxGeometry height="25" width="160" y="55" as="geometry" />
         </mxCell>
-        <mxCell id="lp-2a" parent="lp-2" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;strokeWidth=0;strokeColor=inherit;" value="precio_unitario" vertex="1">
-          <mxGeometry height="40" width="160" as="geometry">
-            <mxRectangle height="40" width="160" as="alternateBounds" />
+        <mxCell id="lp-2a" parent="lp-2" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" value="precio_unitario" vertex="1">
+          <mxGeometry height="25" width="160" as="geometry">
+            <mxRectangle height="25" width="160" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="productos" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" value="productos" vertex="1">
@@ -260,10 +268,10 @@
         <mxCell id="rel-cli-ped" edge="1" parent="1" source="cli-1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERmany;startArrow=ERone;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;fontStyle=0" target="ped-1" value="1:m">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-ped-lp" edge="1" parent="1" source="ped-1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERmany;startArrow=ERone;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.017;entryY=0.122;entryDx=0;entryDy=0;fontSize=14;entryPerimeter=0;" target="linea_pedido" value="1:m">
+        <mxCell id="rel-ped-lp" edge="1" parent="1" source="ped-1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERmany;startArrow=ERone;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" target="lp-1" value="1:m">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-lp-pro" edge="1" parent="1" source="linea_pedido" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERone;startArrow=ERmany;exitX=0.989;exitY=0.152;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;exitPerimeter=0;" target="pro-1" value="m:1">
+        <mxCell id="rel-lp-pro" edge="1" parent="1" source="lp-1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERone;startArrow=ERmany;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" target="pro-1" value="m:1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rel-pro-prov" edge="1" parent="1" source="pro-1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERone;startArrow=ERmany;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" target="prov-1" value="m:1">
@@ -271,11 +279,6 @@
         </mxCell>
         <mxCell id="rel-pro-cat" edge="1" parent="1" source="productos" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;strokeWidth=2;endArrow=ERone;startArrow=ERmany;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" target="categorias" value="m:1">
           <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="ASdU0GhU2Jez56fFTMsu-9" parent="1" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;strokeWidth=0;strokeColor=inherit;" value="cantidad" vertex="1">
-          <mxGeometry height="40" width="160" x="570" y="205" as="geometry">
-            <mxRectangle height="40" width="160" as="alternateBounds" />
-          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

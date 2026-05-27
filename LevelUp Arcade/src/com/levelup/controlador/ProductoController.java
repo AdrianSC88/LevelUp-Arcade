@@ -151,13 +151,19 @@ public class ProductoController {
 
     /**
      * Elimina un producto por su id.
+     * No permite la eliminación si el producto tiene pedidos asociados.
      * @param id identificador del producto a eliminar
-     * @return true si se eliminó correctamente
+     * @return true si se eliminó correctamente, false si tiene pedidos o id inválido
      */
     public boolean eliminarProducto(int id) {
         if (id <= 0) {
             Logger.error("Intento de eliminar producto con id inválido: " + id);
             System.err.println("El id debe ser un número positivo.");
+            return false;
+        }
+        if (productoDAO.tienePedidosAsociados(id)) {
+            Logger.warn("Intento de eliminar producto con id " + id + " que tiene pedidos asociados");
+            System.err.println("No se puede eliminar: el producto tiene pedidos asociados.");
             return false;
         }
         boolean resultado = productoDAO.eliminar(id);
@@ -167,5 +173,14 @@ public class ProductoController {
             Logger.error("Error al eliminar producto con id: " + id);
         }
         return resultado;
+    }
+    
+    /**
+     * Comprueba si un producto tiene pedidos asociados.
+     * @param id identificador del producto
+     * @return true si el producto aparece en alguna línea de pedido
+     */
+    public boolean tienePedidosAsociados(int id) {
+        return productoDAO.tienePedidosAsociados(id);
     }
 }

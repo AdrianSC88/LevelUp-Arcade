@@ -127,6 +127,24 @@ public class ProductoDAO {
     }
 
     /**
+     * Comprueba si un producto tiene líneas de pedido asociadas.
+     * @param id identificador del producto
+     * @return true si el producto aparece en algún pedido
+     */
+    public boolean tienePedidosAsociados(int id) {
+        String sql = "SELECT COUNT(*) FROM linea_pedido WHERE id_producto = ?";
+        try (Connection con = ConexionBD.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() && rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            System.err.println("Error al comprobar pedidos del producto: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
      * Mapea un ResultSet a un objeto Producto.
      * @param rs ResultSet con los datos del producto
      * @return objeto Producto

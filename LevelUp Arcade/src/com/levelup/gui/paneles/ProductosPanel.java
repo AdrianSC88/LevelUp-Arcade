@@ -405,14 +405,24 @@ public class ProductosPanel extends JPanel {
         panel.add(btnIA, BorderLayout.EAST);
         return panel;
     }
-
+    
     private void eliminarFila(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         String nombre = modeloTabla.getValueAt(modelRow, 1).toString();
         if (JOptionPane.showConfirmDialog(this, "¿Eliminar \"" + nombre + "\"?",
                 "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
-            if (productoController.eliminarProducto(id)) { GUIUtils.exito(this, "Producto eliminado."); refrescar(); }
-            else GUIUtils.error(this, "No se pudo eliminar.");
+            if (productoController.eliminarProducto(id)) {
+                GUIUtils.exito(this, "Producto eliminado.");
+                refrescar();
+            } else if (productoController.tienePedidosAsociados(id)) {
+                JOptionPane.showMessageDialog(this,
+                    "No se puede eliminar \"" + nombre + "\":\ntiene pedidos asociados en el sistema.",
+                    "Operación no permitida",
+                    JOptionPane.WARNING_MESSAGE);
+            } else {
+                GUIUtils.error(this, "No se pudo eliminar.");
+            }
         }
     }
+
 }
