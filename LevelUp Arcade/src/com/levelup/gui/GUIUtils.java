@@ -15,25 +15,44 @@ import java.awt.*;
  * por todos los paneles de la interfaz gráfica de LevelUp Arcade.
  * Centraliza la paleta de colores y los componentes reutilizables para
  * garantizar coherencia visual y reducir la duplicación de código.
+ * <p>
+ * Esta clase no es instanciable; todos sus miembros son estáticos.
+ * </p>
  */
 public final class GUIUtils {
 
     // ── PALETA DE COLORES ─────────────────────────────────────────────────────
+    /** Color de fondo general de la aplicación (lila muy claro). */
     public static final Color C_BG       = new Color(248, 247, 255);
+    /** Color morado principal de la marca. */
     public static final Color C_PURPLE   = new Color(92, 51, 181);
+    /** Color morado claro (usado en el sidebar y acentos secundarios). */
     public static final Color C_PURPLE_L = new Color(196, 181, 253);
+    /** Color naranja de acento para botones de acción y alertas. */
     public static final Color C_ORANGE   = new Color(249, 115, 22);
+    /** Color azul para acciones secundarias y etiquetas de empleado. */
     public static final Color C_BLUE     = new Color(59, 130, 246);
+    /** Color rojo para acciones destructivas y mensajes de error. */
     public static final Color C_RED      = new Color(239, 68, 68);
+    /** Color verde para estados positivos (stock disponible, entregado). */
     public static final Color C_GREEN    = new Color(34, 197, 94);
+    /** Blanco puro, usado como fondo de tarjetas y tablas. */
     public static final Color C_WHITE    = Color.WHITE;
+    /** Color de texto principal (casi negro con tinte morado). */
     public static final Color C_TEXT     = new Color(26, 18, 37);
+    /** Color de texto secundario/desactivado (gris neutro). */
     public static final Color C_MUTED    = new Color(107, 114, 128);
+    /** Color de borde de paneles y campos (lila suave). */
     public static final Color C_BORDER   = new Color(229, 224, 248);
+    /** Color de fondo del header oscuro de la topbar. */
     public static final Color C_HEADER   = new Color(45, 21, 114);
+    /** Color de fondo de los campos de texto. */
     public static final Color C_FIELD_BG = new Color(252, 251, 255);
+    /** Color de fondo de filas alternas de la tabla. */
     public static final Color C_ROW_ALT  = new Color(245, 243, 255);
+    /** Color de fondo de la fila seleccionada en la tabla. */
     public static final Color C_SEL_BG   = new Color(92, 51, 181, 30);
+    /** Color de fondo al pasar el ratón sobre un elemento interactivo. */
     public static final Color C_HOVER_BG = new Color(92, 51, 181, 50);
 
     private GUIUtils() { /* no instanciable */ }
@@ -42,6 +61,13 @@ public final class GUIUtils {
 
     /**
      * Crea un botón principal de acción con color de fondo y hover suave.
+     * Al pasar el ratón por encima, el color de fondo se aclara ligeramente
+     * sumando 20 a cada componente RGB.
+     *
+     * @param texto el texto visible del botón
+     * @param bg    el color de fondo base
+     * @param fg    el color del texto
+     * @return el botón creado y configurado
      */
     public static JButton crearBotonTop(String texto, Color bg, Color fg) {
         JButton b = new JButton(texto);
@@ -70,6 +96,12 @@ public final class GUIUtils {
 
     /**
      * Crea un botón inline de tabla con borde de color y hover de relleno.
+     * En reposo tiene fondo blanco y texto del color indicado; al pasar el
+     * ratón invierte los colores (fondo de color, texto blanco).
+     *
+     * @param texto el texto visible del botón
+     * @param color el color del borde y del texto en reposo
+     * @return el botón inline creado (62 px de ancho por defecto)
      */
     public static JButton crearBotonInline(String texto, Color color) {
         JButton b = new JButton(texto);
@@ -93,6 +125,12 @@ public final class GUIUtils {
 
     /**
      * Crea un botón inline con ancho personalizado.
+     * Delega en {@link #crearBotonInline(String, Color)} y sobreescribe el ancho.
+     *
+     * @param texto  el texto visible del botón
+     * @param color  el color del borde y del texto en reposo
+     * @param ancho  el ancho preferido en píxeles
+     * @return el botón inline creado con el ancho indicado
      */
     public static JButton crearBotonInline(String texto, Color color, int ancho) {
         JButton b = crearBotonInline(texto, color);
@@ -102,6 +140,9 @@ public final class GUIUtils {
 
     /**
      * Crea el botón de refrescar estándar con hover suave.
+     * Muestra el símbolo de recarga (↻) y el texto "Refrescar".
+     *
+     * @return el botón de refrescar creado y configurado
      */
     public static JButton crearBotonRefrescar() {
         JButton b = new JButton("↻ Refrescar");
@@ -123,6 +164,17 @@ public final class GUIUtils {
     /**
      * Crea un campo de búsqueda con placeholder, borde animado y filtrado automático
      * sobre el {@link TableRowSorter} proporcionado.
+     * <p>
+     * El placeholder se dibuja en cursiva cuando el campo está vacío y sin foco.
+     * Al ganar el foco el borde cambia a morado; al perderlo vuelve al borde gris.
+     * Cada cambio en el texto actualiza el filtro del sorter en tiempo real mediante
+     * un {@link DocumentListener}.
+     * </p>
+     *
+     * @param placeholder texto de ayuda que se muestra cuando el campo está vacío
+     * @param sorter      sorter de la tabla al que se conecta el filtro;
+     *                    puede ser {@code null} para deshabilitar el filtrado
+     * @return el campo de búsqueda creado y configurado
      */
     public static JTextField crearCampoBusqueda(String placeholder, TableRowSorter<DefaultTableModel> sorter) {
         JTextField campo = new JTextField() {
@@ -165,7 +217,12 @@ public final class GUIUtils {
     }
 
     /**
-     * Aplica o elimina el filtro sobre un {@link TableRowSorter}.
+     * Aplica o elimina el filtro de expresión regular sobre un {@link TableRowSorter}.
+     * La búsqueda es insensible a mayúsculas/minúsculas (prefijo {@code (?i)}).
+     * Si el texto está vacío o es solo espacios, elimina el filtro mostrando todas las filas.
+     *
+     * @param texto  el texto introducido por el usuario
+     * @param sorter el sorter de la tabla sobre el que aplicar el filtro
      */
     public static void filtrar(String texto, TableRowSorter<DefaultTableModel> sorter) {
         if (texto == null || texto.trim().isEmpty()) sorter.setRowFilter(null);
@@ -175,8 +232,12 @@ public final class GUIUtils {
     // ── TABLA ─────────────────────────────────────────────────────────────────
 
     /**
-     * Aplica el estilo estándar a una JTable y devuelve el sorter creado.
+     * Aplica el estilo estándar a una {@link JTable}: fuente, altura de fila,
+     * color de cuadrícula, fondo, selección, cabecera y renderer de filas alternas.
+     * También crea y asigna un {@link TableRowSorter} a la tabla.
      *
+     * @param tabla  la tabla a estilizar
+     * @param modelo el modelo de datos de la tabla
      * @return el sorter creado, ya asignado a la tabla
      */
     public static TableRowSorter<DefaultTableModel> estilizarTabla(JTable tabla, DefaultTableModel modelo) {
@@ -214,7 +275,11 @@ public final class GUIUtils {
     }
 
     /**
-     * Crea un JScrollPane estilizado sin borde para envolver una tabla.
+     * Crea un {@link JScrollPane} estilizado sin borde para envolver una tabla.
+     * El viewport tiene fondo blanco para evitar huecos de color en tablas cortas.
+     *
+     * @param tabla la tabla a envolver en el scroll
+     * @return el scroll pane configurado
      */
     public static JScrollPane crearScrollTabla(JTable tabla) {
         JScrollPane scroll = new JScrollPane(tabla);
@@ -228,10 +293,12 @@ public final class GUIUtils {
     /**
      * Crea el panel topbar morado con gradiente y línea naranja-azul inferior,
      * con logo y título a la izquierda y un panel derecho opcional para botones.
+     * El logo se carga desde {@code resources/logo2.png} en el classpath.
      *
-     * @param titulo       texto del título
-     * @param panelDerecha panel con botones de acción (puede ser null)
-     * @return el topbar construido
+     * @param titulo       texto del título de la sección
+     * @param panelDerecha panel con botones de acción; puede ser {@code null}
+     *                     si no se necesitan botones en este topbar
+     * @return el topbar construido listo para añadir al layout
      */
     public static JPanel construirTopbar(String titulo, JPanel panelDerecha) {
         JPanel bar = new JPanel() {
@@ -273,6 +340,11 @@ public final class GUIUtils {
 
     /**
      * Crea el panel derecho del topbar para alojar botones de acción.
+     * Si el botón es {@code null} devuelve un panel vacío (para mantener
+     * el layout consistente).
+     *
+     * @param boton el botón de acción principal; puede ser {@code null}
+     * @return el panel derecho con el botón añadido (o vacío)
      */
     public static JPanel panelAccionTopbar(JButton boton) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 14));
@@ -285,6 +357,13 @@ public final class GUIUtils {
 
     /**
      * Crea una tarjeta de estadística con título, valor destacado y subtexto.
+     * El valor se muestra en grande con el color de acento indicado.
+     *
+     * @param titulo  texto descriptivo de la estadística (parte superior)
+     * @param valor   valor numérico o textual principal
+     * @param sub     subtexto explicativo bajo el valor
+     * @param acento  color aplicado al valor principal
+     * @return el panel de tarjeta construido
      */
     public static JPanel crearTarjeta(String titulo, String valor, String sub, Color acento) {
         JPanel card = new JPanel(new BorderLayout());
@@ -307,7 +386,13 @@ public final class GUIUtils {
     // ── FORMULARIO ────────────────────────────────────────────────────────────
 
     /**
-     * Construye un panel de formulario con pares etiqueta-campo usando GridBagLayout.
+     * Construye un panel de formulario con pares etiqueta-campo usando {@link GridBagLayout}.
+     * Cada etiqueta se muestra en {@code Consolas} negrita y color morado; cada campo
+     * ocupa el espacio restante en la fila.
+     *
+     * @param labels  array de textos de etiqueta; debe tener la misma longitud que {@code campos}
+     * @param campos  array de componentes de entrada (TextField, ComboBox, etc.)
+     * @return el panel de formulario construido
      */
     public static JPanel construirForm(String[] labels, JComponent[] campos) {
         JPanel p = new JPanel(new GridBagLayout());
@@ -333,11 +418,12 @@ public final class GUIUtils {
     /**
      * Construye la cabecera estándar de tabla con título, campo de búsqueda
      * y botón de refrescar. El campo de búsqueda filtra automáticamente el sorter.
+     * Al pulsar refrescar se borra el texto de búsqueda y se ejecuta {@code onRefrescar}.
      *
-     * @param titulo      texto del título de la sección
+     * @param titulo      texto del título de la sección de tabla
      * @param placeholder texto de ayuda del campo de búsqueda
      * @param sorter      sorter de la tabla para conectar el filtro
-     * @param onRefrescar acción a ejecutar al pulsar refrescar
+     * @param onRefrescar acción a ejecutar al pulsar el botón de refrescar
      * @return el panel cabecera construido
      */
     public static JPanel construirCabeceraTabla(String titulo,
@@ -360,7 +446,7 @@ public final class GUIUtils {
      * Construye la cabecera de tabla con título, campo de búsqueda y panel derecho
      * personalizado. Úsalo cuando necesites añadir botones extra además del refrescar.
      *
-     * @param titulo        texto del título de la sección
+     * @param titulo        texto del título de la sección de tabla
      * @param campoBusqueda campo de búsqueda ya configurado
      * @param derechaBar    panel derecho con los botones de acción
      * @return el panel cabecera construido
@@ -387,6 +473,9 @@ public final class GUIUtils {
 
     /**
      * Muestra un diálogo de confirmación antes de cerrar la aplicación.
+     * Si el usuario confirma, llama a {@link System#exit(int)} con código 0.
+     *
+     * @param parent el componente padre del diálogo (para centrarlo)
      */
     public static void confirmarSalida(Component parent) {
         int resp = JOptionPane.showConfirmDialog(parent,
@@ -397,17 +486,32 @@ public final class GUIUtils {
 
     // ── MENSAJES ──────────────────────────────────────────────────────────────
 
-    /** Muestra un diálogo de éxito. */
+    /**
+     * Muestra un diálogo de éxito con el mensaje indicado.
+     *
+     * @param parent el componente padre del diálogo
+     * @param msg    el mensaje de éxito a mostrar
+     */
     public static void exito(Component parent, String msg) {
         JOptionPane.showMessageDialog(parent, msg, "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /** Muestra un diálogo de error. */
+    /**
+     * Muestra un diálogo de error con el mensaje indicado.
+     *
+     * @param parent el componente padre del diálogo
+     * @param msg    el mensaje de error a mostrar
+     */
     public static void error(Component parent, String msg) {
         JOptionPane.showMessageDialog(parent, msg, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    /** Muestra un label de "sin resultados" centrado en un panel. */
+    /**
+     * Crea un panel con una etiqueta de "sin resultados" centrada,
+     * útil para mostrar cuando una búsqueda no devuelve datos.
+     *
+     * @return el panel con la etiqueta de sin resultados
+     */
     public static JPanel panelSinResultados() {
         JPanel p = new JPanel(new GridBagLayout());
         p.setBackground(C_WHITE);

@@ -8,6 +8,15 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
+/**
+ * Ventana de inicio de sesión de LevelUp Arcade.
+ * <p>
+ * Muestra un formulario con campos de usuario y contraseña, un saludo
+ * dinámico según la hora del día y un sistema de bloqueo tras tres
+ * intentos fallidos consecutivos. Si las credenciales son correctas,
+ * abre {@link MainFrame} y se cierra a sí misma.
+ * </p>
+ */
 public class LoginFrame extends JFrame {
 
     private static final Color C_HEADER_TOP = new Color(92, 51, 181);
@@ -31,12 +40,20 @@ public class LoginFrame extends JFrame {
     private JButton botonLogin;
     private int intentos = 0;
 
+    /**
+     * Construye la ventana de login inicializando el controlador de usuarios
+     * y construyendo todos los componentes de la interfaz.
+     */
     public LoginFrame() {
         this.usuarioController = new UsuarioController();
         configurarVentana();
         construirUI();
     }
 
+    /**
+     * Configura las propiedades básicas de la ventana: título, tamaño,
+     * posición centrada, no redimensionable y siempre al frente.
+     */
     private void configurarVentana() {
         setTitle("LevelUp Arcade — Iniciar sesión");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,6 +65,10 @@ public class LoginFrame extends JFrame {
         toFront();
     }
 
+    /**
+     * Construye y organiza los tres bloques de la ventana:
+     * cabecera, formulario y pie.
+     */
     private void construirUI() {
         setLayout(new BorderLayout());
         add(construirHeader(), BorderLayout.NORTH);
@@ -55,6 +76,12 @@ public class LoginFrame extends JFrame {
         add(construirFooter(), BorderLayout.SOUTH);
     }
 
+    /**
+     * Construye el panel de cabecera con gradiente morado, logo de la aplicación,
+     * título y subtítulo. La línea inferior tiene un gradiente naranja-azul.
+     *
+     * @return el panel de cabecera listo para añadir al layout
+     */
     private JPanel construirHeader() {
         JPanel header = new JPanel() {
             @Override
@@ -109,6 +136,13 @@ public class LoginFrame extends JFrame {
         return header;
     }
 
+    /**
+     * Construye el panel central con el formulario de login: saludo dinámico,
+     * campos de usuario y contraseña, etiqueta de error, botón de acceso y
+     * aviso de seguridad.
+     *
+     * @return el panel de formulario listo para añadir al layout
+     */
     private JPanel construirFormulario() {
         JPanel outer = new JPanel(new GridBagLayout());
         outer.setBackground(C_BG);
@@ -170,6 +204,12 @@ public class LoginFrame extends JFrame {
         return outer;
     }
 
+    /**
+     * Crea el panel informativo que muestra un aviso de acceso restringido
+     * y la política de cifrado de contraseñas.
+     *
+     * @return el panel de aviso listo para añadir al formulario
+     */
     private JPanel crearAviso() {
         JPanel aviso = new JPanel(new BorderLayout());
         aviso.setBackground(C_INFO_BG);
@@ -187,6 +227,12 @@ public class LoginFrame extends JFrame {
         return aviso;
     }
 
+    /**
+     * Construye el pie de página con la versión de la aplicación
+     * y el aviso de copyright.
+     *
+     * @return el panel de pie de página listo para añadir al layout
+     */
     private JPanel construirFooter() {
         JPanel footer = new JPanel(new BorderLayout());
         footer.setBackground(Color.WHITE);
@@ -205,6 +251,13 @@ public class LoginFrame extends JFrame {
         return footer;
     }
 
+    /**
+     * Crea una etiqueta de formulario con el estilo estándar de la pantalla
+     * de login (negrita, color de texto principal, alineada a la izquierda).
+     *
+     * @param texto el texto que mostrará la etiqueta
+     * @return la etiqueta creada y estilizada
+     */
     private JLabel crearLabel(String texto) {
         JLabel lbl = new JLabel(texto);
         lbl.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -213,6 +266,12 @@ public class LoginFrame extends JFrame {
         return lbl;
     }
 
+    /**
+     * Aplica el estilo visual estándar a un campo de texto o contraseña:
+     * fondo claro, fuente, borde redondeado y efecto de foco azul al activarse.
+     *
+     * @param campo el campo ({@link JTextField} o {@link JPasswordField}) a estilizar
+     */
     private void estilizarCampo(JTextField campo) {
         campo.setBackground(C_FIELD_BG);
         campo.setForeground(C_TEXT);
@@ -241,6 +300,12 @@ public class LoginFrame extends JFrame {
         });
     }
 
+    /**
+     * Crea el botón principal de acceso con fondo degradado morado-azul pintado
+     * manualmente. Cambia de tono al pasar el ratón por encima.
+     *
+     * @return el botón de login configurado y con su listener asignado
+     */
     private JButton crearBotonLogin() {
         JButton boton = new JButton("→  Acceder al sistema") {
             @Override
@@ -268,6 +333,15 @@ public class LoginFrame extends JFrame {
         return boton;
     }
 
+    /**
+     * Intenta autenticar al usuario con las credenciales introducidas.
+     * <p>
+     * Si los campos están vacíos muestra un aviso. Si las credenciales son
+     * correctas abre {@link MainFrame}. Si son incorrectas incrementa el
+     * contador de intentos; al alcanzar tres bloquea el botón y cierra la
+     * aplicación tras dos segundos.
+     * </p>
+     */
     private void intentarLogin() {
         String nombreUsuario = campoUsuario.getText().trim();
         String password = new String(campoPassword.getPassword());
@@ -294,6 +368,13 @@ public class LoginFrame extends JFrame {
         }
     }
 
+    /**
+     * Devuelve un saludo contextual en función de la hora actual del sistema.
+     *
+     * @return {@code "Buenos días"} antes de las 12:00,
+     *         {@code "Buenas tardes"} entre las 12:00 y las 19:59,
+     *         {@code "Buenas noches"} a partir de las 20:00
+     */
     private String obtenerSaludo() {
         int hora = java.time.LocalTime.now().getHour();
         if (hora < 12) return "Buenos días";

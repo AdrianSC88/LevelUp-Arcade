@@ -19,6 +19,13 @@ import java.util.List;
 /**
  * Panel de gestión de productos. Permite visualizar, buscar, añadir,
  * editar y eliminar productos del catálogo según el rol del usuario.
+ * <p>
+ * Integra botones de asistente IA en los formularios de añadir y editar,
+ * tanto para generar la descripción del producto como para sugerir su categoría.
+ * La columna Estado se colorea según el nivel de stock: rojo (sin stock),
+ * naranja (stock bajo ≤ 10) y verde (disponible). Al pasar el ratón por la
+ * columna Nombre se muestra la descripción del producto como tooltip.
+ * </p>
  */
 public class ProductosPanel extends JPanel {
 
@@ -34,6 +41,14 @@ public class ProductosPanel extends JPanel {
     private TableRowSorter<DefaultTableModel> sorter;
     private JPanel cuerpo;
 
+    /**
+     * Construye el panel de productos para el usuario indicado.
+     * Inicializa todos los controladores necesarios, construye la interfaz
+     * y carga los datos desde la base de datos.
+     *
+     * @param usuarioActivo el usuario autenticado; determina si se muestran
+     *                      las acciones de administrador
+     */
     public ProductosPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
         this.esAdmin = "administrador".equals(usuarioActivo.getRol());
@@ -47,6 +62,10 @@ public class ProductosPanel extends JPanel {
         cargarDatos();
     }
 
+    /**
+     * Construye la interfaz del panel: topbar con botón de añadir (solo admin),
+     * panel de tarjetas de estadísticas y panel de tabla.
+     */
     private void construirUI() {
         JButton btnAnadir = null;
         if (esAdmin) {
@@ -63,6 +82,13 @@ public class ProductosPanel extends JPanel {
         add(cuerpo, BorderLayout.CENTER);
     }
 
+    /**
+     * Construye el panel de tarjetas con estadísticas del inventario:
+     * total de productos, unidades con stock bajo o sin stock, y valor
+     * total del inventario en euros.
+     *
+     * @return el panel de tarjetas listo para añadir al cuerpo
+     */
     private JPanel construirTarjetas() {
         JPanel panel = new JPanel(new GridLayout(1, 3, 12, 0));
         panel.setBackground(GUIUtils.C_BG);
@@ -80,6 +106,14 @@ public class ProductosPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Construye el panel de tabla con columnas ID, Nombre, Categoría, Proveedor,
+     * Precio, Stock, Estado y (si es admin) Acciones.
+     * Conecta el tooltip de descripción en la columna Nombre y los listeners de
+     * ratón para los botones de acción y el hover.
+     *
+     * @return el panel de tabla listo para añadir al cuerpo
+     */
     private JPanel construirPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(GUIUtils.C_WHITE);
@@ -159,6 +193,10 @@ public class ProductosPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Recarga los datos de la tabla y actualiza las tarjetas de estadísticas.
+     * Se llama tras cualquier operación CRUD para mantener la vista sincronizada.
+     */
     private void refrescar() {
         cargarDatos();
         cuerpo.remove(0);
@@ -167,6 +205,10 @@ public class ProductosPanel extends JPanel {
         cuerpo.repaint();
     }
 
+    /**
+     * Renderer de la columna de acciones. Muestra los botones "Editar" y "Eliminar"
+     * con efecto hover al pasar el ratón por la fila.
+     */
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
         private final JButton btnEditar   = GUIUtils.crearBotonInline("Editar",   GUIUtils.C_BLUE);
         private final JButton btnEliminar = GUIUtils.crearBotonInline("Eliminar", GUIUtils.C_RED);
@@ -188,6 +230,11 @@ public class ProductosPanel extends JPanel {
         }
     }
 
+    /**
+     * Vacía el modelo de la tabla y lo rellena con todos los productos
+     * obtenidos del controlador. Calcula el estado de stock de cada producto
+     * ("Sin stock", "Stock bajo" o "Disponible") para la columna de estado.
+     */
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
         for (Producto p : productoController.obtenerTodos()) {
@@ -201,6 +248,12 @@ public class ProductosPanel extends JPanel {
         }
     }
 
+    /**
+     * Abre un diálogo para introducir los datos de un nuevo producto.
+     * Incluye botones de asistente IA para generar la descripción y sugerir
+     * la categoría basándose en el nombre introducido.
+     * Valida que precio y stock sean valores numéricos antes de guardar.
+     */
     private void dialogoAnadir() {
         List<Categoria> cats  = categoriaController.obtenerTodas();
         List<Proveedor> provs = proveedorController.obtenerTodos();
@@ -286,6 +339,13 @@ public class ProductosPanel extends JPanel {
         }
     }
 
+    /**
+     * Abre un diálogo para editar el producto de la fila indicada.
+     * Precarga los datos actuales y ofrece los mismos botones de asistente IA
+     * que el diálogo de añadir.
+     *
+     * @param modelRow índice de fila en el modelo (no en la vista)
+     */
     private void dialogoEditar(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         Producto p = productoController.obtenerPorId(id);
@@ -378,7 +438,13 @@ public class ProductosPanel extends JPanel {
 
     /**
      * Crea un panel con un campo de texto y un botón "IA" a la derecha.
-     * El botón muestra feedback visual mientras la IA está generando.
+     * El botón muestra feedback visual mientras la IA está generando:
+     * cambia su texto a "..." y se deshabilita hasta recibir la respuesta.
+     *
+     * @param campo    el campo de texto donde se volcará el resultado generado
+     * @param accionIA acción a ejecutar al pulsar el botón; recibe el propio botón
+     *                 para que la acción pueda modificar su estado
+     * @return el panel con campo y botón IA dispuestos horizontalmente
      */
     private JPanel construirCampoConIA(JTextField campo, java.util.function.Consumer<JButton> accionIA) {
         JPanel panel = new JPanel(new BorderLayout(4, 0));
@@ -392,8 +458,15 @@ public class ProductosPanel extends JPanel {
     }
 
     /**
-     * Crea un panel con un JComboBox y un botón "IA" a la derecha.
-     * El botón muestra feedback visual mientras la IA está pensando.
+     * Crea un panel con un {@link JComboBox} y un botón "IA" a la derecha.
+     * El botón muestra feedback visual mientras la IA está pensando y,
+     * al recibir la respuesta, selecciona automáticamente la categoría
+     * sugerida en el combo (por coincidencia exacta o parcial).
+     *
+     * @param combo    el combo donde se seleccionará la categoría sugerida
+     * @param accionIA acción a ejecutar al pulsar el botón; recibe el propio botón
+     *                 para que la acción pueda modificar su estado
+     * @return el panel con combo y botón IA dispuestos horizontalmente
      */
     private JPanel construirComboConIA(JComboBox<String> combo, java.util.function.Consumer<JButton> accionIA) {
         JPanel panel = new JPanel(new BorderLayout(4, 0));
@@ -405,7 +478,14 @@ public class ProductosPanel extends JPanel {
         panel.add(btnIA, BorderLayout.EAST);
         return panel;
     }
-    
+
+    /**
+     * Solicita confirmación y elimina el producto de la fila indicada.
+     * Si el producto tiene pedidos asociados muestra un aviso específico
+     * en lugar de un error genérico.
+     *
+     * @param modelRow índice de fila en el modelo (no en la vista)
+     */
     private void eliminarFila(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         String nombre = modeloTabla.getValueAt(modelRow, 1).toString();

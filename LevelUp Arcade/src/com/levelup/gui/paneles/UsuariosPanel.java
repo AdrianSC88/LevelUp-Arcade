@@ -12,7 +12,11 @@ import java.util.List;
 
 /**
  * Panel de gestión de usuarios. Solo accesible para administradores.
- * Permite crear usuarios, cambiar contraseñas y eliminar cuentas.
+ * <p>
+ * Permite crear nuevos usuarios, cambiar contraseñas y eliminar cuentas.
+ * La columna de rol se colorea según el tipo: morado para administradores
+ * y azul para empleados. No es posible eliminar el propio usuario activo.
+ * </p>
  */
 public class UsuariosPanel extends JPanel {
 
@@ -23,6 +27,13 @@ public class UsuariosPanel extends JPanel {
     private TableRowSorter<DefaultTableModel> sorter;
     private JPanel cuerpo;
 
+    /**
+     * Construye el panel de gestión de usuarios para el administrador activo.
+     * Inicializa el controlador, construye la interfaz y carga los datos.
+     *
+     * @param usuarioActivo el administrador que ha iniciado sesión;
+     *                      se usa para impedir que se elimine a sí mismo
+     */
     public UsuariosPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
         this.usuarioController = new UsuarioController();
@@ -32,6 +43,10 @@ public class UsuariosPanel extends JPanel {
         cargarDatos();
     }
 
+    /**
+     * Construye la interfaz del panel: topbar con botón de añadir usuario,
+     * panel de tarjetas de estadísticas y panel de tabla.
+     */
     private void construirUI() {
         JButton btnAnadir = GUIUtils.crearBotonTop("+ Añadir usuario", GUIUtils.C_ORANGE, GUIUtils.C_WHITE);
         btnAnadir.addActionListener(e -> dialogoAnadir());
@@ -44,6 +59,12 @@ public class UsuariosPanel extends JPanel {
         add(cuerpo, BorderLayout.CENTER);
     }
 
+    /**
+     * Construye el panel de tarjetas de estadísticas con el recuento de
+     * administradores y empleados registrados en el sistema.
+     *
+     * @return el panel de tarjetas listo para añadir al cuerpo
+     */
     private JPanel construirTarjetas() {
         JPanel panel = new JPanel(new GridLayout(1, 2, 12, 0));
         panel.setBackground(GUIUtils.C_BG);
@@ -56,6 +77,13 @@ public class UsuariosPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Construye el panel de tabla con columnas ID, Usuario, Nombre, Rol y Acciones.
+     * La columna Rol se renderiza con color diferenciado y la columna Acciones
+     * muestra los botones "Contraseña" y "Eliminar" con efecto hover.
+     *
+     * @return el panel de tabla listo para añadir al cuerpo
+     */
     private JPanel construirPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(GUIUtils.C_WHITE);
@@ -108,6 +136,10 @@ public class UsuariosPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Recarga los datos de la tabla y actualiza las tarjetas de estadísticas.
+     * Se llama tras cualquier operación CRUD para mantener la vista sincronizada.
+     */
     private void refrescar() {
         cargarDatos();
         cuerpo.remove(0);
@@ -115,6 +147,10 @@ public class UsuariosPanel extends JPanel {
         cuerpo.revalidate(); cuerpo.repaint();
     }
 
+    /**
+     * Renderer de la columna de acciones. Muestra los botones "Contraseña" y
+     * "Eliminar" con efecto hover al pasar el ratón por la fila.
+     */
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
         private final JButton btnPass     = GUIUtils.crearBotonInline("Contraseña", GUIUtils.C_BLUE, 76);
         private final JButton btnEliminar = GUIUtils.crearBotonInline("Eliminar",   GUIUtils.C_RED,  76);
@@ -129,12 +165,21 @@ public class UsuariosPanel extends JPanel {
         }
     }
 
+    /**
+     * Vacía el modelo de la tabla y lo rellena con todos los usuarios
+     * obtenidos del controlador, mostrando nombre de usuario en lugar de nombre completo.
+     */
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
         for (Usuario u : usuarioController.obtenerTodos())
             modeloTabla.addRow(new Object[]{u.getId(), u.getNombreUsuario(), u.getNombre(), u.getRol(), ""});
     }
 
+    /**
+     * Abre un diálogo para crear un nuevo usuario con nombre de usuario,
+     * nombre completo, contraseña y rol (administrador/empleado).
+     * Si el usuario confirma y la operación tiene éxito, refresca la vista.
+     */
     private void dialogoAnadir() {
         JTextField fU = new JTextField(), fN = new JTextField();
         JPasswordField fP = new JPasswordField();
@@ -147,6 +192,12 @@ public class UsuariosPanel extends JPanel {
         }
     }
 
+    /**
+     * Abre un diálogo para cambiar la contraseña del usuario de la fila indicada.
+     * La contraseña debe tener al menos 6 caracteres (validado en el controlador).
+     *
+     * @param modelRow índice de fila en el modelo (no en la vista)
+     */
     private void dialogoCambiarPassword(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         String nombre = modeloTabla.getValueAt(modelRow, 1).toString();
@@ -158,6 +209,12 @@ public class UsuariosPanel extends JPanel {
         }
     }
 
+    /**
+     * Solicita confirmación y elimina el usuario de la fila indicada.
+     * Impide eliminar al propio usuario activo mostrando un error.
+     *
+     * @param modelRow índice de fila en el modelo (no en la vista)
+     */
     private void eliminarFila(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         String nombre = modeloTabla.getValueAt(modelRow, 1).toString();

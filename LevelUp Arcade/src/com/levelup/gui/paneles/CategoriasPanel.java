@@ -14,6 +14,10 @@ import java.util.List;
 /**
  * Panel de gestión de categorías. Permite visualizar, buscar, añadir,
  * editar y eliminar categorías según el rol del usuario.
+ * <p>
+ * Los administradores ven una columna de acciones con botones "Editar" y
+ * "Eliminar" en cada fila. Los empleados solo tienen acceso de lectura.
+ * </p>
  */
 public class CategoriasPanel extends JPanel {
 
@@ -25,6 +29,13 @@ public class CategoriasPanel extends JPanel {
     private TableRowSorter<DefaultTableModel> sorter;
     private JPanel cuerpo;
 
+    /**
+     * Construye el panel de categorías para el usuario indicado.
+     * Inicializa el controlador, construye la interfaz y carga los datos.
+     *
+     * @param usuarioActivo el usuario autenticado; determina si se muestran
+     *                      las acciones de administrador
+     */
     public CategoriasPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
         this.esAdmin = "administrador".equals(usuarioActivo.getRol());
@@ -35,6 +46,10 @@ public class CategoriasPanel extends JPanel {
         cargarDatos();
     }
 
+    /**
+     * Construye la interfaz del panel: topbar con botón de añadir (solo admin),
+     * panel de tarjetas de estadísticas y panel de tabla.
+     */
     private void construirUI() {
         JButton btnAnadir = null;
         if (esAdmin) {
@@ -50,6 +65,12 @@ public class CategoriasPanel extends JPanel {
         add(cuerpo, BorderLayout.CENTER);
     }
 
+    /**
+     * Construye el panel de tarjetas de estadísticas con el total de categorías
+     * y cuántas tienen descripción documentada.
+     *
+     * @return el panel de tarjetas listo para añadir al cuerpo
+     */
     private JPanel construirTarjetas() {
         JPanel panel = new JPanel(new GridLayout(1, 2, 12, 0));
         panel.setBackground(GUIUtils.C_BG);
@@ -61,6 +82,14 @@ public class CategoriasPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Construye el panel de tabla con cabecera de búsqueda y columnas
+     * ID, Nombre, Descripción y (si es admin) Acciones.
+     * Conecta los listeners de ratón para gestionar los clics en los botones
+     * de acción y el efecto hover en las filas.
+     *
+     * @return el panel de tabla listo para añadir al cuerpo
+     */
     private JPanel construirPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(GUIUtils.C_WHITE);
@@ -100,6 +129,10 @@ public class CategoriasPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Recarga los datos de la tabla y actualiza las tarjetas de estadísticas.
+     * Se llama tras cualquier operación CRUD para mantener la vista sincronizada.
+     */
     private void refrescar() {
         cargarDatos();
         cuerpo.remove(0);
@@ -107,6 +140,10 @@ public class CategoriasPanel extends JPanel {
         cuerpo.revalidate(); cuerpo.repaint();
     }
 
+    /**
+     * Renderer de la columna de acciones. Muestra dos botones inline
+     * ("Editar" y "Eliminar") con efecto hover al pasar el ratón por la fila.
+     */
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
         private final JButton btnEditar   = GUIUtils.crearBotonInline("Editar",   GUIUtils.C_BLUE);
         private final JButton btnEliminar = GUIUtils.crearBotonInline("Eliminar", GUIUtils.C_RED);
@@ -121,12 +158,20 @@ public class CategoriasPanel extends JPanel {
         }
     }
 
+    /**
+     * Vacía el modelo de la tabla y lo rellena con todas las categorías
+     * obtenidas del controlador.
+     */
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
         for (Categoria c : categoriaController.obtenerTodas())
             modeloTabla.addRow(new Object[]{c.getId(), c.getNombre(), c.getDescripcion(), ""});
     }
 
+    /**
+     * Abre un diálogo para introducir los datos de una nueva categoría.
+     * Si el usuario confirma y la operación tiene éxito, refresca la vista.
+     */
     private void dialogoAnadir() {
         JTextField fN = new JTextField(), fD = new JTextField();
         JPanel form = GUIUtils.construirForm(new String[]{"Nombre","Descripción"}, new JComponent[]{fN,fD});
@@ -136,6 +181,12 @@ public class CategoriasPanel extends JPanel {
         }
     }
 
+    /**
+     * Abre un diálogo para editar la categoría de la fila indicada.
+     * Precarga los datos actuales en los campos del formulario.
+     *
+     * @param modelRow índice de fila en el modelo (no en la vista)
+     */
     private void dialogoEditar(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         Categoria c = categoriaController.obtenerPorId(id);
@@ -148,6 +199,11 @@ public class CategoriasPanel extends JPanel {
         }
     }
 
+    /**
+     * Solicita confirmación y elimina la categoría de la fila indicada.
+     *
+     * @param modelRow índice de fila en el modelo (no en la vista)
+     */
     private void eliminarFila(int modelRow) {
         int id = Integer.parseInt(modeloTabla.getValueAt(modelRow, 0).toString());
         String nombre = modeloTabla.getValueAt(modelRow, 1).toString();

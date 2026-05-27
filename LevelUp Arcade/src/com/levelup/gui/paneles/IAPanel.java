@@ -10,8 +10,12 @@ import java.awt.*;
 
 /**
  * Panel del asistente de Inteligencia Artificial.
+ * <p>
  * Permite generar descripciones de productos y sugerir categorías
- * mediante la API de OpenRouter.
+ * mediante la API de OpenRouter. La llamada a la API se realiza en un
+ * hilo de fondo ({@link SwingWorker}) para no bloquear la interfaz.
+ * El panel es accesible para todos los roles.
+ * </p>
  */
 public class IAPanel extends JPanel {
 
@@ -20,6 +24,13 @@ public class IAPanel extends JPanel {
     private JTextArea areaRespuesta;
     private JLabel labelEstado;
 
+    /**
+     * Construye el panel del asistente IA.
+     * Inicializa el controlador LLM y construye la interfaz.
+     *
+     * @param usuarioActivo el usuario autenticado (no se usa para permisos
+     *                      en este panel, ya que es accesible para todos los roles)
+     */
     public IAPanel(Usuario usuarioActivo) {
         this.llmController = new LlmController();
         setLayout(new BorderLayout(0, 0));
@@ -27,11 +38,24 @@ public class IAPanel extends JPanel {
         construirUI();
     }
 
+    /**
+     * Construye la interfaz del panel: topbar sin botones de acción
+     * y el cuerpo con los paneles de entrada y respuesta.
+     */
     private void construirUI() {
         add(GUIUtils.construirTopbar("Asistente de Inteligencia Artificial", null), BorderLayout.NORTH);
         add(construirCuerpo(), BorderLayout.CENTER);
     }
 
+    /**
+     * Construye el cuerpo del panel con dos secciones:
+     * <ul>
+     *   <li>Panel de entrada: campo de nombre de producto y botones de acción.</li>
+     *   <li>Panel de respuesta: área de texto de solo lectura con el resultado del asistente.</li>
+     * </ul>
+     *
+     * @return el panel de cuerpo listo para añadir al layout
+     */
     private JPanel construirCuerpo() {
         JPanel cuerpo = new JPanel(new BorderLayout(0, 20));
         cuerpo.setBackground(GUIUtils.C_BG);
@@ -125,6 +149,15 @@ public class IAPanel extends JPanel {
         return cuerpo;
     }
 
+    /**
+     * Lanza la consulta al asistente IA en un hilo de fondo.
+     * Muestra el estado "Consultando..." mientras espera la respuesta.
+     * Al terminar, actualiza el área de respuesta y la etiqueta de estado.
+     * Si ocurre un error, lo muestra en el área de respuesta.
+     *
+     * @param tipo {@code "descripcion"} para generar una descripción del producto,
+     *             o {@code "categoria"} para sugerir una categoría
+     */
     private void ejecutar(String tipo) {
         String nombre = campoProducto.getText().trim();
         if (nombre.isEmpty()) {

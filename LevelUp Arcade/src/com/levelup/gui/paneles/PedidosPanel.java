@@ -20,6 +20,12 @@ import java.util.List;
 /**
  * Panel de gestión de pedidos. Permite visualizar, buscar, crear,
  * cambiar estado y eliminar pedidos según el rol del usuario.
+ * <p>
+ * Los administradores pueden crear nuevos pedidos con sus líneas de detalle,
+ * cambiar el estado de un pedido existente y eliminarlo. Los empleados solo
+ * tienen acceso de lectura. La columna de estado se colorea según el valor
+ * (naranja para pendiente, azul para procesando, verde para entregado, etc.).
+ * </p>
  */
 public class PedidosPanel extends JPanel {
 
@@ -32,7 +38,13 @@ public class PedidosPanel extends JPanel {
     private TableRowSorter<DefaultTableModel> sorter;
     private JPanel                   cuerpo;
 
-    /** Constructor. Recibe el usuario activo para controlar permisos. */
+    /**
+     * Construye el panel de pedidos para el usuario indicado.
+     * Inicializa los controladores necesarios, construye la interfaz y carga los datos.
+     *
+     * @param usuarioActivo el usuario autenticado; determina si se muestran
+     *                      las acciones de administrador
+     */
     public PedidosPanel(Usuario usuarioActivo) {
         this.esAdmin            = "administrador".equals(usuarioActivo.getRol());
         this.pedidoController   = new PedidoController();
@@ -46,6 +58,10 @@ public class PedidosPanel extends JPanel {
 
     // ─── UI principal ───────────────────────────────────────────────────────
 
+    /**
+     * Construye la interfaz del panel: topbar con botón de nuevo pedido (solo admin),
+     * panel de tarjetas de estadísticas y panel de tabla.
+     */
     private void construirUI() {
         JButton btnNuevo = null;
         if (esAdmin) {
@@ -61,6 +77,12 @@ public class PedidosPanel extends JPanel {
         add(cuerpo, BorderLayout.CENTER);
     }
 
+    /**
+     * Construye el panel de tarjetas con el total de pedidos, los pendientes
+     * que requieren atención y los entregados completados.
+     *
+     * @return el panel de tarjetas listo para añadir al cuerpo
+     */
     private JPanel construirTarjetas() {
         List<Pedido> todos   = pedidoController.obtenerTodos();
         long pendientes      = todos.stream().filter(p -> p.getEstado() == EstadoPedido.PENDIENTE).count();
@@ -77,6 +99,13 @@ public class PedidosPanel extends JPanel {
 
     // ─── Panel tabla ────────────────────────────────────────────────────────
 
+    /**
+     * Construye el panel de tabla con columnas ID, Cliente, Fecha, Estado y
+     * (si es admin) Acciones. La columna de estado se colorea según el valor.
+     * Conecta los listeners de ratón para los botones de acción y el hover.
+     *
+     * @return el panel de tabla listo para añadir al cuerpo
+     */
     private JPanel construirPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(GUIUtils.C_WHITE);
@@ -142,12 +171,27 @@ public class PedidosPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Construye la cabecera estándar de la tabla de pedidos con buscador y
+     * botón de refrescar, delegando en {@link GUIUtils#construirCabeceraTabla}.
+     *
+     * @return el panel de cabecera construido
+     */
     private JPanel construirCabeceraTabla() {
         return GUIUtils.construirCabeceraTabla("Listado de pedidos", "Buscar por ID, cliente, estado...", sorter, this::refrescar);
     }
 
     // ─── Diálogo crear pedido ───────────────────────────────────────────────
 
+    /**
+     * Abre un diálogo modal para crear un nuevo pedido.
+     * <p>
+     * Permite seleccionar el cliente, añadir líneas de producto con cantidad
+     * y confirmar la creación. Si no existen clientes o productos registrados,
+     * muestra un error y cancela la operación. Cada línea se añade individualmente
+     * mediante {@link PedidoController#añadirLineaPedido(LineaPedido)}.
+     * </p>
+     */
     private void dialogoCrearPedido() {
         List<Cliente>  clientes  = clienteController.obtenerTodos();
         List<Producto> productos = productoController.obtenerTodos();
@@ -334,6 +378,10 @@ public class PedidosPanel extends JPanel {
 
     // ─── Acciones de tabla ──────────────────────────────────────────────────
 
+    /**
+     * Recarga los datos de la tabla y actualiza las tarjetas de estadísticas.
+     * Se llama tras cualquier operación CRUD para mantener la vista sincronizada.
+     */
     private void refrescar() {
         cargarDatos();
         cuerpo.remove(0);
@@ -342,6 +390,10 @@ public class PedidosPanel extends JPanel {
         cuerpo.repaint();
     }
 
+    /**
+     * Vacía el modelo de la tabla y lo rellena con todos los pedidos
+     * obtenidos del controlador. Muestra "-" cuando algún campo es nulo.
+     */
     private void cargarDatos() {
         modeloTabla.setRowCount(0);
         for (Pedido p : pedidoController.obtenerTodos()) {
@@ -355,6 +407,12 @@ public class PedidosPanel extends JPanel {
         }
     }
 
+    /**
+     * Abre un diálogo para seleccionar el nuevo estado del pedido de la fila indicada.
+     * Los estados disponibles son los valores del enum {@link EstadoPedido}.
+     *
+     * @param fila índice de fila en el modelo (no en la vista)
+     */
     private void dialogoCambiarEstado(int fila) {
         int id = Integer.parseInt(modeloTabla.getValueAt(fila, 0).toString());
         EstadoPedido[] estados = EstadoPedido.values();
@@ -368,6 +426,12 @@ public class PedidosPanel extends JPanel {
         }
     }
 
+    /**
+     * Solicita confirmación y elimina el pedido de la fila indicada junto con
+     * todas sus líneas de detalle.
+     *
+     * @param fila índice de fila en el modelo (no en la vista)
+     */
     private void eliminarFila(int fila) {
         int id = Integer.parseInt(modeloTabla.getValueAt(fila, 0).toString());
         if (JOptionPane.showConfirmDialog(this, "¿Eliminar el pedido #" + id + "?",
@@ -379,6 +443,10 @@ public class PedidosPanel extends JPanel {
 
     // ─── Renderer de acciones ───────────────────────────────────────────────
 
+    /**
+     * Renderer de la columna de acciones. Muestra los botones "Estado" y "Eliminar"
+     * con efecto hover al pasar el ratón por la fila.
+     */
     private class AccionesRenderer extends JPanel implements TableCellRenderer {
         private final JButton btnEstado   = GUIUtils.crearBotonInline("Estado",   GUIUtils.C_BLUE);
         private final JButton btnEliminar = GUIUtils.crearBotonInline("Eliminar", GUIUtils.C_RED);

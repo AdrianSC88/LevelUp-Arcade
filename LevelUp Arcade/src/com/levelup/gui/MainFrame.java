@@ -9,17 +9,30 @@ import java.awt.*;
 
 /**
  * Ventana principal de la aplicación tras el login.
- * Contiene el sidebar de navegación y el área de contenido central.
- * La navegación y los paneles disponibles se adaptan al rol del usuario.
+ * <p>
+ * Contiene el sidebar de navegación lateral, la barra superior con
+ * el breadcrumb y la etiqueta de rol, el área de contenido central
+ * donde se cargan los paneles de cada sección, y el pie de página.
+ * La navegación y los paneles disponibles se adaptan al rol del usuario:
+ * el panel de usuarios solo es accesible para administradores.
+ * </p>
  */
 public class MainFrame extends JFrame {
 
+    /** Anchura fija en píxeles del sidebar de navegación lateral. */
     private static final int SIDEBAR_W = 220;
 
     private final Usuario usuarioActivo;
     private JPanel areaContenido;
     private JLabel labelSeccion;
 
+    /**
+     * Construye la ventana principal para el usuario autenticado.
+     * Inicializa la ventana, construye la interfaz y navega al panel
+     * de productos como sección de inicio.
+     *
+     * @param usuarioActivo el usuario que ha iniciado sesión
+     */
     public MainFrame(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
         configurarVentana();
@@ -27,6 +40,11 @@ public class MainFrame extends JFrame {
         navegarA("productos");
     }
 
+    /**
+     * Configura las propiedades de la ventana: título con nombre y rol del
+     * usuario, tamaño, tamaño mínimo, posición centrada y diálogo de
+     * confirmación antes de cerrar.
+     */
     private void configurarVentana() {
         setTitle("LevelUp Arcade — " + usuarioActivo.getNombre() + " [" + usuarioActivo.getRol() + "]");
         // Confirmación antes de cerrar
@@ -42,6 +60,10 @@ public class MainFrame extends JFrame {
         getContentPane().setBackground(GUIUtils.C_BG);
     }
 
+    /**
+     * Ensambla los cuatro bloques de la ventana en su layout {@link BorderLayout}:
+     * sidebar (oeste), topbar (norte), área de contenido (centro) y pie (sur).
+     */
     private void construirUI() {
         setLayout(new BorderLayout());
         add(construirSidebar(),       BorderLayout.WEST);
@@ -50,6 +72,14 @@ public class MainFrame extends JFrame {
         add(construirFooter(),        BorderLayout.SOUTH);
     }
 
+    /**
+     * Construye el sidebar de navegación oscuro con la sección de marca,
+     * los botones de navegación agrupados por categoría, el botón de
+     * cerrar sesión al final y separadores visuales entre secciones.
+     * El botón de usuarios solo se añade si el usuario es administrador.
+     *
+     * @return el panel sidebar listo para añadir al layout
+     */
     private JPanel construirSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setBackground(GUIUtils.C_PURPLE_L.darker().darker().darker()); // C_SIDEBAR
@@ -135,6 +165,15 @@ public class MainFrame extends JFrame {
         return sidebar;
     }
 
+    /**
+     * Crea un botón de navegación del sidebar que, al pulsarse, llama a
+     * {@link #navegarA(String)} con la sección indicada. Muestra un fondo
+     * semitransparente al pasar el ratón por encima.
+     *
+     * @param texto   texto visible del botón
+     * @param seccion identificador de la sección destino
+     * @return el botón de navegación configurado
+     */
     private JButton crearNavBoton(String texto, String seccion) {
         JButton boton = new JButton(texto) {
             @Override protected void paintComponent(Graphics g) {
@@ -161,6 +200,13 @@ public class MainFrame extends JFrame {
         return boton;
     }
 
+    /**
+     * Crea una etiqueta de sección del sidebar (p. ej. "GESTIÓN" o "SISTEMA")
+     * con estilo tipográfico en mayúsculas y color violáceo semitransparente.
+     *
+     * @param texto el texto de la etiqueta de sección
+     * @return la etiqueta configurada
+     */
     private JLabel crearNavLabel(String texto) {
         JLabel label = new JLabel(texto);
         label.setFont(new Font("Consolas", Font.BOLD, 11));
@@ -170,6 +216,12 @@ public class MainFrame extends JFrame {
         return label;
     }
 
+    /**
+     * Crea un separador horizontal de 1 px de alto para el sidebar,
+     * con color violáceo semitransparente.
+     *
+     * @return el panel separador
+     */
     private JPanel crearSeparador() {
         JPanel sep = new JPanel();
         sep.setBackground(new Color(196, 181, 253, 25));
@@ -178,6 +230,13 @@ public class MainFrame extends JFrame {
         return sep;
     }
 
+    /**
+     * Construye la barra superior con el breadcrumb de sección a la izquierda
+     * y la etiqueta de rol del usuario (con color diferenciado según si es
+     * administrador o empleado) a la derecha.
+     *
+     * @return el panel topbar listo para añadir al layout
+     */
     private JPanel construirTopbar() {
         JPanel topbar = new JPanel(new BorderLayout());
         topbar.setBackground(Color.WHITE);
@@ -203,12 +262,23 @@ public class MainFrame extends JFrame {
         return topbar;
     }
 
+    /**
+     * Construye el panel central vacío donde se irán cargando los paneles
+     * de cada sección al navegar.
+     *
+     * @return el panel de contenido inicializado
+     */
     private JPanel construirAreaContenido() {
         areaContenido = new JPanel(new BorderLayout());
         areaContenido.setBackground(GUIUtils.C_BG);
         return areaContenido;
     }
 
+    /**
+     * Construye el pie de página con el nombre del autor, curso y año académico.
+     *
+     * @return la etiqueta de pie de página configurada
+     */
     private JLabel construirFooter() {
         JLabel footer = new JLabel(
             "Adrián Sánchez Cañadas · 1.º DAM · CampusFP · Curso 2025–2026",
@@ -227,8 +297,11 @@ public class MainFrame extends JFrame {
 
     /**
      * Navega al panel indicado actualizando el área de contenido y el breadcrumb.
+     * Elimina el panel anterior, instancia el nuevo según el identificador de
+     * sección y actualiza el texto del label de navegación superior.
      *
-     * @param seccion identificador de la sección destino
+     * @param seccion identificador de la sección destino (p. ej. {@code "productos"},
+     *                {@code "clientes"}, {@code "ia"}, etc.)
      */
     public void navegarA(String seccion) {
         areaContenido.removeAll();
