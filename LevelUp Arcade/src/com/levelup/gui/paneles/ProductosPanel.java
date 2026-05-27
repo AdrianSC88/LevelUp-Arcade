@@ -1,6 +1,7 @@
 package com.levelup.gui.paneles;
 
 import com.levelup.controlador.CategoriaController;
+import com.levelup.controlador.LlmController;
 import com.levelup.controlador.ProductoController;
 import com.levelup.controlador.ProveedorController;
 import com.levelup.gui.GUIUtils;
@@ -24,6 +25,7 @@ public class ProductosPanel extends JPanel {
     private final ProductoController productoController;
     private final CategoriaController categoriaController;
     private final ProveedorController proveedorController;
+    private final LlmController llmController;
     private final Usuario usuarioActivo;
     private final boolean esAdmin;
 
@@ -35,9 +37,10 @@ public class ProductosPanel extends JPanel {
     public ProductosPanel(Usuario usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
         this.esAdmin = "administrador".equals(usuarioActivo.getRol());
-        this.productoController = new ProductoController();
+        this.productoController  = new ProductoController();
         this.categoriaController = new CategoriaController();
         this.proveedorController = new ProveedorController();
+        this.llmController       = new LlmController();
         setLayout(new BorderLayout(0, 0));
         setBackground(GUIUtils.C_BG);
         construirUI();
@@ -201,14 +204,74 @@ public class ProductosPanel extends JPanel {
     private void dialogoAnadir() {
         List<Categoria> cats  = categoriaController.obtenerTodas();
         List<Proveedor> provs = proveedorController.obtenerTodos();
-        JTextField fNombre = new JTextField(), fDesc = new JTextField(),
-                   fPrecio = new JTextField(), fStock = new JTextField();
+
+        JTextField fNombre = new JTextField();
+        JTextField fPrecio = new JTextField();
+        JTextField fStock  = new JTextField();
         JComboBox<String> cbCat  = new JComboBox<>(cats.stream().map(Categoria::getNombre).toArray(String[]::new));
         JComboBox<String> cbProv = new JComboBox<>(provs.stream().map(Proveedor::getNombre).toArray(String[]::new));
-        JPanel form = GUIUtils.construirForm(
-            new String[]{"Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor"},
-            new JComponent[]{fNombre, fDesc, fPrecio, fStock, cbCat, cbProv}
-        );
+
+        // Campo descripción con botón IA
+        JTextField fDesc = new JTextField();
+        JPanel panelDesc = construirCampoConIA(fDesc, btn -> {
+            String nombre = fNombre.getText().trim();
+            if (nombre.isEmpty()) { GUIUtils.error(null, "Introduce primero el nombre del producto."); return; }
+            btn.setText("..."); btn.setEnabled(false);
+            fDesc.setText("Generando..."); fDesc.setEnabled(false);
+            new SwingWorker<String, Void>() {
+                @Override protected String doInBackground() { return llmController.generarDescripcion(nombre); }
+                @Override protected void done() {
+                    try { fDesc.setText(get()); } catch (Exception e) { fDesc.setText(""); }
+                    fDesc.setEnabled(true);
+                    btn.setText("▪ IA"); btn.setEnabled(true);
+                }
+            }.execute();
+        });
+
+        // Combo categoría con botón IA
+        JPanel panelCat = construirComboConIA(cbCat, btn -> {
+            String nombre = fNombre.getText().trim();
+            if (nombre.isEmpty()) { GUIUtils.error(null, "Introduce primero el nombre del producto."); return; }
+            btn.setText("..."); btn.setEnabled(false);
+            new SwingWorker<String, Void>() {
+                @Override protected String doInBackground() { return llmController.sugerirCategoria(nombre); }
+                @Override protected void done() {
+                    try {
+                        String sugerida = get().trim();
+                        for (int i = 0; i < cbCat.getItemCount(); i++) {
+                            if (cbCat.getItemAt(i).equalsIgnoreCase(sugerida)) { cbCat.setSelectedIndex(i); return; }
+                        }
+                        for (int i = 0; i < cbCat.getItemCount(); i++) {
+                            if (cbCat.getItemAt(i).toLowerCase().contains(sugerida.toLowerCase()) ||
+                                sugerida.toLowerCase().contains(cbCat.getItemAt(i).toLowerCase())) {
+                                cbCat.setSelectedIndex(i); return;
+                            }
+                        }
+                    } catch (Exception e) { /* ignorar */ }
+                    finally { btn.setText("▪ IA"); btn.setEnabled(true); }
+                }
+            }.execute();
+        });
+
+        JPanel form = new JPanel(new java.awt.GridBagLayout());
+        form.setBackground(GUIUtils.C_WHITE);
+        form.setBorder(new EmptyBorder(12, 12, 12, 12));
+        java.awt.GridBagConstraints g = new java.awt.GridBagConstraints();
+        g.insets = new java.awt.Insets(6, 6, 6, 6);
+        g.fill = java.awt.GridBagConstraints.HORIZONTAL;
+
+        String[] labels = {"Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor"};
+        JComponent[] campos = {fNombre, panelDesc, fPrecio, fStock, panelCat, cbProv};
+        for (int i = 0; i < labels.length; i++) {
+            g.gridx = 0; g.gridy = i; g.weightx = 0;
+            JLabel lbl = new JLabel(labels[i]);
+            lbl.setFont(new Font("Consolas", Font.BOLD, 11)); lbl.setForeground(GUIUtils.C_PURPLE);
+            form.add(lbl, g);
+            g.gridx = 1; g.weightx = 1;
+            campos[i].setPreferredSize(new java.awt.Dimension(300, 32));
+            form.add(campos[i], g);
+        }
+
         if (JOptionPane.showConfirmDialog(this, form, "Añadir producto",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
             try {
@@ -229,16 +292,76 @@ public class ProductosPanel extends JPanel {
         if (p == null) return;
         List<Categoria> cats  = categoriaController.obtenerTodas();
         List<Proveedor> provs = proveedorController.obtenerTodos();
-        JTextField fNombre = new JTextField(p.getNombre()), fDesc = new JTextField(p.getDescripcion()),
-                   fPrecio = new JTextField(String.valueOf(p.getPrecio())), fStock = new JTextField(String.valueOf(p.getStock()));
+
+        JTextField fNombre = new JTextField(p.getNombre());
+        JTextField fPrecio = new JTextField(String.valueOf(p.getPrecio()));
+        JTextField fStock  = new JTextField(String.valueOf(p.getStock()));
         JComboBox<String> cbCat  = new JComboBox<>(cats.stream().map(Categoria::getNombre).toArray(String[]::new));
         JComboBox<String> cbProv = new JComboBox<>(provs.stream().map(Proveedor::getNombre).toArray(String[]::new));
         cats.stream().filter(c -> c.getId() == p.getCategoria().getId()).findFirst().ifPresent(c -> cbCat.setSelectedIndex(cats.indexOf(c)));
         provs.stream().filter(v -> v.getId() == p.getProveedor().getId()).findFirst().ifPresent(v -> cbProv.setSelectedIndex(provs.indexOf(v)));
-        JPanel form = GUIUtils.construirForm(
-            new String[]{"Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor"},
-            new JComponent[]{fNombre, fDesc, fPrecio, fStock, cbCat, cbProv}
-        );
+
+        // Campo descripción con botón IA
+        JTextField fDesc = new JTextField(p.getDescripcion());
+        JPanel panelDesc = construirCampoConIA(fDesc, btn -> {
+            String nombre = fNombre.getText().trim();
+            if (nombre.isEmpty()) { GUIUtils.error(null, "Introduce primero el nombre del producto."); return; }
+            btn.setText("..."); btn.setEnabled(false);
+            fDesc.setText("Generando..."); fDesc.setEnabled(false);
+            new SwingWorker<String, Void>() {
+                @Override protected String doInBackground() { return llmController.generarDescripcion(nombre); }
+                @Override protected void done() {
+                    try { fDesc.setText(get()); } catch (Exception e) { fDesc.setText(p.getDescripcion()); }
+                    fDesc.setEnabled(true);
+                    btn.setText("▪ IA"); btn.setEnabled(true);
+                }
+            }.execute();
+        });
+
+        // Combo categoría con botón IA
+        JPanel panelCat = construirComboConIA(cbCat, btn -> {
+            String nombre = fNombre.getText().trim();
+            if (nombre.isEmpty()) { GUIUtils.error(null, "Introduce primero el nombre del producto."); return; }
+            btn.setText("..."); btn.setEnabled(false);
+            new SwingWorker<String, Void>() {
+                @Override protected String doInBackground() { return llmController.sugerirCategoria(nombre); }
+                @Override protected void done() {
+                    try {
+                        String sugerida = get().trim();
+                        for (int i = 0; i < cbCat.getItemCount(); i++) {
+                            if (cbCat.getItemAt(i).equalsIgnoreCase(sugerida)) { cbCat.setSelectedIndex(i); return; }
+                        }
+                        for (int i = 0; i < cbCat.getItemCount(); i++) {
+                            if (cbCat.getItemAt(i).toLowerCase().contains(sugerida.toLowerCase()) ||
+                                sugerida.toLowerCase().contains(cbCat.getItemAt(i).toLowerCase())) {
+                                cbCat.setSelectedIndex(i); return;
+                            }
+                        }
+                    } catch (Exception e) { /* ignorar */ }
+                    finally { btn.setText("▪ IA"); btn.setEnabled(true); }
+                }
+            }.execute();
+        });
+
+        JPanel form = new JPanel(new java.awt.GridBagLayout());
+        form.setBackground(GUIUtils.C_WHITE);
+        form.setBorder(new EmptyBorder(12, 12, 12, 12));
+        java.awt.GridBagConstraints g = new java.awt.GridBagConstraints();
+        g.insets = new java.awt.Insets(6, 6, 6, 6);
+        g.fill = java.awt.GridBagConstraints.HORIZONTAL;
+
+        String[] labels = {"Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor"};
+        JComponent[] campos = {fNombre, panelDesc, fPrecio, fStock, panelCat, cbProv};
+        for (int i = 0; i < labels.length; i++) {
+            g.gridx = 0; g.gridy = i; g.weightx = 0;
+            JLabel lbl = new JLabel(labels[i]);
+            lbl.setFont(new Font("Consolas", Font.BOLD, 11)); lbl.setForeground(GUIUtils.C_PURPLE);
+            form.add(lbl, g);
+            g.gridx = 1; g.weightx = 1;
+            campos[i].setPreferredSize(new java.awt.Dimension(300, 32));
+            form.add(campos[i], g);
+        }
+
         if (JOptionPane.showConfirmDialog(this, form, "Editar producto",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
             try {
@@ -251,6 +374,36 @@ public class ProductosPanel extends JPanel {
                 else GUIUtils.error(this, "No se pudo actualizar.");
             } catch (NumberFormatException ex) { GUIUtils.error(this, "Precio y stock deben ser números válidos."); }
         }
+    }
+
+    /**
+     * Crea un panel con un campo de texto y un botón "IA" a la derecha.
+     * El botón muestra feedback visual mientras la IA está generando.
+     */
+    private JPanel construirCampoConIA(JTextField campo, java.util.function.Consumer<JButton> accionIA) {
+        JPanel panel = new JPanel(new BorderLayout(4, 0));
+        panel.setBackground(GUIUtils.C_WHITE);
+        JButton btnIA = GUIUtils.crearBotonInline("▪ IA", GUIUtils.C_PURPLE, 52);
+        btnIA.setToolTipText("Generar con Inteligencia Artificial");
+        btnIA.addActionListener(e -> accionIA.accept(btnIA));
+        panel.add(campo, BorderLayout.CENTER);
+        panel.add(btnIA, BorderLayout.EAST);
+        return panel;
+    }
+
+    /**
+     * Crea un panel con un JComboBox y un botón "IA" a la derecha.
+     * El botón muestra feedback visual mientras la IA está pensando.
+     */
+    private JPanel construirComboConIA(JComboBox<String> combo, java.util.function.Consumer<JButton> accionIA) {
+        JPanel panel = new JPanel(new BorderLayout(4, 0));
+        panel.setBackground(GUIUtils.C_WHITE);
+        JButton btnIA = GUIUtils.crearBotonInline("▪ IA", GUIUtils.C_PURPLE, 52);
+        btnIA.setToolTipText("Sugerir con Inteligencia Artificial");
+        btnIA.addActionListener(e -> accionIA.accept(btnIA));
+        panel.add(combo, BorderLayout.CENTER);
+        panel.add(btnIA, BorderLayout.EAST);
+        return panel;
     }
 
     private void eliminarFila(int modelRow) {
