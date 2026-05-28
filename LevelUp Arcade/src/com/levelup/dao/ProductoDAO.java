@@ -127,6 +127,25 @@ public class ProductoDAO {
     }
 
     /**
+     * Obtiene los identificadores de los pedidos que contienen el producto indicado.
+     * @param id identificador del producto
+     * @return lista de IDs de pedido distintos que contienen el producto; vacía si ninguno
+     */
+    public List<Integer> obtenerIdsPedidosAsociados(int id) {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT DISTINCT id_pedido FROM linea_pedido WHERE id_producto = ? ORDER BY id_pedido";
+        try (Connection con = ConexionBD.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) ids.add(rs.getInt(1));
+        } catch (SQLException e) {
+            System.err.println("Error al obtener pedidos del producto: " + e.getMessage());
+        }
+        return ids;
+    }
+
+    /**
      * Comprueba si un producto tiene líneas de pedido asociadas.
      * @param id identificador del producto
      * @return true si el producto aparece en algún pedido

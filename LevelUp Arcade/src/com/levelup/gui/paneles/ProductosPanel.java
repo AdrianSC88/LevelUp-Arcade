@@ -481,8 +481,9 @@ public class ProductosPanel extends JPanel {
 
     /**
      * Solicita confirmación y elimina el producto de la fila indicada.
-     * Si el producto tiene pedidos asociados muestra un aviso específico
-     * en lugar de un error genérico.
+     * Si el producto tiene pedidos asociados muestra un aviso con los IDs
+     * de los pedidos concretos que lo contienen, para que el usuario pueda
+     * gestionarlos antes de reintentar la eliminación.
      *
      * @param modelRow índice de fila en el modelo (no en la vista)
      */
@@ -494,13 +495,20 @@ public class ProductosPanel extends JPanel {
             if (productoController.eliminarProducto(id)) {
                 GUIUtils.exito(this, "Producto eliminado.");
                 refrescar();
-            } else if (productoController.tienePedidosAsociados(id)) {
-                JOptionPane.showMessageDialog(this,
-                    "No se puede eliminar \"" + nombre + "\":\ntiene pedidos asociados en el sistema.",
-                    "Operación no permitida",
-                    JOptionPane.WARNING_MESSAGE);
             } else {
-                GUIUtils.error(this, "No se pudo eliminar.");
+                List<Integer> pedidosIds = productoController.obtenerIdsPedidosAsociados(id);
+                if (!pedidosIds.isEmpty()) {
+                    String ids = pedidosIds.stream()
+                        .map(pid -> "#" + pid)
+                        .collect(java.util.stream.Collectors.joining(", "));
+                    JOptionPane.showMessageDialog(this,
+                        "No se puede eliminar \"" + nombre + "\": aparece en los pedidos " + ids + ".\n"
+                        + "Cancela o elimina esos pedidos primero.",
+                        "Operación no permitida",
+                        JOptionPane.WARNING_MESSAGE);
+                } else {
+                    GUIUtils.error(this, "No se pudo eliminar.");
+                }
             }
         }
     }

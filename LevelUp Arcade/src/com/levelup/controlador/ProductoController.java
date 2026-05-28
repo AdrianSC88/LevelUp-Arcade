@@ -183,4 +183,14 @@ public class ProductoController {
     public boolean tienePedidosAsociados(int id) {
         return productoDAO.tienePedidosAsociados(id);
     }
+
+    /**
+     * Obtiene los identificadores de los pedidos que contienen el producto indicado.
+     * Útil para informar al usuario de qué pedidos debe gestionar antes de eliminar el producto.
+     * @param id identificador del producto
+     * @return lista de IDs de pedido distintos que contienen el producto; vacía si ninguno
+     */
+    public List<Integer> obtenerIdsPedidosAsociados(int id) {
+        return productoDAO.obtenerIdsPedidosAsociados(id);
+    }
 }
