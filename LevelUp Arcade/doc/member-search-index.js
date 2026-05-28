@@ -1,1 +1,1 @@
-memberSearchIndex = [{"p":"com.levelup.gui.paneles","c":"ProductosPanel","l":"ProductosPanel(Usuario)","u":"%3Cinit%3E(com.levelup.modelo.Usuario)"}];updateSearchResults();
+memberSearchIndex = [{"p":"com.levelup.gui.paneles","c":"ProductosPanel","l":"ProductosPanel(Usuario)","u":"%3Cinit%3E(com.levelup.modelo.Usuario)","k":"3"}];updateSearchResults();
