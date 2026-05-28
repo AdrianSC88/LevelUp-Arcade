@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.levelup"},{"l":"com.levelup.controlador"},{"l":"com.levelup.dao"},{"l":"com.levelup.modelo"},{"l":"com.levelup.servicio"},{"l":"com.levelup.util"},{"l":"com.levelup.vista"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.levelup.gui.paneles"}];updateSearchResults();
