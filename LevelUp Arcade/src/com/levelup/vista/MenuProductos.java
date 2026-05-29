@@ -299,6 +299,7 @@ public class MenuProductos {
 
     /**
      * Solicita confirmación y elimina un producto.
+     * Si el producto tiene pedidos asociados, informa de sus IDs y cancela la operación.
      */
     private void eliminarProducto() {
         System.out.println("\n--- ELIMINAR PRODUCTO ---");
@@ -310,6 +311,18 @@ public class MenuProductos {
                 System.out.println("Producto no encontrado.");
                 return;
             }
+
+            List<Integer> pedidosAsociados = productoController.obtenerIdsPedidosAsociados(id);
+            if (!pedidosAsociados.isEmpty()) {
+                String ids = pedidosAsociados.stream()
+                        .map(pid -> "#" + pid)
+                        .collect(java.util.stream.Collectors.joining(", "));
+                System.err.println("No se puede eliminar '" + producto.getNombre()
+                        + "': aparece en los pedidos " + ids + ".");
+                System.err.println("Cancela o elimina esos pedidos primero.");
+                return;
+            }
+
             System.out.print("¿Seguro que quieres eliminar '" + producto.getNombre() + "'? (s/n): ");
             if (scanner.nextLine().equalsIgnoreCase("s")) {
                 if (productoController.eliminarProducto(id)) {
