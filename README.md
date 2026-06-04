@@ -21,7 +21,7 @@ Sistema de gestión de inventario, clientes y proveedores con inteligencia artif
 Crea el archivo `config.properties` en la misma carpeta que el `.jar` con el siguiente contenido:
 
 ```properties
-db.url=jdbc:mariadb://IP_DEL_SERVIDOR:3306/levelup_arcade
+db.url=jdbc:mariadb://IP_DEL_SERVIDOR:3308/levelup_arcade
 db.usuario=TU_USUARIO
 db.password=TU_PASSWORD
 ```
